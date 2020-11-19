@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux'
 
-export default class LoginPage extends Component {
+class LoginPage extends Component {
 
     state = {
-        name: '',
+        username: '',
         password: ''
     }
 
@@ -21,14 +22,23 @@ export default class LoginPage extends Component {
 
 
     render() {
+        console.log('this.props: ',this.props.users.loggedIn)
         return(
             <div>
                 <form onSubmit={this.handleSubmit}>
-                    <input type='text' value={this.state.name} name='name' onChange={this.handleChange}/>
+                    <input type='text' value={this.state.username} name='username' onChange={this.handleChange}/>
                     <input type='text' value={this.state.password} name='password' onChange={this.handleChange}/>
                     <input type='submit' />
                 </form>
+                {(this.props.users.loggedIn)? <p>loggin success!!! WOOOOO</p> : <p>XX</p>}
             </div>
         )
     }
 }
+
+const mapStateToProps = state => {
+    console.log(state.users.user)
+    return {users: state.users.user}
+  }
+
+export default connect(mapStateToProps)(LoginPage)

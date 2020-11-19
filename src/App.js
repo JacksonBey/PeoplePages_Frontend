@@ -11,11 +11,12 @@ import {
 import NavBar from './Components/NavBar';
 import { Component } from 'react';
 import {connect} from 'react-redux'
+import { fetchUser } from './actions/fetchUser'
 
 class App extends Component{
 
 
-  renderLogin = () => <LoginPage handleLogin={this.props.login}/>
+  renderLogin = () => <LoginPage handleLogin={this.props.login} isLoggedIn = {this.props.loggedIn}/>
 
   render() {
   return (
@@ -30,10 +31,13 @@ class App extends Component{
   );
   }
 }
-const mapStateToProps = ({users}) => ({users})
+const mapStateToProps = state => {
+  console.log(state.users.user)
+  return {users: state.users.user}
+}
 
 const mapDispatchToProps = dispatch => ({
-  login: info => dispatch({type: 'LOG_IN', info}),
+  login: (text) => dispatch(fetchUser(text)),
   signUp: id => dispatch({type: 'DELETE_RESTAURANT', id})
 })
 
