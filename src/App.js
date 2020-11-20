@@ -17,10 +17,19 @@ import jwt_decode from "jwt-decode";
 
 class App extends Component{
 
+  state = {
+    redirected: false
+  }
+
 
 
   componentDidMount() {
     // console.log('localstorage user: ',localStorage.getItem('user'))
+    // console.log('mounted')
+    this.setState({
+      redirected: false
+
+    })
     if(localStorage.getItem('token') !== ''){
       let token= localStorage.getItem('token')
       // console.log('token: ', token)
@@ -29,24 +38,37 @@ class App extends Component{
       let text = {username: localStorage.getItem('user'), password: pw.password}
       // console.log('text: ', text)
       this.props.login(text)
+
     }
   }
 
-  // componentDidUpdate() {
+  componentDidUpdate() {
     // console.log('ls user: ',localStorage.getItem('user'))
     // console.log('logged in?')
+    // console.log('redirected?', this.state.redirected)
+    // console.log('loggedIn: ',this.props.users.loggedIn)
     // console.log(this.props.history)
-  // }
+    if(this.props.users.loggedIn === true && this.state.redirected === false){
+      // console.log('logged in!!!!!!')
+      this.setState({
+        redirected: true
 
-  // handleLogin = (text) => {
-  //   this.props.login(text)
-  //   // if(){
-  //   //   this.props.history.push('/') 
-  //   // }
-  // }
+      })
+      this.props.history.push('/') 
+    }
+  }
+
+  handleLogout = () => {
+    // console.log('handlelogout')
+    this.props.logOut()
+    this.setState({
+      redirected: false
+
+    })
+  }
 
 
-  renderLogin = () => <LoginPage handleLogin={this.props.login} isLoggedIn = {this.props.loggedIn} handleLogout={this.props.logOut}/>
+  renderLogin = () => <LoginPage handleLogin={this.props.login} isLoggedIn = {this.props.loggedIn} handleLogout={this.handleLogout}/>
 
   render() {
   return (
