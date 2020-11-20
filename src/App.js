@@ -23,18 +23,27 @@ class App extends Component{
     // console.log('localstorage user: ',localStorage.getItem('user'))
     if(localStorage.getItem('token') !== ''){
       let token= localStorage.getItem('token')
-      console.log('token: ', token)
+      // console.log('token: ', token)
       let pw = jwt_decode(token)
-      console.log('parseJwt: ', pw.password)
+      // console.log('parseJwt: ', pw.password)
       let text = {username: localStorage.getItem('user'), password: pw.password}
-      console.log('text: ', text)
+      // console.log('text: ', text)
       this.props.login(text)
     }
   }
 
-  componentDidUpdate() {
-    console.log('ls user: ',localStorage.getItem('user'))
-  }
+  // componentDidUpdate() {
+    // console.log('ls user: ',localStorage.getItem('user'))
+    // console.log('logged in?')
+    // console.log(this.props.history)
+  // }
+
+  // handleLogin = (text) => {
+  //   this.props.login(text)
+  //   // if(){
+  //   //   this.props.history.push('/') 
+  //   // }
+  // }
 
 
   renderLogin = () => <LoginPage handleLogin={this.props.login} isLoggedIn = {this.props.loggedIn} handleLogout={this.props.logOut}/>
@@ -53,7 +62,7 @@ class App extends Component{
   }
 }
 const mapStateToProps = state => {
-  console.log(state.users.user)
+  // console.log(state.users.user)
   return {users: state.users.user}
 }
 

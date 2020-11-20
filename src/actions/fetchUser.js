@@ -1,3 +1,5 @@
+
+
 export function fetchUser(text){
     console.log('text: ', text)
     return (dispatch) => {
@@ -13,11 +15,10 @@ export function fetchUser(text){
         })
         })
         .then(res => res.json())
-        .then(data => {dispatch({type: 'LOG_IN', data}, localStorage.setItem('user', data.user.username), localStorage.setItem('token', data.token))
-        // if(data.message === 'Invalid username or password') {
-        //     this.setState({error: true},() => {
-        //     this.props.history.push('/login')
-        //     })
+        .then(data => {dispatch({type: 'LOG_IN', data},
+        ((data.error === 'Invalid username or password') ? null : (
+            localStorage.setItem('user', data.user.username), localStorage.setItem('token', data.token)
+         )))
         // } else {
         // this.setState({user: data.user, token: data.token, error: false, loggedIn: true}, () => {
         //     this.props.history.push('/') 
