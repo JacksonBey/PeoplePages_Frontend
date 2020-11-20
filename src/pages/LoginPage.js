@@ -30,14 +30,14 @@ class LoginPage extends Component {
                     <input type='text' value={this.state.password} name='password' onChange={this.handleChange}/>
                     <input type='submit' />
                 </form>
-                {(this.props.users.loggedIn)? <p>loggin success!!! WOOOOO</p> : <p>XX</p>}
+                {(this.props.users.loggedIn)? <button onClick={this.props.handleLogout}>LogOut</button> : <p>XX</p>}
             </div>
         )
     }
 }
 
 const mapStateToProps = state => {
-    console.log(state.users.user)
+    // console.log(state.users.user)
     return {users: state.users.user}
   }
 

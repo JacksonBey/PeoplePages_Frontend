@@ -12,11 +12,32 @@ import NavBar from './Components/NavBar';
 import { Component } from 'react';
 import {connect} from 'react-redux'
 import { fetchUser } from './actions/fetchUser'
+import jwt_decode from "jwt-decode";
+
 
 class App extends Component{
 
 
-  renderLogin = () => <LoginPage handleLogin={this.props.login} isLoggedIn = {this.props.loggedIn}/>
+
+  componentDidMount() {
+    // console.log('localstorage user: ',localStorage.getItem('user'))
+    if(localStorage.getItem('token') !== ''){
+      let token= localStorage.getItem('token')
+      console.log('token: ', token)
+      let pw = jwt_decode(token)
+      console.log('parseJwt: ', pw.password)
+      let text = {username: localStorage.getItem('user'), password: pw.password}
+      console.log('text: ', text)
+      this.props.login(text)
+    }
+  }
+
+  componentDidUpdate() {
+    console.log('ls user: ',localStorage.getItem('user'))
+  }
+
+
+  renderLogin = () => <LoginPage handleLogin={this.props.login} isLoggedIn = {this.props.loggedIn} handleLogout={this.props.logOut}/>
 
   render() {
   return (
@@ -38,7 +59,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   login: (text) => dispatch(fetchUser(text)),
-  signUp: id => dispatch({type: 'DELETE_RESTAURANT', id})
+  logOut: () => dispatch({type: 'LOG_OUT'})
 })
 
 

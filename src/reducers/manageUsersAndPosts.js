@@ -20,10 +20,15 @@ function usersReducer(state = { user: {
             requesting: true
         }   
     case 'LOG_IN':
-        console.log('state: ', state)
-        console.log('action: ', action)
+        // console.log('state: ', state)
+        // console.log('action: ', action)
         if(action.data.error ===  "Invalid username or password") {
-            return state
+            return { user: {
+                user: '',
+                token: '',
+                loggedIn: false,
+                error: true}, requesting: false   
+            }
         } else {
         return {
             user: {
@@ -33,6 +38,15 @@ function usersReducer(state = { user: {
         },
             requesting: false
         }}
+    case 'LOG_OUT':
+        localStorage.setItem('token', '')
+        localStorage.setItem('user', '')
+        return { user: {
+            user: '',
+            token: '',
+            loggedIn: false,
+            error: false}, requesting: false   
+        }
 
         // state = { user: {
         //     user: '',

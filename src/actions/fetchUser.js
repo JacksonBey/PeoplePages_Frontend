@@ -13,7 +13,7 @@ export function fetchUser(text){
         })
         })
         .then(res => res.json())
-        .then(data => { dispatch({type: 'LOG_IN', data})
+        .then(data => {dispatch({type: 'LOG_IN', data}, localStorage.setItem('user', data.user.username), localStorage.setItem('token', data.token))
         // if(data.message === 'Invalid username or password') {
         //     this.setState({error: true},() => {
         //     this.props.history.push('/login')
