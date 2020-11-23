@@ -14,11 +14,11 @@ class PostFeedPage extends Component {
 
 
     render() {
-        console.log('this.props.posts: ',this.props.posts)
+        // console.log('this.props.posts: ',this.props.posts)
         return(
             <div>
                 <p>hi from PostFeedPage</p>
-        {(this.props.posts === undefined)? null : this.props.posts.posts.map((post, idx) => <p key={idx}>{`${idx+1}.  `}{post.content}</p>)} 
+        {(this.props.posts === undefined || this.props.posts === [])? null : this.props.posts.posts.map((post, idx) => <p key={idx}>{`${idx+1}.  `}{post.content}</p>)} 
             </div>
         )
     }

@@ -16,7 +16,7 @@ class MyAccountPage extends Component {
     componentDidMount = () => {
         let token= localStorage.getItem('token')
         let userId = jwt_decode(token).user_id
-        console.log(userId)
+        // console.log(userId)
         this.setState({
             userId
         })
@@ -43,7 +43,7 @@ class MyAccountPage extends Component {
 
 
     render() {
-        console.log('user props: ',this.props.user)
+        // console.log('user props: ',this.props.user)
         let {user, firstName, lastNameInitial, age, location} = this.props.user
         return(
             <div>

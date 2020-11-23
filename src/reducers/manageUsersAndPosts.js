@@ -87,8 +87,8 @@ function usersReducer(state = { user: {
     }
   }
 
-  function postsReducer(state ={ 
-      posts: [], 
+  function postsReducer(state ={ posts: {
+      posts: []}, 
       requesting: false
     }, action) {
 
