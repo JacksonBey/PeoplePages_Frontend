@@ -87,8 +87,35 @@ function usersReducer(state = { user: {
     }
   }
 
-  function postsReducer(state = [], action) {
+  function postsReducer(state ={ 
+      posts: [], 
+      requesting: false
+    }, action) {
+
     switch (action.type) {
+
+    case 'START_REQUEST':
+    return {
+        ...state,
+        requesting: true
+    } 
+    
+    case 'GET_POSTS':
+        return {
+            posts: action.data,
+            requesting: false
+        }
+        
+    case 'CREATE_POST':
+                // console.log('action: ', action)
+                // console.log('state: ',state)
+                // let nstate = [...state, action.data.post]
+                // console.log('nstate: ', nstate)
+                console.log('post created')
+        return {
+            ...state,
+            requesting: false
+        }
       default:
         return state;
     }

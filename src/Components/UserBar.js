@@ -46,6 +46,22 @@ const UserBar = () => {
                     background: 'lightgrey'
                 }}
                 >Account</NavLink> 
+            <NavLink
+                className='ui item'
+                to= '/createpost'
+                exact
+                activeStyle={{
+                    background: 'lightgrey'
+                }}
+                >Create Post</NavLink> 
+            <NavLink
+                className='ui item'
+                to= '/postfeed'
+                exact
+                activeStyle={{
+                    background: 'lightgrey'
+                }}
+                >My Post Feed</NavLink> 
         </div>
     )
 }

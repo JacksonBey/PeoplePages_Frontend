@@ -46,6 +46,14 @@ const NavBar = () => {
                     background: 'lightgrey'
                 }}
                 >Sign-Up</NavLink> 
+            <NavLink
+                className='ui item'
+                to= '/postfeed'
+                exact
+                activeStyle={{
+                    background: 'lightgrey'
+                }}
+                >Post Feed</NavLink> 
 
         </div>
     )

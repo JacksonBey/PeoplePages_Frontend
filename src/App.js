@@ -5,6 +5,8 @@ import AboutPage from './pages/AboutPage'
 import LoginPage from './pages/LoginPage'
 import SignUpPage from './pages/SignUpPage'
 import MyAccountPage from './pages/MyAccountPage'
+import CreatePostPage from './pages/CreatePostPage'
+import PostFeedPage from './pages/PostFeedPage'
 import {
   withRouter,
   Route,
@@ -17,6 +19,8 @@ import {connect} from 'react-redux'
 import { fetchUser } from './actions/fetchUser'
 import { signUpUser } from './actions/signUpUser'
 import { editUserInfo } from './actions/editUserInfo'
+import { createPost } from './actions/createPost'
+import { fetchPosts } from './actions/fetchPosts'
 import jwt_decode from "jwt-decode";
 
 
@@ -77,6 +81,8 @@ class App extends Component{
   renderHomePage = () => <HomePage  isLoggedIn = {this.props.loggedIn}/>
   renderSignUpPage = () => <SignUpPage handleSignUp={this.props.signUp}/>
   renderMyAccountPage = () => <MyAccountPage  handleEditInfo = {this.props.editInfo}/>
+  renderCreatePostPage = () => <CreatePostPage  createPost = {this.props.createPost}/>
+  renderPostFeedPage = () => <PostFeedPage  getPosts = {this.props.getPosts}/>
 
 
   render() {
@@ -90,6 +96,8 @@ class App extends Component{
       <Route exact path='/login' component={this.renderLogin} />
       <Route exact path='/signup' component={this.renderSignUpPage} />
       <Route exact path='/myaccount' component={this.renderMyAccountPage} />
+      <Route exact path='/createpost' component={this.renderCreatePostPage} />
+      <Route exact path='/postfeed' component={this.renderPostFeedPage} />
       </Switch>
     </div>
   );
@@ -104,7 +112,9 @@ const mapDispatchToProps = dispatch => ({
   login: (text) => dispatch(fetchUser(text)),
   logOut: () => dispatch({type: 'LOG_OUT'}),
   signUp: (text) => dispatch(signUpUser(text)),
-  editInfo: (text) => dispatch(editUserInfo(text))
+  editInfo: (text) => dispatch(editUserInfo(text)),
+  createPost: (text) => dispatch(createPost(text)),
+  getPosts: () => dispatch(fetchPosts({type: 'GET_POSTS'}))
 })
 
 
