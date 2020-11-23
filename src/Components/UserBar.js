@@ -10,7 +10,7 @@ import { NavLink } from 'react-router-dom';
 //   color: 'white',
 // }
 
-const NavBar = () => {
+const UserBar = () => {
     return(
         <div className='ui secondary pointing menu'>
             <NavLink
@@ -40,16 +40,15 @@ const NavBar = () => {
                 >login</NavLink> 
             <NavLink
                 className='ui item'
-                to= '/signup'
+                to= '/myaccount'
                 exact
                 activeStyle={{
                     background: 'lightgrey'
                 }}
-                >Sign-Up</NavLink> 
-
+                >Account</NavLink> 
         </div>
     )
 }
 
 
-export default NavBar;
+export default UserBar;

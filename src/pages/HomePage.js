@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
+import { connect } from "react-redux";
 
-export default class HomePage extends Component {
+class HomePage extends Component {
 
     // showUsername = () => {
     //     if (this.props.user.data === undefined) {
@@ -11,11 +12,21 @@ export default class HomePage extends Component {
     // }
 
     render() {
+        // console.log('props', this.props.user.loggedIn)
+        // console.log('state', 'dsf')
         return(
             <div>
                 {/* {this.showUsername()} */}
+        {this.props.user.loggedIn ? <p>Welcome, {this.props.user.user}</p> : null}
                 <p>hi from homepage</p>
             </div>
         )
     }
 }
+
+const mapStateToProps = state => ({
+    user: state.users.user
+})
+
+
+export default connect(mapStateToProps)(HomePage)

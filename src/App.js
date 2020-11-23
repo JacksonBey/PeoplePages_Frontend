@@ -3,15 +3,20 @@ import './App.css';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage'
 import LoginPage from './pages/LoginPage'
+import SignUpPage from './pages/SignUpPage'
+import MyAccountPage from './pages/MyAccountPage'
 import {
   withRouter,
   Route,
   Switch
 } from 'react-router-dom';
 import NavBar from './Components/NavBar';
+import UserBar from './Components/UserBar';
 import { Component } from 'react';
 import {connect} from 'react-redux'
 import { fetchUser } from './actions/fetchUser'
+import { signUpUser } from './actions/signUpUser'
+import { editUserInfo } from './actions/editUserInfo'
 import jwt_decode from "jwt-decode";
 
 
@@ -69,15 +74,22 @@ class App extends Component{
 
 
   renderLogin = () => <LoginPage handleLogin={this.props.login} isLoggedIn = {this.props.loggedIn} handleLogout={this.handleLogout}/>
+  renderHomePage = () => <HomePage  isLoggedIn = {this.props.loggedIn}/>
+  renderSignUpPage = () => <SignUpPage handleSignUp={this.props.signUp}/>
+  renderMyAccountPage = () => <MyAccountPage  handleEditInfo = {this.props.editInfo}/>
+
 
   render() {
+    // console.log(this.props.user)
   return (
     <div className="App">
-      <NavBar />
+      {(this.props.users.loggedIn)? <UserBar /> : <NavBar />}
             <Switch>
-      <Route exact path='/' component={HomePage}/>
+      <Route exact path='/' component={this.renderHomePage}/>
       <Route exact path='/about' component={AboutPage} />
       <Route exact path='/login' component={this.renderLogin} />
+      <Route exact path='/signup' component={this.renderSignUpPage} />
+      <Route exact path='/myaccount' component={this.renderMyAccountPage} />
       </Switch>
     </div>
   );
@@ -90,7 +102,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   login: (text) => dispatch(fetchUser(text)),
-  logOut: () => dispatch({type: 'LOG_OUT'})
+  logOut: () => dispatch({type: 'LOG_OUT'}),
+  signUp: (text) => dispatch(signUpUser(text)),
+  editInfo: (text) => dispatch(editUserInfo(text))
 })
 
 

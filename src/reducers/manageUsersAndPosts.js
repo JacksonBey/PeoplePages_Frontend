@@ -37,6 +37,10 @@ function usersReducer(state = { user: {
         return {
             user: {
             user: action.data.user.username,
+            firstName: action.data.user.firstName,
+            lastNameInitial: action.data.user.lastNameInitial,
+            location: action.data.user.location,
+            age: action.data.user.age,
             token: action.data.token,
             loggedIn: true
         },
@@ -51,13 +55,32 @@ function usersReducer(state = { user: {
             loggedIn: false,
             error: false}, requesting: false   
         }
-
-        // state = { user: {
-        //     user: '',
-        //     token: '',
-        //     loggedIn: false,
-        //     error: false}, requesting: false   
-        // }
+    case 'SIGN_UP':
+        return {
+            user: {
+            user: action.data.user.username,
+            token: action.data.token,
+            firstName: action.data.user.firstName,
+            lastNameInitial: action.data.user.lastNameInitial,
+            location: action.data.user.location,
+            age: action.data.user.age,
+            loggedIn: true
+        },
+            requesting: false
+        }
+    case 'EDIT_USER':
+         console.log('action: ', action)
+        return {
+            user: {
+                ...state.user,
+            firstName: action.data.user.firstName,
+            lastNameInitial: action.data.user.lastNameInitial,
+            location: action.data.user.location,
+            age: action.data.user.age,
+            loggedIn: true
+        },
+            requesting: false
+        }
 
     default:
         return state;
