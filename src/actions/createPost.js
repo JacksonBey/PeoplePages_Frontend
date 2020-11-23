@@ -10,7 +10,8 @@ export function createPost(text){
         },
         body: JSON.stringify({
             content: text.content,
-            user_id: text.userId
+            user_id: text.userId,
+            username: text.username
         })
         })
         .then(res => res.json())

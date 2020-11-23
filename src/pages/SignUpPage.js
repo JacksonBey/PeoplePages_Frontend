@@ -5,7 +5,9 @@ import React, {Component} from 'react';
 
     state = {
         username: '',
-        password: ''
+        password: '',
+        firstName: '',
+        lastNameInitial: ''
     }
 
     handleChange = (e) => {
@@ -24,8 +26,18 @@ import React, {Component} from 'react';
         return(
             <div>
                 <form onSubmit={this.handleSubmit}>
+                    <label> Username: 
                     <input type='text' name='username' value={this.state.username} onChange={this.handleChange}/>
+                    </label>
+                    <label> Password: 
                     <input type='text' name='password' value={this.state.password} onChange={this.handleChange}/>
+                    </label>
+                    <label>First Name: 
+                    <input type='text' name='firstName' value={this.state.firstName} onChange={this.handleChange}/>
+                    </label>
+                    <label>Last Name Initial: 
+                    <input type='text' name='lastNameInitial' value={this.state.lastNameInitial} onChange={this.handleChange}/>
+                    </label>
                     <input type='submit' />
 
                 </form>

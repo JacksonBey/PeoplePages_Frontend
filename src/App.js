@@ -86,7 +86,6 @@ class App extends Component{
 
 
   render() {
-    // console.log(this.props.user)
   return (
     <div className="App">
       {(this.props.users.loggedIn)? <UserBar /> : <NavBar />}

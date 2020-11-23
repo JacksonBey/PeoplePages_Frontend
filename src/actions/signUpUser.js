@@ -9,7 +9,9 @@ export function signUpUser(text){
         },
         body: JSON.stringify({
             username: text.username,
-            password: text.password
+            password: text.password,
+            firstName: text.firstName,
+            lastNameInitial: text.lastNameInitial
         })
         })
         .then(res => res.json())

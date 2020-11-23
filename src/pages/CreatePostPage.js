@@ -1,19 +1,26 @@
 import React, {Component} from 'react';
 import jwt_decode from "jwt-decode";
+import { connect } from 'react-redux'
 
-export default class CreatePostPage extends Component {
+class CreatePostPage extends Component {
     state = {
         content: '',
-        userId: ''
+        userId: '',
+        username: ''
     }
 
     componentDidMount = () => {
         let token= localStorage.getItem('token')
         let userId = jwt_decode(token).user_id
-        console.log(userId)
+        let username = this.props.user.firstName + ' ' + this.props.user.lastNameInitial + '.'
+        // console.log(userId)
         this.setState({
-            userId
+            userId,
+            username
         })
+        // console.log('user: ', this.props.user)
+
+        // console.log('username: ', username)
     }
 
     handleChange = (e) => {
@@ -40,3 +47,9 @@ export default class CreatePostPage extends Component {
         )
     }
 }
+
+
+const mapStateToProps = state => ({
+    user: state.users.user
+})
+export default connect(mapStateToProps)(CreatePostPage)
