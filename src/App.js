@@ -23,6 +23,7 @@ import { createPost } from './actions/createPost'
 import { fetchPosts } from './actions/fetchPosts'
 import jwt_decode from "jwt-decode";
 import DisplayPostPage from './pages/DisplayPostPage'
+import UserView from './Components/UserView'
 
 
 class App extends Component{
@@ -100,6 +101,7 @@ class App extends Component{
       {/* <Route exact path='/postfeed' component={this.renderPostFeedPage} /> */}
       <Route path='/postfeed' render={routerProps => <PostFeedPage {...routerProps} getPosts = {this.props.getPosts}/>} />
       <Route path={`/posts/:postId`} render={routerProps => <DisplayPostPage {...routerProps} /> }/>
+      <Route path={`/users/:userId`} render={routerProps => <UserView {...routerProps} /> }/>
       </Switch>
     </div>
   );

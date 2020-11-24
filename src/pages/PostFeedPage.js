@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import Post from '../Components/Post'
-import { Route } from 'react-router-dom';
-import DisplayPostPage from './DisplayPostPage'
 
 class PostFeedPage extends Component {
 
@@ -52,7 +50,6 @@ class PostFeedPage extends Component {
             liked= {this.findliked(post)}
         />)
         } 
-          <Route path={`posts/:postId`} render={routerProps => <DisplayPostPage {...routerProps} posts={this.props.post} /> }/>
             </div>
         )
     }

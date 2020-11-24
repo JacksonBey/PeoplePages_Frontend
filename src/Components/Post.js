@@ -63,13 +63,15 @@ class Post extends Component {
         // console.log('id of poster: ', this.props.post.user_id)
 
         // console.log(poster)
-        let {id, content, username} = this.props.post
+        let {id, content, username, user_id} = this.props.post
         return(
              <Segment>
                  <Link key={id} to={`/posts/${id}`}>Goto post</Link>
                  <h3>{id}</h3>
              <p>{content}</p>
-             <p>-{username}</p> 
+             {/* <p>-{username}</p>  */}
+        <Link key={user_id + 'u'} to={`/users/${user_id}`}>{username}</Link>
+            <br/>
              {(this.props.user.loggedIn) ?
              (this.state.liked) ? <button onClick={this.handleUnlikeClick}>&#10084;</button> 
              : <button onClick={this.handleLikeClick}>&#9825;</button> : null}

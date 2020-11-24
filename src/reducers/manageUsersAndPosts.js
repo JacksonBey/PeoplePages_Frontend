@@ -57,11 +57,13 @@ function usersReducer(state = { user: {
             error: false}, requesting: false   
         }
     case 'SIGN_UP':
+        // console.log('action data user id: ',action.data.user)
+        // console.log('i was here')
         if(action.data.error === undefined) {localStorage.setItem('signup_error', '')
         return {
             user: {
             user: action.data.user.username,
-            user_id: action.data.id,
+            user_id: action.data.user.id,
             token: action.data.token,
             firstName: action.data.user.firstName,
             lastNameInitial: action.data.user.lastNameInitial,
@@ -79,6 +81,15 @@ function usersReducer(state = { user: {
                 error: true}, requesting: false   
             }
         } 
+    case 'GET_USERS':
+        // console.log('hit get users')
+        // console.log('action data: ', action.data)
+        let users = action.data.users
+        return {
+            users: users,
+            ...state,
+            requesting: false
+        }
 
     case 'EDIT_USER':
          console.log('action: ', action)
@@ -142,7 +153,7 @@ function usersReducer(state = { user: {
     case 'DELETE_POST':
         let didx = state.posts.findIndex(post => post.id === action.text.post.id)
         return {
-            ...state,
+            posts: [...state.posts.slice(0,didx), ...state.posts.slice(didx+1)],
             requesting: false
         }
     case 'ADD_LIKE':
