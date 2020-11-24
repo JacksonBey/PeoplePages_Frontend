@@ -57,6 +57,7 @@ function usersReducer(state = { user: {
             error: false}, requesting: false   
         }
     case 'SIGN_UP':
+        if(action.data.error === undefined) {localStorage.setItem('signup_error', '')
         return {
             user: {
             user: action.data.user.username,
@@ -69,6 +70,15 @@ function usersReducer(state = { user: {
         },
             requesting: false
         }
+        } else{
+        return { user: {
+                user: '',
+                token: '',
+                loggedIn: false,
+                error: true}, requesting: false   
+            }
+        } 
+
     case 'EDIT_USER':
          console.log('action: ', action)
         return {
@@ -108,11 +118,13 @@ function usersReducer(state = { user: {
         }
         
     case 'CREATE_POST':
-                // console.log('action: ', action)
-                // console.log('state: ',state)
-                // let nstate = [...state, action.data.post]
-                // console.log('nstate: ', nstate)
-                console.log('post created')
+        // console.log('action: ', action)
+        // console.log('state: ',state)
+        // let nstate = [...state, action.data.post]
+        // console.log('nstate: ', nstate)
+        // console.log('post created? actiom data error', action.data.error)
+        if(action.data.error === undefined) {localStorage.setItem('post_error', '')
+        } else{localStorage.setItem('post_error', action.data.error.content)} 
         return {
             ...state,
             requesting: false

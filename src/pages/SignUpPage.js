@@ -23,6 +23,7 @@ import React, {Component} from 'react';
 
 
     render() {
+        console.log('error mesage', localStorage.getItem('signup_error'))
         return(
             <div>
                 <form onSubmit={this.handleSubmit}>
@@ -41,6 +42,7 @@ import React, {Component} from 'react';
                     <input type='submit' />
 
                 </form>
+                <p style={{ color: 'red' }}>{localStorage.getItem('signup_error')}</p>
             </div>
         )
     }

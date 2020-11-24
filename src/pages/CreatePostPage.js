@@ -32,17 +32,24 @@ class CreatePostPage extends Component {
     handleSubmit = (e) => {
         e.preventDefault()
         this.props.createPost(this.state)
+        this.setState({
+            content: ''
+        })
     }
 
 
     render() {
+        // console.log('posts errors: ', this.props.posts)
         return(
             <div>
+                <br/>
                 <form onSubmit={this.handleSubmit}>
                     <input type='text' name='content' value={this.state.content} onChange={this.handleChange}/>
                     <input type='submit' />
 
                 </form>
+                <br/>
+                <p style={{ color: 'red' }}>{localStorage.getItem('post_error')}</p>
             </div>
         )
     }
@@ -50,6 +57,7 @@ class CreatePostPage extends Component {
 
 
 const mapStateToProps = state => ({
-    user: state.users.user
+    user: state.users.user,
+    posts: state.posts
 })
 export default connect(mapStateToProps)(CreatePostPage)

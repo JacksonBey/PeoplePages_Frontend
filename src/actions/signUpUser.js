@@ -1,5 +1,6 @@
 export function signUpUser(text){
     console.log('text: ', text)
+    let errormsg;
     return (dispatch) => {
         dispatch({ type: 'START_LOG_REQUEST' });
     fetch('http://localhost:3001/users', {
@@ -15,8 +16,11 @@ export function signUpUser(text){
         })
         })
         .then(res => res.json())
-        .then(data => {dispatch({type: 'SIGN_UP', data},
-        ((data.error === 'Invalid username or password') ? null : (
+        .then(data => {dispatch({type: 'SIGN_UP', data}, console.log('data.error',data.error),
+        ((data.error !== undefined) ? (
+        localStorage.setItem('signup_error', 'invalid username or password') 
+        )
+        : (
             localStorage.setItem('user', data.user.username), localStorage.setItem('token', data.token)
          )))
         // } else {
