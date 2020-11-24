@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
-import { Segment } from 'semantic-ui-react'
-import { Icon } from 'semantic-ui-react'
+import Post from '../Components/Post'
 
 class PostFeedPage extends Component {
 
+    state = {
+        posts: this.props.getPosts()
+    }
+
     componentDidMount() {
         this.props.getPosts()
-    }
+        }
 
     renderPosts() {
 
@@ -18,31 +21,40 @@ class PostFeedPage extends Component {
          </div> })
     }
 
+    findliked = (post) => {
+        let isliked = post.likes.find(like => like.user_id === this.props.user.user_id)
+        if(isliked === undefined){
+            return null
+        } else {
+            return isliked
+        }
+    }
+
+    handlePosts = () => {
+        return 
+    }
+
 
 
     render() {
         // console.log('this.props.posts: ',this.props.posts)
+        // console.log('typeof props post: ', typeof this.props.posts)
+        // console.log('props length when loading:', this.props.posts.posts.length)
         // console.log('username', this.props.posts.posts[0].username)
-        // console.log('b: ', b.reverse())
+        // console.log('user id: ', this.props.user.user_id)
         return(
             <div>
                 <h2>Posts</h2>
-        {(this.props.posts === undefined || this.props.posts === [])? null : this.props.posts.posts.reverse().map((post, idx) =>{
-             return (
-             <Segment key={idx} >
-             <p>{`${idx+1}.  `}{post.content}</p>
-             <p>-{post.username}</p> <button><Icon name='thumbs up outline'/></button>
-             </Segment>
-
-             )
-             })} 
+        {(this.props.posts === undefined || this.props.posts === [])? null : this.props.posts.map((post, idx) => <Post key={idx} post={post}
+            liked= {this.findliked(post)}
+        />)} 
             </div>
         )
     }
 }
 
 const mapStateToProps = state => {
-    return {posts: state.posts.posts}
+    return {posts: state.posts.posts, user: state.users.user}
   }
 
 

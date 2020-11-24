@@ -37,6 +37,7 @@ function usersReducer(state = { user: {
         return {
             user: {
             user: action.data.user.username,
+            user_id: action.data.user.id,
             firstName: action.data.user.firstName,
             lastNameInitial: action.data.user.lastNameInitial,
             location: action.data.user.location,
@@ -87,8 +88,8 @@ function usersReducer(state = { user: {
     }
   }
 
-  function postsReducer(state ={ posts: {
-      posts: []}, 
+  function postsReducer(state ={
+      posts: [], 
       requesting: false
     }, action) {
 
@@ -114,6 +115,33 @@ function usersReducer(state = { user: {
                 console.log('post created')
         return {
             ...state,
+            requesting: false
+        }
+    case 'ADD_LIKE':
+        // console.log('like added', action.data.like.id)
+        // console.log('action data post id: ', action.data.like.post_id)
+        // console.log('state posts: ', state.posts)
+        let idx = state.posts.findIndex(post => post.id === action.data.like.post_id)
+        //find post
+        //add likes into post likes
+        //add post back into state
+        let post = state.posts.find(p => p.id === action.data.like.post_id)
+
+        post.likes = [...post.likes, action.data.like]
+        // console.log('found post: ', post)
+
+        return {
+            posts: [...state.posts.slice(0,idx), post, ...state.posts.slice(idx+1)],
+            requesting: false
+        }
+    case 'UNLIKE':
+        // console.log('like removed')
+        // console.log('action text: ', action.text)
+        let index = state.posts.findIndex(post => post.id === action.text.post_id)
+        let likepost = state.posts.find(p => p.id === action.text.post_id)
+        likepost.likes = likepost.likes.filter(like => like.id !== action.text.like_id)
+        return {
+            posts: [...state.posts.slice(0,index), likepost, ...state.posts.slice(index+1)],
             requesting: false
         }
       default:
