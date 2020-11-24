@@ -39,14 +39,23 @@ class DisplayPostPage extends Component {
         })
     }
 
+    handleDelete = (e) => {
+        console.log('delete hit')
+        this.props.deletePost(this.state)
+        this.setState({
+            content: '',
+            post: {content: 'DELETED'}
+        })
+    }
+
 
 
     render() {
         // console.log('posts display props: ', this.props)
         // console.log('postId: ', this.props.match.params.postId)
         let poster = false
-        console.log('userprops', this.props.user)
-        console.log('this.porsp post', this.props.posts)
+        // console.log('userprops', this.props.user)
+        // console.log('this.porsp post', this.props.posts)
         if (this.props.user.loggedIn !== false && this.props.posts !== [] && this.state.post !== undefined) {poster = (this.props.user.user_id === this.state.post.user_id)}
         if (this.props.posts === undefined || this.props.posts === [] || this.state.post === undefined) {
             return <div>hi</div>
@@ -56,7 +65,7 @@ class DisplayPostPage extends Component {
                 <div>
                     <p>hi from DisplayPostPage</p>
             <p>content: {this.state.post.content}</p>
-            {poster ? ( <div><button onClick={this.toggleEdit}>&#x270E;</button> <button>delete?</button> </div>): null}
+            {poster ? ( <div><button onClick={this.toggleEdit}>&#x270E;</button> <button onClick={this.handleDelete}>delete?</button> </div>): null}
             {(this.state.edit) ?                 <form onSubmit={this.handleSubmit}>
                         <input type='text' name='content' value={this.state.content} onChange={this.handleChange} placeholder={this.state.post.content}/>
                         <input type='submit' />

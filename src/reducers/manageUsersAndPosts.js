@@ -140,7 +140,7 @@ function usersReducer(state = { user: {
             requesting: false
         }
     case 'DELETE_POST':
-        let didx = state.posts.findIndex(post => post.id === action.text.postId)
+        let didx = state.posts.findIndex(post => post.id === action.text.post.id)
         return {
             ...state,
             requesting: false

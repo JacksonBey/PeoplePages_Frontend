@@ -19,7 +19,7 @@ export function editPost(text){
 export function deletePost(text){
     return (dispatch) => {
         dispatch({ type: 'START_REQUEST' });
-    fetch(`http://localhost:3001/posts/${text.postId}`, {method: 'DELETE'})
+    fetch(`http://localhost:3001/posts/${text.post.id}`, {method: 'DELETE'})
             .then(res => res.json())
             .then(data => {dispatch({type: 'DELETE_POST', text})})
 }
