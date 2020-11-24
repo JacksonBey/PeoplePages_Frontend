@@ -22,6 +22,7 @@ import { editUserInfo } from './actions/editUserInfo'
 import { createPost } from './actions/createPost'
 import { fetchPosts } from './actions/fetchPosts'
 import jwt_decode from "jwt-decode";
+import DisplayPostPage from './pages/DisplayPostPage'
 
 
 class App extends Component{
@@ -96,7 +97,9 @@ class App extends Component{
       <Route exact path='/signup' component={this.renderSignUpPage} />
       <Route exact path='/myaccount' component={this.renderMyAccountPage} />
       <Route exact path='/createpost' component={this.renderCreatePostPage} />
-      <Route exact path='/postfeed' component={this.renderPostFeedPage} />
+      {/* <Route exact path='/postfeed' component={this.renderPostFeedPage} /> */}
+      <Route path='/postfeed' render={routerProps => <PostFeedPage {...routerProps} getPosts = {this.props.getPosts}/>} />
+      <Route path={`/posts/:postId`} render={routerProps => <DisplayPostPage {...routerProps} /> }/>
       </Switch>
     </div>
   );

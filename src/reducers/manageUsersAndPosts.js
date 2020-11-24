@@ -61,6 +61,7 @@ function usersReducer(state = { user: {
         return {
             user: {
             user: action.data.user.username,
+            user_id: action.data.id,
             token: action.data.token,
             firstName: action.data.user.firstName,
             lastNameInitial: action.data.user.lastNameInitial,
@@ -129,9 +130,24 @@ function usersReducer(state = { user: {
             ...state,
             requesting: false
         }
+    case 'EDIT_POST':
+        console.log('action: ', action)
+        let eidx = state.posts.findIndex(post => post.id === action.data.post.id)
+        let epost = state.posts.find(post => post.id === action.data.post.id)
+        epost.content = action.data.post.content
+        return {
+            posts: [...state.posts.slice(0,eidx), epost, ...state.posts.slice(eidx+1)],
+            requesting: false
+        }
+    case 'DELETE_POST':
+        let didx = state.posts.findIndex(post => post.id === action.text.postId)
+        return {
+            ...state,
+            requesting: false
+        }
     case 'ADD_LIKE':
-        // console.log('like added', action.data.like.id)
-        // console.log('action data post id: ', action.data.like.post_id)
+        console.log('like added', action.data.like.id)
+        console.log('action data post id: ', action.data.like.post_id)
         // console.log('state posts: ', state.posts)
         let idx = state.posts.findIndex(post => post.id === action.data.like.post_id)
         //find post

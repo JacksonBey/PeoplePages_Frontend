@@ -1,5 +1,5 @@
 export function addLike(text){
-    // console.log('text: ', text)
+    console.log('text: ', text)
     return (dispatch) => {
         dispatch({ type: 'START_REQUEST' });
     fetch('http://localhost:3001/likes', {

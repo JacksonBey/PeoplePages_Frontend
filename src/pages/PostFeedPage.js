@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import Post from '../Components/Post'
+import { Route } from 'react-router-dom';
+import DisplayPostPage from './DisplayPostPage'
 
 class PostFeedPage extends Component {
 
@@ -42,12 +44,15 @@ class PostFeedPage extends Component {
         // console.log('props length when loading:', this.props.posts.posts.length)
         // console.log('username', this.props.posts.posts[0].username)
         // console.log('user id: ', this.props.user.user_id)
+        // console.log('props: ', this.props)
         return(
             <div>
                 <h2>Posts</h2>
         {(this.props.posts === undefined || this.props.posts === [])? null : this.props.posts.map((post, idx) => <Post key={idx} post={post}
             liked= {this.findliked(post)}
-        />)} 
+        />)
+        } 
+          <Route path={`posts/:postId`} render={routerProps => <DisplayPostPage {...routerProps} posts={this.props.post} /> }/>
             </div>
         )
     }

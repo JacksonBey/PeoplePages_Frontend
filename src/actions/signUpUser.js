@@ -1,6 +1,5 @@
 export function signUpUser(text){
     console.log('text: ', text)
-    let errormsg;
     return (dispatch) => {
         dispatch({ type: 'START_LOG_REQUEST' });
     fetch('http://localhost:3001/users', {
