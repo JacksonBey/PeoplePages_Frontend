@@ -82,8 +82,8 @@ function usersReducer(state = { user: {
             }
         } 
     case 'GET_USERS':
-        // console.log('hit get users')
-        // console.log('action data: ', action.data)
+        console.log('hit get users')
+        console.log('action data: ', action.data)
         let users = action.data.users
         return {
             users: users,
@@ -104,6 +104,14 @@ function usersReducer(state = { user: {
         },
             requesting: false
         }
+    case 'ADD_FRIEND':
+        console.log('friended')
+        console.log('friending action data',action.data)
+        return state
+    case 'UN_FRIEND':
+        console.log('unfriended')
+        console.log('unfriending action text',action.text)
+        return state
 
     default:
         return state;

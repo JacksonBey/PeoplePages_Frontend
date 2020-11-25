@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import {getUsers} from '../actions/getUsers'
+import {addFriend, unFriend} from '../actions/friendships'
 
 class UserView extends Component {
 
@@ -22,9 +23,16 @@ class UserView extends Component {
         }
     }}
 
+    handleFriend = (followed) => {
+        let follower = this.props.users.user  
+        let text ={follower_id: follower.user_id, followed_id: followed.id}
+        // console.log('friending text: ', text)
+        this.props.addFriend(text)
+    }
+
 
     render() {
-        // console.log('user view props', this.props)
+        console.log('user view props', this.props)
         if (this.props.users.users !== undefined){
             let displayUser = this.props.users.users.find(user => user.id === parseInt(this.props.match.params.userId))
         // console.log('displayUser: ', displayUser)
@@ -33,7 +41,7 @@ class UserView extends Component {
         return(
             <div>
                 <h1>{displayUser.firstName} {displayUser.lastNameInitial.toUpperCase()}.</h1>
-                {(this.props.users.user.loggedIn && this.state.currentUser === false) ? <button>Add Friend!</button> : null}
+                {(this.props.users.user.loggedIn && this.state.currentUser === false) ? <button onClick={() => this.handleFriend(displayUser)}>Add Friend!</button> : null}
             </div>
         )
         
@@ -52,7 +60,9 @@ const mapStateToProps = state => {
   }
   
   const mapDispatchToProps = dispatch => ({
-    getUsers: () => dispatch(getUsers())
+    getUsers: () => dispatch(getUsers()),
+    addFriend: (text) => dispatch(addFriend(text)),
+    unFriend: (text) => dispatch(unFriend(text))
   })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserView)

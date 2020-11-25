@@ -56,16 +56,16 @@ class MyAccountPage extends Component {
                 {this.state.isEdit ?
                     <form onSubmit={this.handleSubmit}>
                         <label>First Name: 
-                        <input type='text' name='firstName' value={this.state.firstName} onChange={this.handleChange}/>
+                        <input type='text' name='firstName' value={this.state.firstName} onChange={this.handleChange} placeholder={firstName}/>
                         </label>
                         <label>Last Name Initial: 
-                        <input type='text' name='lastNameInitial' value={this.state.lastNameInitial} onChange={this.handleChange}/>
+                        <input type='text' name='lastNameInitial' value={this.state.lastNameInitial} onChange={this.handleChange} placeholder={lastNameInitial}/>
                         </label>
                         <label>Age: 
-                        <input type='text' name='age' value={this.state.age} onChange={this.handleChange}/>
+                        <input type='text' name='age' value={this.state.age} onChange={this.handleChange} placeholder={age}/>
                         </label>
                         <label>Location: 
-                        <input type='text' name='location' value={this.state.location} onChange={this.handleChange}/>
+                        <input type='text' name='location' value={this.state.location} onChange={this.handleChange} placeholder={location}/>
                         </label>
                         <input type='submit' />
 
