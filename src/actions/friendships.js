@@ -1,5 +1,5 @@
 export function addFriend(text){
-    console.log('text: ', text)
+    // console.log('text: ', text)
     return (dispatch) => {
         dispatch({ type: 'START_LOG_REQUEST' });
     fetch('http://localhost:3001/friendships', {
@@ -9,7 +9,7 @@ export function addFriend(text){
             },
             body: JSON.stringify({
                 follower_id: text.follower_id,
-                followed_id: text.followed_id
+                followee_id: text.followee_id
             })
             })
             .then(res => res.json())
@@ -19,8 +19,8 @@ export function addFriend(text){
 
 export function unFriend(text){
     return (dispatch) => {
-        dispatch({ type: 'START_REQUEST' });
-    fetch(`http://localhost:3001/likes/${text.friendship_id}`, {method: 'DELETE'})
+        dispatch({ type: 'START_LOG_REQUEST' });
+    fetch(`http://localhost:3001/friendships/${text.friendship_id}`, {method: 'DELETE'})
             .then(res => res.json())
             .then(data => {dispatch({type: 'UN_FRIEND', text})})
 }

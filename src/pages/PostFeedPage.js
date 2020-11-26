@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import Post from '../Components/Post'
+import {getUsers} from '../actions/getUsers'
 
 class PostFeedPage extends Component {
 
@@ -10,6 +11,7 @@ class PostFeedPage extends Component {
 
     componentDidMount() {
         this.props.getPosts()
+        this.props.getUsers()
         }
 
     renderPosts() {
@@ -59,5 +61,9 @@ const mapStateToProps = state => {
     return {posts: state.posts.posts, user: state.users.user}
   }
 
+  const mapDispatchToProps = dispatch => ({
+    getUsers: () => dispatch(getUsers())
+  })
 
-export default connect(mapStateToProps)(PostFeedPage)
+
+export default connect(mapStateToProps,mapDispatchToProps)(PostFeedPage)

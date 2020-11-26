@@ -82,17 +82,20 @@ function usersReducer(state = { user: {
             }
         } 
     case 'GET_USERS':
-        console.log('hit get users')
-        console.log('action data: ', action.data)
+        // console.log('hit get users')
+        // console.log('action data: ', action.data)
         let users = action.data.users
+        let friendships = action.data.friendships
+        // console.log('users in action:', users)
         return {
             users: users,
+            friendships: friendships,
             ...state,
             requesting: false
         }
 
     case 'EDIT_USER':
-         console.log('action: ', action)
+        //  console.log('action: ', action)
         return {
             user: {
                 ...state.user,
@@ -132,6 +135,7 @@ function usersReducer(state = { user: {
     } 
     
     case 'GET_POSTS':
+        // console.log('action data: ', action.data)
         return {
             posts: action.data,
             requesting: false
