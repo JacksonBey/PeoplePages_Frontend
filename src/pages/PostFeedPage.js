@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import Post from '../Components/Post'
 import {getUsers} from '../actions/getUsers'
+import { getFriendships } from '../actions/friendships';
 
 class PostFeedPage extends Component {
 
@@ -12,6 +13,7 @@ class PostFeedPage extends Component {
     componentDidMount() {
         this.props.getPosts()
         this.props.getUsers()
+        this.props.getFriendships()
         }
 
     renderPosts() {
@@ -62,7 +64,8 @@ const mapStateToProps = state => {
   }
 
   const mapDispatchToProps = dispatch => ({
-    getUsers: () => dispatch(getUsers())
+    getUsers: () => dispatch(getUsers()),
+    getFriendships: () => dispatch(getFriendships())
   })
 
 

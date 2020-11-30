@@ -13,15 +13,29 @@ export function addFriend(text){
             })
             })
             .then(res => res.json())
-            .then(data => {dispatch({type: 'ADD_FRIEND', data})})
+            .then(data => {
+                let ntext = {...text, data}
+                dispatch({type: 'ADD_FRIEND', ntext})})
 }
 }
 
 export function unFriend(text){
+    console.log('text: ', text)
     return (dispatch) => {
         dispatch({ type: 'START_LOG_REQUEST' });
-    fetch(`http://localhost:3001/friendships/${text.friendship_id}`, {method: 'DELETE'})
+    fetch(`http://localhost:3001/friendships/${text.friendship.id}`, {method: 'DELETE'})
             .then(res => res.json())
             .then(data => {dispatch({type: 'UN_FRIEND', text})})
 }
+}
+
+export function getFriendships(text){
+    return (dispatch) => {
+        dispatch({ type: 'START_LOG_REQUEST' });
+    fetch(`http://localhost:3001/friendships`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }}).then(res => res.json())
+        .then(data => dispatch({type: 'GET_FRIENDSHIPS', data}))}
 }
