@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import { connect } from 'react-redux'
 
 // const link = {
 //   width: '100px',
@@ -10,7 +11,12 @@ import { NavLink } from 'react-router-dom';
 //   color: 'white',
 // }
 
-const UserBar = () => {
+class UserBar extends Component {
+    render(){
+        let notifications;
+    console.log('userbar props: ', this.props)
+    if (this.props.notifications !== undefined){
+    notifications = this.props.notifications.filter(note => note.user_id === this.props.user.user_id)}
     return(
         <div className='ui secondary pointing menu'>
             <NavLink
@@ -62,9 +68,25 @@ const UserBar = () => {
                     background: 'lightgrey'
                 }}
                 >My Post Feed</NavLink> 
+            <NavLink
+                className='ui item'
+                to= '/notifications'
+                exact
+                activeStyle={{
+                    background: 'lightgrey'
+                }}
+            >Notifications({notifications === undefined ? 0 : notifications.length})</NavLink> 
         </div>
-    )
+    )}
 }
 
 
-export default UserBar;
+// export default UserBar;
+
+
+const mapStateToProps = state => {
+    return {user: state.users.user, notifications: state.users.notifications}
+  }
+
+
+export default connect(mapStateToProps)(UserBar)

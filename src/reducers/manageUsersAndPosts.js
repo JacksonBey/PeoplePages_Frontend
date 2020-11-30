@@ -27,7 +27,9 @@ function usersReducer(state = { user: {
         // console.log('state: ', state)
         // console.log('action: ', action)
         if(action.data.error ===  "Invalid username or password") {
-            return { user: {
+            return { 
+                ...state,
+                user: {
                 user: '',
                 token: '',
                 loggedIn: false,
@@ -35,6 +37,7 @@ function usersReducer(state = { user: {
             }
         } else {
         return {
+            ...state,
             user: {
             user: action.data.user.username,
             user_id: action.data.user.id,
@@ -61,6 +64,7 @@ function usersReducer(state = { user: {
         // console.log('i was here')
         if(action.data.error === undefined) {localStorage.setItem('signup_error', '')
         return {
+            ...state,
             user: {
             user: action.data.user.username,
             user_id: action.data.user.id,
@@ -102,6 +106,7 @@ function usersReducer(state = { user: {
     case 'EDIT_USER':
         //  console.log('action: ', action)
         return {
+            ...state,
             user: {
                 ...state.user,
             firstName: action.data.user.firstName,
@@ -159,11 +164,38 @@ function usersReducer(state = { user: {
         return {
             ...state, users: ufusers, friendships: friendshiplist
         }
+    case 'GET_NOTIFICATIONS':
+        console.log('notifications action data: ', action.data)
+        return {
+            ...state,
+            notifications: action.data.notifications
+        }
+    case 'NOTIFY':
+        console.log('notify action data: ', action)
+        return {
+            ...state,
+            notifications: [...state.notifications, action.data.notification]
+        }
+    case 'READ_NOTIFICATION':
+        console.log('read notify data', action.text)
+        console.log('state.notifications: ', state.notifications)
+        let nnotifications = state.notifications.filter(note => note.id !== action.text.id)
+        console.log('nnotifications: ', nnotifications)
+        return {
+            ...state,
+            notifications: nnotifications
+        }
 
     default:
         return state;
     }
   }
+
+
+
+
+
+
 
   function postsReducer(state ={
       posts: [], 

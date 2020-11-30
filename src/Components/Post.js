@@ -3,6 +3,7 @@ import { Segment } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import {addLike, unLike} from '../actions/likes'
 import { Link } from 'react-router-dom';
+import {notify} from '../actions/notifications'
 
 
 class Post extends Component {
@@ -20,9 +21,9 @@ class Post extends Component {
         }
     }
 
-    findLike = () => {
+    // findLike = () => {
         
-    }
+    // }
 
     handleLikeClick = () => {
         let nlikes = this.state.likes + 1
@@ -31,8 +32,11 @@ class Post extends Component {
             likes: nlikes
         })
         let text = {post_id: this.props.post.id, user_id: this.props.user.user_id}
-        // console.log('userid: ', this.props.user.user_id)
+        console.log('userid: ', this.props.user)
         // console.log('text package: ',text)
+        console.log('post props: ', this.props.post)
+        let note = {user_id: this.props.post.user_id, reason: `${this.props.user.firstName} ${this.props.user.lastNameInitial}. liked your post!`, post_id: this.props.post.id, friend_id: this.props.user.user_id}
+        this.props.notify(note)
         this.props.addLike(text)
     }
 
@@ -90,7 +94,8 @@ const mapStateToProps = state => {
   
   const mapDispatchToProps = dispatch => ({
     addLike: (text) => dispatch(addLike(text)),
-    unLike: (text) => dispatch(unLike(text))
+    unLike: (text) => dispatch(unLike(text)),
+    notify: (note) => dispatch(notify(note))
   })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post)

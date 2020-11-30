@@ -24,23 +24,26 @@ import { fetchPosts } from './actions/fetchPosts'
 import jwt_decode from "jwt-decode";
 import DisplayPostPage from './pages/DisplayPostPage'
 import UserView from './Components/UserView'
+import NotificationPage from './pages/NotificationPage';
+import {getNotifications} from './actions/notifications'
 
 
 class App extends Component{
 
   state = {
-    redirected: false
+    redirected: true
   }
 
 
 
   componentDidMount() {
     // console.log('localstorage user: ',localStorage.getItem('user'))
-    // console.log('mounted')
-    this.setState({
-      redirected: false
+    // // console.log('mounted')
+    // this.setState({
+    //   redirected: false
 
-    })
+    // })
+    this.props.getNotifications()
     if(localStorage.getItem('token') !== ''){
       let token= localStorage.getItem('token')
       // console.log('token: ', token)
@@ -102,6 +105,7 @@ class App extends Component{
       <Route path='/postfeed' render={routerProps => <PostFeedPage {...routerProps} getPosts = {this.props.getPosts}/>} />
       <Route path={`/posts/:postId`} render={routerProps => <DisplayPostPage {...routerProps} /> }/>
       <Route path={`/users/:userId`} render={routerProps => <UserView {...routerProps} /> }/>
+      <Route path='/notifications' component={NotificationPage} />
       </Switch>
     </div>
   );
@@ -118,7 +122,8 @@ const mapDispatchToProps = dispatch => ({
   signUp: (text) => dispatch(signUpUser(text)),
   editInfo: (text) => dispatch(editUserInfo(text)),
   createPost: (text) => dispatch(createPost(text)),
-  getPosts: () => dispatch(fetchPosts({type: 'GET_POSTS'}))
+  getPosts: () => dispatch(fetchPosts({type: 'GET_POSTS'})),
+  getNotifications: () => dispatch(getNotifications({type: 'GET_NOTIFICATIONS'}))
 })
 
 

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import { editPost, deletePost } from '../actions/postUD';
 
+
 class DisplayPostPage extends Component {
 
     // componentDidMount() {

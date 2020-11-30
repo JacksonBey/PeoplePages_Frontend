@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import {getUsers} from '../actions/getUsers'
 import {addFriend, unFriend} from '../actions/friendships'
+import {notify} from '../actions/notifications'
 
 class UserView extends Component {
 
@@ -63,7 +64,9 @@ class UserView extends Component {
             friends: [...this.state.friends, follower],
             isFriend: true
         })
-
+        let note = {user_id: followee.id, reason: `${this.props.user.firstName} ${this.props.user.lastNameInitial}. added you as a friend!`, post_id: null, friend_id: this.props.user.user_id }
+        console.log('add freind note: ', note)
+        this.props.notify(note)
         this.props.addFriend(text)
     }
 
@@ -71,6 +74,9 @@ class UserView extends Component {
         let follower = this.props.users.user
         // console.log('follower: ', follower)
         let friendship = this.props.users.friendships.find(friendship => friendship.followee_id === followee.id) 
+        if (friendship === undefined){
+            friendship = this.props.users.friendships.find(friendship => friendship.follower_id === followee.id) 
+        }
         // console.log('friendship: ',friendship)
         let text ={friendship: friendship, followee: followee, follower: follower, follower_id: follower.user_id, followee_id: followee.id}
         // console.log('state frineds: ', this.state.friends)
@@ -116,14 +122,15 @@ class UserView extends Component {
 
 const mapStateToProps = state => {
     // console.log(state.users.user)
-    return {users: state.users,
+    return {users: state.users, user: state.users.user,
     friendships: state.friendships}
   }
   
   const mapDispatchToProps = dispatch => ({
     getUsers: () => dispatch(getUsers()),
     addFriend: (text) => dispatch(addFriend(text)),
-    unFriend: (text) => dispatch(unFriend(text))
+    unFriend: (text) => dispatch(unFriend(text)),
+    notify: (note) => dispatch(notify(note))
   })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserView)
