@@ -12,7 +12,8 @@ class Comment extends Component {
         comments: [],
         editOrDelete: false,
         editComment: false,
-        commentTxt: this.props.comment.content
+        commentTxt: this.props.comment.content,
+        date: ''
     }
 
 
@@ -44,10 +45,21 @@ class Comment extends Component {
     //     this.props.createComment(text)
     // }
 
-    // componentDidMount = () => {
-    //     let comments = this.props.posts.find(post => post.id === this.props.comment.post_id).comments
-    //     console.log('comments: ', comments)
-    // }
+    componentDidMount = () => {
+        let comments = this.props.posts.find(post => post.id === this.props.comment.post_id).comments
+        console.log('comments: ', comments)
+        console.log('comment: ', this.props.comment)
+        if(this.props.comment.id === undefined) {
+            let date = new Date().split('T')[0]
+            this.setState({
+                date  
+            })
+        } else {
+            this.setState({
+                date: this.props.comment.created_at.split('T')[0]
+            })
+        }
+    }
     
     
     
@@ -133,13 +145,14 @@ class Comment extends Component {
 
     render() {
         let {id, content, user_id, username} = this.props.comment
+
         return(
             <div>
             {this.state.editComment ?                 
                 <form onSubmit={this.handleCommentEditSubmit}>
                     <input type='text' name='commentContent' value={this.state.commentContent} onChange={this.handleChange} placeholder={content}/>
                     <input type='submit' />     
-                </form> : <p>{this.state.commentTxt} -<Link key={id} to={`/users/${user_id}`}>{username}</Link> </p>}
+            </form> : <p>{this.state.commentTxt} -<Link key={id} to={`/users/${user_id}`}>{username}</Link> {this.state.date}</p>}
             {/* <p >{content} -<Link key={id} to={`/users/${user_id}`}>{username}</Link>  */}
             {user_id === this.props.user.user_id && this.state.editOrDelete === false ? 
             <button onClick={this.handleEODClick}>X</button> 
