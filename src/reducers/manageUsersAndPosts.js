@@ -278,17 +278,33 @@ function usersReducer(state = { user: {
             requesting: false
         }
     case 'CREATE_COMMENT':
-        // console.log('action data: ', action.data)
+        console.log('action data: ', action.data)
+        console.log('error? : ', action.data.datas !== undefined)
+        if (action.data.datas !== undefined) {
+            console.log('action data error content: ', action.data.datas.error.content)
+            let cidx = state.posts.findIndex(post => post.id === action.data.text.post_id)
+            let cpost = state.posts.find(p => p.id === action.data.text.post_id)
+            cpost.errors = true
+            return {
+                posts: [...state.posts.slice(0,cidx), cpost, ...state.posts.slice(cidx+1)],
+                requesting: false
+            }
+        } else {
+
         // console.log('state.posts: ', state.posts)
         let cidx = state.posts.findIndex(post => post.id === action.data.comment.post_id)
         let cpost = state.posts.find(p => p.id === action.data.comment.post_id)
         // console.log('cpost: ', cpost)
         cpost.comments = [...cpost.comments, action.data.comment]
+        cpost.errors = false
 
         return {
             posts: [...state.posts.slice(0,cidx), cpost, ...state.posts.slice(cidx+1)],
             requesting: false
         }
+
+        }
+
     case 'EDIT_COMMENT':
         console.log('action data: ', action.data)
 
@@ -322,3 +338,4 @@ function usersReducer(state = { user: {
     }
   }
 
+ 

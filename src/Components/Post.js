@@ -90,9 +90,11 @@ class Post extends Component {
         })
         let text ={content: e.target.commentContent.value, user_id: this.props.user.user_id, username: username, post_id: this.props.post.id}
         console.log('text package: ', text)
-        this.setState({
-            comments: [text, ...this.state.comments]
-        })
+        if (text.content !== "") {
+            this.setState({
+                comments: [text, ...this.state.comments]
+            })
+        }
         this.props.createComment(text)
     }
 
@@ -145,7 +147,7 @@ class Post extends Component {
         // console.log('liked?: ', this.props.liked)
         // console.log('id of user: ', this.props.user.user_id )
         // console.log('id of poster: ', this.props.post.user_id)
-
+        console.log('props error: ', this.props.posts.find(post => post.id === this.props.post.id).errors )
         // console.log(poster)
         let {id, content, username, user_id} = this.props.post
         return(
@@ -179,6 +181,7 @@ class Post extends Component {
                     <input type='submit' />     
                 </form>
              : null}
+            {this.props.posts.find(post => post.id === this.props.post.id).errors ? <p style={{ color: 'red' }}>is too short (minimum is 1 character)</p> : null}
              </Segment>
 
         )
@@ -187,7 +190,7 @@ class Post extends Component {
 
 const mapStateToProps = state => {
     // console.log(state.users.user)
-    return {user: state.users.user}
+    return {user: state.users.user, posts: state.posts.posts}
   }
   
   const mapDispatchToProps = dispatch => ({

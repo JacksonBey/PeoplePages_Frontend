@@ -16,7 +16,16 @@ export function createComment(text){
         })
         })
         .then(res => res.json())
-        .then(data => {dispatch({type: 'CREATE_COMMENT', data})})
+        .then(datas => {
+            console.log('create comment data: ', datas)
+            if (datas.error !== undefined){
+                let data = {datas, text}
+                dispatch({type: 'CREATE_COMMENT', data}) 
+            } else {
+                let data = datas
+              dispatch({type: 'CREATE_COMMENT', data})  
+            }
+            })
 }}
 
 
