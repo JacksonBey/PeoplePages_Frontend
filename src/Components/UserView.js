@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import {getUsers} from '../actions/getUsers'
 import {addFriend, unFriend} from '../actions/friendships'
 import {notify} from '../actions/notifications'
+import { getFriendships } from '../actions/friendships';
 
 class UserView extends Component {
 
@@ -14,15 +15,15 @@ class UserView extends Component {
 
     componentDidMount(){
         this.props.getUsers()
+        // this.props.getFriendships()
         let displayUser;
-        // console.log('in comp did mount')
+        console.log('in comp did mount')
         // console.log('users: ', this.props.users.users)
         // console.log('friendships: ', this.props.users.friendships)
         if (this.props.users.users !== undefined){
         displayUser = this.props.users.users.find(user => user.id === parseInt(this.props.match.params.userId))
 
         //get friendships belonging to displayed user.
-        // console.log('display user: ',displayUser)
         let friends = []
         if (displayUser.followers !== []){
         displayUser.followers.forEach(friend => friends.push(friend))
@@ -54,6 +55,35 @@ class UserView extends Component {
             })
         }
     }}
+
+    // componentDidUpdate(){
+    //     console.log('state.friends: ', this.state.friends)
+    //     console.log('this.props.users.users', this.props.users.users)
+    //     console.log('updated')
+    //     if (this.props.users.users !== undefined){
+    //         console.log('in conditional')
+    //         let displayUser = this.props.users.users.find(user => user.id === parseInt(this.props.match.params.userId))
+    
+    //         //get friendships belonging to displayed user.
+    //         let friends = []
+    //         if (displayUser.followers !== []){
+    //         displayUser.followers.forEach(friend => friends.push(friend))
+    //         // console.log('friends after follwers: ', friends)
+    //         }
+    //         if (displayUser.followees !== []){
+    //         displayUser.followees.forEach(friend => friends.push(friend))
+    //         // console.log('friends after follwees: ', friends)
+    //         }
+    //         // console.log('d user friends: ', friends)
+    //         let isFriend = friends.find(friend => friend.id === this.props.users.user.user_id)
+    //         if(isFriend === undefined){
+    //             isFriend = false
+    //         } else {isFriend = true}
+    //         // console.log('isfriend: ',isFriend)
+    //         this.setState({
+    //             friends, isFriend
+    //         })}
+    // }
 
     handleFriend = (followee) => {
         let follower = this.props.users.user  
@@ -92,10 +122,28 @@ class UserView extends Component {
     }
 
 
+
     render() {
         // console.log('user view props', this.props)
         if (this.props.users.users !== undefined){
             let displayUser = this.props.users.users.find(user => user.id === parseInt(this.props.match.params.userId))
+            let friends = []
+            if (displayUser.followers !== []){
+            displayUser.followers.forEach(friend => friends.push(friend))
+            // console.log('friends after follwers: ', friends)
+            }
+            if (displayUser.followees !== []){
+            displayUser.followees.forEach(friend => friends.push(friend))
+            // console.log('friends after follwees: ', friends)
+            }
+            let isFriend = friends.find(friend => friend.id === this.props.users.user.user_id)
+            if(isFriend === undefined){
+                isFriend = false
+            } else {isFriend = true}
+            let currentUser = true
+            if (this.props.users.user.user_id !== displayUser.id){
+                     currentUser = false
+            }
         // console.log('displayUser: ', displayUser)
         // console.log('logged in user: ', this.props.users.user.loggedIn)
         // console.log('current user state', this.state.currentUser)
@@ -108,10 +156,10 @@ class UserView extends Component {
         return(
             <div>
                 <h1>{displayUser.firstName} {displayUser.lastNameInitial.toUpperCase()}.</h1>
-                <h3>Friends({this.state.friends.length}):</h3>
-        {this.state.friends.map((friend,idx) =>{ return <li key={idx}>{friend.firstName} {friend.lastNameInitial}.</li>})}
-                {(this.props.users.user.loggedIn && this.state.currentUser === false && this.state.isFriend === false) ? <button onClick={() => this.handleFriend(displayUser)}>Add Friend!</button> : null}
-                {(this.state.isFriend === true) ? <button onClick={() => this.handleUnFriend(displayUser)}>Unfriend</button> : null}
+                <h3>Friends({friends.length}):</h3>
+        {friends.map((friend,idx) =>{ return <li key={idx}>{friend.firstName} {friend.lastNameInitial}.</li>})}
+                {(this.props.users.user.loggedIn && currentUser === false && isFriend === false) ? <button onClick={() => this.handleFriend(displayUser)}>Add Friend!</button> : null}
+                {(isFriend === true) ? <button onClick={() => this.handleUnFriend(displayUser)}>Unfriend</button> : null}
             </div>
         )
         // && this.state.isFriend === false
@@ -129,6 +177,15 @@ class UserView extends Component {
 // {(this.state.isFriend === true) ? <button onClick={() => this.handleUnFriend(displayUser)}>Unfriend</button> : null}
 // </div>
 
+
+// before experiment: 
+{/* <h1>{displayUser.firstName} {displayUser.lastNameInitial.toUpperCase()}.</h1>
+<h3>Friends({this.state.friends.length}):</h3>
+{this.state.friends.map((friend,idx) =>{ return <li key={idx}>{friend.firstName} {friend.lastNameInitial}.</li>})}
+{(this.props.users.user.loggedIn && this.state.currentUser === false && this.state.isFriend === false) ? <button onClick={() => this.handleFriend(displayUser)}>Add Friend!</button> : null}
+{(this.state.isFriend === true) ? <button onClick={() => this.handleUnFriend(displayUser)}>Unfriend</button> : null}
+</div> */}
+
 const mapStateToProps = state => {
     // console.log(state.users.user)
     return {users: state.users, user: state.users.user,
@@ -139,7 +196,8 @@ const mapStateToProps = state => {
     getUsers: () => dispatch(getUsers()),
     addFriend: (text) => dispatch(addFriend(text)),
     unFriend: (text) => dispatch(unFriend(text)),
-    notify: (note) => dispatch(notify(note))
+    notify: (note) => dispatch(notify(note)),
+    getFriendships: () => dispatch(getFriendships())
   })
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserView)

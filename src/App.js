@@ -46,6 +46,7 @@ class App extends Component{
     // })
     this.props.getNotifications()
     this.props.getFriendships()
+    this.props.getPosts()
     if(localStorage.getItem('token') !== ''){
       let token= localStorage.getItem('token')
       // console.log('token: ', token)

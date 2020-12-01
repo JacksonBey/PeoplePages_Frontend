@@ -5,8 +5,8 @@ import {addLike, unLike} from '../actions/likes'
 import { Link } from 'react-router-dom';
 import {notify} from '../actions/notifications'
 import {createComment} from '../actions/comments'
-import Comment from './Comment'
-import { v4 as uuid } from 'uuid';
+// import Comment from './Comment'
+// import { v4 as uuid } from 'uuid';
 
 class Post extends Component {
 
@@ -164,8 +164,8 @@ class Post extends Component {
              (this.state.liked) ? <button onClick={this.handleUnlikeClick}>&#10084;</button> 
              : <button onClick={this.handleLikeClick}>&#9825;</button> : null}
              <p>likes: {this.state.likes}</p>
-             {this.state.comments.length > 0 ? <p>Comments({this.state.comments.length}):</p> : null}
-            {this.state.comments.map(comment => {
+             {this.state.comments.length > 0 ? <p>Comments({this.state.comments.length})</p> : null}
+            {/* {this.state.comments.map(comment => {
                 // return (
                 // <p key={comment.id + 'r'}>{comment.content} -<Link key={id} to={`/users/${comment.user_id}`}>{comment.username}</Link>
                 // {comment.user_id === this.props.user.user_id && this.state.editOrDelete === false ? 
@@ -183,7 +183,7 @@ class Post extends Component {
                     <input type='submit' />     
                 </form>
              : null}
-            {this.props.posts.find(post => post.id === this.props.post.id).errors ? <p style={{ color: 'red' }}>is too short (minimum is 1 character)</p> : null}
+            {this.props.posts.find(post => post.id === this.props.post.id).errors ? <p style={{ color: 'red' }}>is too short (minimum is 1 character)</p> : null} */}
              </Segment>
 
         )

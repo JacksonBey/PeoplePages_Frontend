@@ -11,7 +11,7 @@ class PostFeedPage extends Component {
     }
 
     componentDidMount() {
-        this.props.getPosts()
+        // this.props.getPosts()
         this.props.getUsers()
         this.props.getFriendships()
         }

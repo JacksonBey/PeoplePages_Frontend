@@ -46,7 +46,11 @@ class NotificationPage extends Component {
                     // console.log(note.reason.split(' ').slice(2).join(' '))
                     let person = note.reason.split(' ').slice(0,2).join(' ').toString()
                     let reason = note.reason.split(' ').slice(2).join(' ').toString()
-                    return <li key={idx}><Link to={`/users/${note.friend_id}`}>{person}</Link> {reason}<button onClick={() => this.handleRead(note)}>X</button> </li>
+                    return <li key={idx}><Link to={`/users/${note.friend_id}`}>{person}</Link> {reason}
+                    {note.post_id !== null ?
+                    <Link to={`/posts/${note.post_id}`}>Goto Post</Link> : null
+                    }
+                    <button onClick={() => this.handleRead(note)}>X</button> </li>
                 })}
             </div>
         )
