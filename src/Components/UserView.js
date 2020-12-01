@@ -7,7 +7,7 @@ import {notify} from '../actions/notifications'
 class UserView extends Component {
 
     state={
-        currentUser: false,
+        currentUser: true,
         friends: [],
         isFriend: false
     }
@@ -20,7 +20,6 @@ class UserView extends Component {
         // console.log('friendships: ', this.props.users.friendships)
         if (this.props.users.users !== undefined){
         displayUser = this.props.users.users.find(user => user.id === parseInt(this.props.match.params.userId))
-
 
         //get friendships belonging to displayed user.
         // console.log('display user: ',displayUser)
@@ -49,9 +48,9 @@ class UserView extends Component {
 
         // console.log('displayUser: ', displayUser)
         // console.log('current user id: ', this.props.users.user)
-        if (this.props.users.user.user_id === displayUser.id){
+        if (this.props.users.user.user_id !== displayUser.id){
             this.setState({
-                currentUser: true
+                currentUser: false
             })
         }
     }}
@@ -65,7 +64,7 @@ class UserView extends Component {
             isFriend: true
         })
         let note = {user_id: followee.id, reason: `${this.props.user.firstName} ${this.props.user.lastNameInitial}. added you as a friend!`, post_id: null, friend_id: this.props.user.user_id }
-        console.log('add freind note: ', note)
+        // console.log('add freind note: ', note)
         this.props.notify(note)
         this.props.addFriend(text)
     }
@@ -81,9 +80,9 @@ class UserView extends Component {
         let text ={friendship: friendship, followee: followee, follower: follower, follower_id: follower.user_id, followee_id: followee.id}
         // console.log('state frineds: ', this.state.friends)
         let nfriends = this.state.friends.filter(friend => friend.id !== follower.user_id)
-        console.log('new friends list 1st filter: ', nfriends)
+        // console.log('new friends list 1st filter: ', nfriends)
         nfriends = nfriends.filter(friend => friend.id !== follower.id)
-        console.log('new friends list: ', nfriends)
+        // console.log('new friends list: ', nfriends)
         this.setState({
             friends: nfriends,
             isFriend: false
@@ -100,7 +99,12 @@ class UserView extends Component {
         // console.log('displayUser: ', displayUser)
         // console.log('logged in user: ', this.props.users.user.loggedIn)
         // console.log('current user state', this.state.currentUser)
-        console.log('friends added', this.state.friends)
+        // console.log('friends added', this.state.friends)
+        // let friendships;
+        // if (this.props.users.friendships !== undefined){
+        //     friendships = this.props.users.friendships.filter(friend => friend.follower_id === displayUser.id)
+        //     friendships = [...friendships, this.props.users.friendships.filter(friend => friend.followee_id === displayUser.id)]
+        // }
         return(
             <div>
                 <h1>{displayUser.firstName} {displayUser.lastNameInitial.toUpperCase()}.</h1>
@@ -119,6 +123,11 @@ class UserView extends Component {
         )}
     }
 }
+
+// {this.state.friends.map((friend,idx) =>{ return <li key={idx}>{friend.firstName} {friend.lastNameInitial}.</li>})}
+// {(this.props.users.user.loggedIn && this.state.currentUser === false && this.state.isFriend === false) ? <button onClick={() => this.handleFriend(displayUser)}>Add Friend!</button> : null}
+// {(this.state.isFriend === true) ? <button onClick={() => this.handleUnFriend(displayUser)}>Unfriend</button> : null}
+// </div>
 
 const mapStateToProps = state => {
     // console.log(state.users.user)

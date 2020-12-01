@@ -100,7 +100,8 @@ function usersReducer(state = { user: {
     case 'GET_FRIENDSHIPS':
         // console.log('action data: ', action.data)
         return {...state,
-            friendships: action.data.friendships
+            friendships: action.data.friendships,
+            requesting: false
         }
 
     case 'EDIT_USER':
@@ -118,8 +119,8 @@ function usersReducer(state = { user: {
             requesting: false
         }
     case 'ADD_FRIEND':
-        console.log('friended')
-        console.log('friending action data',action.ntext)
+        // console.log('friended')
+        // console.log('friending action data',action.ntext)
         // let follower = action.ntext.follower
         let follower = state.users.find(user => user.id === action.ntext.follower.user_id)
         let followee = action.ntext.followee
@@ -127,12 +128,12 @@ function usersReducer(state = { user: {
         // let followeeinx = state.users.findIndex(user => user.id === followee.user_id)
         follower.followees = [...follower.followees, followee]
         followee.followers = [...followee.followers, follower]
-        console.log('followee: ', followee)
-        console.log('follower: ', follower)
+        // console.log('followee: ', followee)
+        // console.log('follower: ', follower)
         let uusers = state.users.filter(user => user.id !== follower.id)
         uusers = uusers.filter(user => user.id !== followee.id)
         uusers = [...uusers, followee, follower]
-        console.log('uusers: ', uusers)
+        // console.log('uusers: ', uusers)
         let nfriendslist = [...state.friendships, action.ntext.data.friendship]
         // let nusers = {users: [...state.users]}
         // console.log('nusers before: ', nusers)
@@ -143,7 +144,8 @@ function usersReducer(state = { user: {
         // let nstate = [state.user, state.users=[...state.users.slice(0,followerinx), follower, ...state.users.slice(followerinx+1)]]
         // nstate = [state.user, nstate.users=[...nstate.users.slice(0,followeeinx), followee, ...nstate.users.slice(followeeinx+1)]]
         return {
-            ...state, users: uusers, friendships: nfriendslist
+            ...state, users: uusers, friendships: nfriendslist,
+            requesting: false
         }
     case 'UN_FRIEND':
         console.log('unfriended')
@@ -157,33 +159,37 @@ function usersReducer(state = { user: {
         ufusers = [...ufusers, ufollowee, ufollower]
         // console.log('state friendships: ', state.friendships)
         let friendshiplist = state.friendships.filter(friendship => friendship.id !== action.text.friendship.id)
-        console.log('friendshiplist: ',friendshiplist)
+        // console.log('friendshiplist: ',friendshiplist)
         // console.log('ufollower: ', ufollower)
         // console.log('ufollowee: ', ufollower)
 
         return {
-            ...state, users: ufusers, friendships: friendshiplist
+            ...state, users: ufusers, friendships: friendshiplist,
+            requesting: false
         }
     case 'GET_NOTIFICATIONS':
-        console.log('notifications action data: ', action.data)
+        // console.log('notifications action data: ', action.data)
         return {
             ...state,
-            notifications: action.data.notifications
+            notifications: action.data.notifications,
+            requesting: false
         }
     case 'NOTIFY':
-        console.log('notify action data: ', action)
+        // console.log('notify action data: ', action)
         return {
             ...state,
-            notifications: [...state.notifications, action.data.notification]
+            notifications: [...state.notifications, action.data.notification],
+            requesting: false
         }
     case 'READ_NOTIFICATION':
-        console.log('read notify data', action.text)
-        console.log('state.notifications: ', state.notifications)
+        // console.log('read notify data', action.text)
+        // console.log('state.notifications: ', state.notifications)
         let nnotifications = state.notifications.filter(note => note.id !== action.text.id)
-        console.log('nnotifications: ', nnotifications)
+        // console.log('nnotifications: ', nnotifications)
         return {
             ...state,
-            notifications: nnotifications
+            notifications: nnotifications,
+            requesting: false
         }
 
     default:
@@ -245,8 +251,8 @@ function usersReducer(state = { user: {
             requesting: false
         }
     case 'ADD_LIKE':
-        console.log('like added', action.data.like.id)
-        console.log('action data post id: ', action.data.like.post_id)
+        // console.log('like added', action.data.like.id)
+        // console.log('action data post id: ', action.data.like.post_id)
         // console.log('state posts: ', state.posts)
         let idx = state.posts.findIndex(post => post.id === action.data.like.post_id)
         //find post
@@ -271,7 +277,47 @@ function usersReducer(state = { user: {
             posts: [...state.posts.slice(0,index), likepost, ...state.posts.slice(index+1)],
             requesting: false
         }
-      default:
+    case 'CREATE_COMMENT':
+        // console.log('action data: ', action.data)
+        // console.log('state.posts: ', state.posts)
+        let cidx = state.posts.findIndex(post => post.id === action.data.comment.post_id)
+        let cpost = state.posts.find(p => p.id === action.data.comment.post_id)
+        // console.log('cpost: ', cpost)
+        cpost.comments = [...cpost.comments, action.data.comment]
+
+        return {
+            posts: [...state.posts.slice(0,cidx), cpost, ...state.posts.slice(cidx+1)],
+            requesting: false
+        }
+    case 'EDIT_COMMENT':
+        console.log('action data: ', action.data)
+
+
+        let ecpost = state.posts.find(post => post.id === action.data.comment.post_id)
+        let ecommentPostidx = state.posts.findIndex(post => post.id === action.data.post_id)
+        let ecidx = ecpost.comments.findIndex(comment => comment.id === action.data.comment.id)
+        // console.log('ecidx: ', ecidx)
+        // console.log('ecpost: ', ecpost.comments)
+        ecpost.comments = ecpost.comments.filter(comment => comment.id !== action.data.comment.id)
+        // console.log('ecposts post filter: ', ecpost.comments)
+        ecpost.comments = [...ecpost.comments.slice(0,ecidx), action.data.comment, ...ecpost.comments.slice(ecidx+1)]
+        // console.log('ecpost post comment edit: ', ecpost.comments)
+        return {
+            posts: [...state.posts.slice(0,ecommentPostidx), ecpost, ...state.posts.slice(ecommentPostidx+1)],
+            requesting: false
+        }
+    case 'DELETE_COMMENT':
+        console.log('action data: ', action.text)
+        let dcpost = state.posts.find(post => post.id === action.text.comment.post_id)
+        console.log('dcpost: ', dcpost)
+        let dcommentPostidx = state.posts.findIndex(post => post.id === action.text.comment.post_id)
+
+        dcpost.comments = dcpost.comments.filter(comment => comment.id !== action.text.comment.id)
+        return {
+            posts: [...state.posts.slice(0,dcommentPostidx), dcpost, ...state.posts.slice(dcommentPostidx+1)],
+            requesting: false
+        }
+    default:
         return state;
     }
   }

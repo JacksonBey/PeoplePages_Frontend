@@ -14,7 +14,7 @@ import { connect } from 'react-redux'
 class UserBar extends Component {
     render(){
         let notifications;
-    console.log('userbar props: ', this.props)
+    // console.log('userbar props: ', this.props)
     if (this.props.notifications !== undefined){
     notifications = this.props.notifications.filter(note => note.user_id === this.props.user.user_id)}
     return(

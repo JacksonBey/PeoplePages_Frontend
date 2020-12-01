@@ -15,7 +15,8 @@ export function fetchUser(text){
         })
         })
         .then(res => res.json())
-        .then(data => {console.log('login user data: ', data)
+        .then(data => {
+            // console.log('login user data: ', data)
             dispatch({type: 'LOG_IN', data},
         ((data.error === 'Invalid username or password') ? null : (
             localStorage.setItem('user', data.user.username), localStorage.setItem('token', data.token)

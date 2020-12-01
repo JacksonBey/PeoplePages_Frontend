@@ -38,6 +38,19 @@ class PostFeedPage extends Component {
         return 
     }
 
+    compare(a, b) {
+        const aind = a.id;
+        const bind = b.id;
+      
+        let comparison = 0;
+        if (bind > aind) {
+          comparison = 1;
+        } else if (bind < aind) {
+          comparison = -1;
+        }
+        return comparison;
+    }
+
 
 
     render() {
@@ -50,7 +63,7 @@ class PostFeedPage extends Component {
         return(
             <div>
                 <h2>Posts</h2>
-        {(this.props.posts === undefined || this.props.posts === [])? null : this.props.posts.map((post, idx) => <Post key={idx} post={post}
+        {(this.props.posts === undefined || this.props.posts === [])? null : this.props.posts.sort(this.compare).map((post, idx) => <Post key={idx} post={post}
             liked= {this.findliked(post)}
         />)
         } 

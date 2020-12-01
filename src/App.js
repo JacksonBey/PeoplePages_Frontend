@@ -26,6 +26,7 @@ import DisplayPostPage from './pages/DisplayPostPage'
 import UserView from './Components/UserView'
 import NotificationPage from './pages/NotificationPage';
 import {getNotifications} from './actions/notifications'
+import { getFriendships } from './actions/friendships';
 
 
 class App extends Component{
@@ -38,12 +39,13 @@ class App extends Component{
 
   componentDidMount() {
     // console.log('localstorage user: ',localStorage.getItem('user'))
-    // // console.log('mounted')
+    console.log('mounted')
     // this.setState({
     //   redirected: false
 
     // })
     this.props.getNotifications()
+    this.props.getFriendships()
     if(localStorage.getItem('token') !== ''){
       let token= localStorage.getItem('token')
       // console.log('token: ', token)
@@ -123,7 +125,8 @@ const mapDispatchToProps = dispatch => ({
   editInfo: (text) => dispatch(editUserInfo(text)),
   createPost: (text) => dispatch(createPost(text)),
   getPosts: () => dispatch(fetchPosts({type: 'GET_POSTS'})),
-  getNotifications: () => dispatch(getNotifications({type: 'GET_NOTIFICATIONS'}))
+  getNotifications: () => dispatch(getNotifications({type: 'GET_NOTIFICATIONS'})),
+  getFriendships: () => dispatch(getFriendships({type: 'GET_FRIENDSHIPS'}))
 })
 
 

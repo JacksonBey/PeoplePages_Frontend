@@ -4,13 +4,19 @@ import { connect } from 'react-redux'
 import {addLike, unLike} from '../actions/likes'
 import { Link } from 'react-router-dom';
 import {notify} from '../actions/notifications'
-
+import {createComment} from '../actions/comments'
+import Comment from './Comment'
+import { v4 as uuid } from 'uuid';
 
 class Post extends Component {
 
     state = {
         likes: this.props.post.likes.length,
-        liked: false
+        liked: false,
+        commenting: false,
+        commentContent: '',
+        comments: [],
+        editOrDelete: false
     }
 
     componentDidMount(){
@@ -19,6 +25,9 @@ class Post extends Component {
                 liked: true
             })
         }
+        this.setState({
+            comments: this.props.post.comments.sort(this.compare)
+        })
     }
 
     // findLike = () => {
@@ -32,9 +41,9 @@ class Post extends Component {
             likes: nlikes
         })
         let text = {post_id: this.props.post.id, user_id: this.props.user.user_id}
-        console.log('userid: ', this.props.user)
+        // console.log('userid: ', this.props.user)
         // console.log('text package: ',text)
-        console.log('post props: ', this.props.post)
+        // console.log('post props: ', this.props.post)
         let note = {user_id: this.props.post.user_id, reason: `${this.props.user.firstName} ${this.props.user.lastNameInitial}. liked your post!`, post_id: this.props.post.id, friend_id: this.props.user.user_id}
         this.props.notify(note)
         this.props.addLike(text)
@@ -47,7 +56,7 @@ class Post extends Component {
             likes: nlikes
         })
         // let likeid = 
-        console.log('likes: ', this.props.post.likes.find(like => like.user_id === this.props.user.user_id))
+        // console.log('likes: ', this.props.post.likes.find(like => like.user_id === this.props.user.user_id))
         let text;
         if (this.props.post.likes.find(like => like.user_id === this.props.user.user_id) !== undefined){
           text = {post_id: this.props.post.id, user_id: this.props.user.user_id, like_id: this.props.post.likes.find(like => like.user_id === this.props.user.user_id).id}}
@@ -59,9 +68,75 @@ class Post extends Component {
         this.props.unLike(text)
     }
 
+    handleChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+    
+    handleComment = () => {
+        this.setState({
+            commenting: true
+        })
+    
+    }
+
+    handleSubmitComment = (e) => {
+        e.preventDefault()
+        console.log('comment content: ', e.target.commentContent.value)
+        let username = this.props.user.firstName +' '+ this.props.user.lastNameInitial + '.'
+        this.setState({
+            commenting: false
+        })
+        let text ={content: e.target.commentContent.value, user_id: this.props.user.user_id, username: username, post_id: this.props.post.id}
+        console.log('text package: ', text)
+        this.setState({
+            comments: [text, ...this.state.comments]
+        })
+        this.props.createComment(text)
+    }
+
+    handleEODClick = () => {
+        this.setState({
+            editOrDelete: true
+        })
+    }
+
+    handleCommentEdit = () => {
+        this.setState({
+            editOrDelete: false
+        })
+    }
+
+    handleCommentDelete = () => {
+        this.setState({
+            editOrDelete: false
+        })
+    }
+
+    compare(a, b) {
+        const aind = a.id;
+        const bind = b.id;
+      
+        let comparison = 0;
+        if (bind > aind) {
+          comparison = 1;
+        } else if (bind < aind) {
+          comparison = -1;
+        }
+        return comparison;
+    }
+
+    onDeleteComment = (comment) => {
+        console.log('tobe deleted comment',comment)
+        let ncomments = this.state.comments.filter(c => c.id !== comment.id)
+        this.setState({
+            comments: ncomments
+        })
+    }
 
     render() {
-        // console.log('props: ', this.props)
+        // console.log('props.post.comments: ', this.props.post.comments)
         // console.log('liked?: ', this.props.liked)
         // console.log('id of user: ', this.props.user.user_id )
         // console.log('id of poster: ', this.props.post.user_id)
@@ -80,7 +155,25 @@ class Post extends Component {
              (this.state.liked) ? <button onClick={this.handleUnlikeClick}>&#10084;</button> 
              : <button onClick={this.handleLikeClick}>&#9825;</button> : null}
              <p>likes: {this.state.likes}</p>
-            
+             {this.state.comments.length > 0 ? <p>Comments({this.state.comments.length}):</p> : null}
+            {this.state.comments.map(comment => {
+                // return (
+                // <p key={comment.id + 'r'}>{comment.content} -<Link key={id} to={`/users/${comment.user_id}`}>{comment.username}</Link>
+                // {comment.user_id === this.props.user.user_id && this.state.editOrDelete === false ? 
+                // <button onClick={this.handleEODClick}>X</button> 
+                // : null}
+                // {this.state.editOrDelete ? <span><button onClick={this.handleCommentEdit}>Edit</button><button onClick={this.handleCommentDelete}>Delete</button></span> : null}
+                // </p>
+                // )
+                return <Comment key={uuid()} comment={comment} id={comment.id} post={this.props.post} onDeleteComment={this.onDeleteComment}/>
+            })}
+            {(this.props.user.loggedIn && this.state.commenting === false) ? <button onClick = {this.handleComment}>create comment</button> : null}
+            {this.state.commenting === true ? 
+                <form onSubmit={this.handleSubmitComment}>
+                    <input type='text' name='commentContent' value={this.state.commentContent} onChange={this.handleChange}/>
+                    <input type='submit' />     
+                </form>
+             : null}
              </Segment>
 
         )
@@ -95,7 +188,8 @@ const mapStateToProps = state => {
   const mapDispatchToProps = dispatch => ({
     addLike: (text) => dispatch(addLike(text)),
     unLike: (text) => dispatch(unLike(text)),
-    notify: (note) => dispatch(notify(note))
+    notify: (note) => dispatch(notify(note)),
+    createComment: (text) => dispatch(createComment(text))
   })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Post)
