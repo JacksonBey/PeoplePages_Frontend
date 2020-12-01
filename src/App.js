@@ -39,7 +39,7 @@ class App extends Component{
 
   componentDidMount() {
     // console.log('localstorage user: ',localStorage.getItem('user'))
-    console.log('mounted')
+    // console.log('mounted')
     // this.setState({
     //   redirected: false
 

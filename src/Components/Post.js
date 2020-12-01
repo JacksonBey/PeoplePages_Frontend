@@ -95,6 +95,8 @@ class Post extends Component {
                 comments: [text, ...this.state.comments]
             })
         }
+        // let note = {user_id: this.props.post.user_id, reason: `${this.props.user.firstName} ${this.props.user.lastNameInitial}. commented on your post!`, post_id: this.state.post.id, friend_id: null }
+        // this.props.notify(note)
         this.props.createComment(text)
     }
 
@@ -147,7 +149,7 @@ class Post extends Component {
         // console.log('liked?: ', this.props.liked)
         // console.log('id of user: ', this.props.user.user_id )
         // console.log('id of poster: ', this.props.post.user_id)
-        console.log('props error: ', this.props.posts.find(post => post.id === this.props.post.id).errors )
+        // console.log('props error: ', this.props.posts.find(post => post.id === this.props.post.id).errors )
         // console.log(poster)
         let {id, content, username, user_id} = this.props.post
         return(
