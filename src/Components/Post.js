@@ -96,23 +96,23 @@ class Post extends Component {
         this.props.createComment(text)
     }
 
-    handleEODClick = () => {
-        this.setState({
-            editOrDelete: true
-        })
-    }
+    // handleEODClick = () => {
+    //     this.setState({
+    //         editOrDelete: true
+    //     })
+    // }
 
-    handleCommentEdit = () => {
-        this.setState({
-            editOrDelete: false
-        })
-    }
+    // handleCommentEdit = () => {
+    //     this.setState({
+    //         editOrDelete: false
+    //     })
+    // }
 
-    handleCommentDelete = () => {
-        this.setState({
-            editOrDelete: false
-        })
-    }
+    // handleCommentDelete = () => {
+    //     this.setState({
+    //         editOrDelete: false
+    //     })
+    // }
 
     compare(a, b) {
         const aind = a.id;
@@ -129,7 +129,12 @@ class Post extends Component {
 
     onDeleteComment = (comment) => {
         console.log('tobe deleted comment',comment)
-        let ncomments = this.state.comments.filter(c => c.id !== comment.id)
+        let ncomments;
+        if (comment.id === undefined){
+            ncomments = this.state.comments.filter(c => c.content !== comment.content)
+        } else {ncomments = this.state.comments.filter(c => c.id !== comment.id)}
+        console.log('state comments: ', this.state.comments)
+        console.log('new state comments: ', ncomments)
         this.setState({
             comments: ncomments
         })

@@ -90,7 +90,7 @@ class Comment extends Component {
                 editOrDelete: false, comments: currentpost.comments
             })
             text = {comment: this.props.comment, id: ncomment.id}
-            this.props.onDeleteComment(ncomment)
+            this.props.onDeleteComment(this.props.comment)
         }
 
         // console.log('delete comment text: ', text)
