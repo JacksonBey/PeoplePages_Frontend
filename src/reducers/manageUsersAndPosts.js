@@ -222,15 +222,18 @@ function usersReducer(state = { user: {
         }
         
     case 'CREATE_POST':
-        // console.log('action: ', action)
+        console.log('action: ', action)
         // console.log('state: ',state)
         // let nstate = [...state, action.data.post]
         // console.log('nstate: ', nstate)
         // console.log('post created? actiom data error', action.data.error)
+        let newPost= action.data.post
         if(action.data.error === undefined) {localStorage.setItem('post_error', '')
+        newPost.likes = []
+        newPost.comments = []
         } else{localStorage.setItem('post_error', action.data.error.content)} 
         return {
-            ...state,
+            posts: [ newPost, ...state.posts],
             requesting: false
         }
     case 'EDIT_POST':

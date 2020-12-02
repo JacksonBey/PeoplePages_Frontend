@@ -71,7 +71,7 @@ class App extends Component{
         redirected: true
 
       })
-      this.props.history.push('/') 
+      this.props.history.push('/postfeed') 
     }
   }
 
@@ -82,14 +82,24 @@ class App extends Component{
       redirected: false
 
     })
+    this.props.history.push('/login') 
+  }
+
+  handleLogin = (text) => {
+    this.props.login(text)
+    this.props.history.push('/postfeed')
+  }
+
+  handleCreation= () => {
+    this.props.history.push('/postfeed')
   }
 
 
-  renderLogin = () => <LoginPage handleLogin={this.props.login} isLoggedIn = {this.props.loggedIn} handleLogout={this.handleLogout}/>
+  renderLogin = () => <LoginPage handleLogin={this.handleLogin} isLoggedIn = {this.props.loggedIn} handleLogout={this.handleLogout}/>
   renderHomePage = () => <HomePage  isLoggedIn = {this.props.loggedIn}/>
   renderSignUpPage = () => <SignUpPage handleSignUp={this.props.signUp}/>
   renderMyAccountPage = () => <MyAccountPage  handleEditInfo = {this.props.editInfo}/>
-  renderCreatePostPage = () => <CreatePostPage  createPost = {this.props.createPost}/>
+  renderCreatePostPage = () => <CreatePostPage  createPost = {this.props.createPost} handleCreation = {this.handleCreation}/>
   renderPostFeedPage = () => <PostFeedPage  getPosts = {this.props.getPosts}/>
 
 
@@ -107,7 +117,7 @@ class App extends Component{
       {/* <Route exact path='/postfeed' component={this.renderPostFeedPage} /> */}
       <Route path='/postfeed' render={routerProps => <PostFeedPage {...routerProps} getPosts = {this.props.getPosts}/>} />
       <Route path={`/posts/:postId`} render={routerProps => <DisplayPostPage {...routerProps} /> }/>
-      <Route path={`/users/:userId`} render={routerProps => <UserView {...routerProps} /> }/>
+      <Route path={`/users/:userId`} render={routerProps => <UserView {...routerProps} isLoggedIn = {this.props.loggedIn} handleLogout={this.handleLogout}/> }/>
       <Route path='/notifications' component={NotificationPage} />
       </Switch>
     </div>

@@ -36,14 +36,14 @@ class UserBar extends Component {
                     background: 'lightgrey'
                 }}
                 >about</NavLink> 
-            <NavLink
+            {/* <NavLink
                 className='ui item'
                 to= '/login'
                 exact
                 activeStyle={{
                     background: 'lightgrey'
                 }}
-                >login</NavLink> 
+                >login</NavLink>  */}
             <NavLink
                 className='ui item'
                 // to= '/myaccount'

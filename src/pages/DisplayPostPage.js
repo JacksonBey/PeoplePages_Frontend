@@ -133,6 +133,7 @@ class DisplayPostPage extends Component {
                 <div>
                     <p>hi from DisplayPostPage</p>
             <p>content: {this.state.post.content}</p>
+            {this.state.post.image !== '' && this.state.post.image !== null ? <img src={this.state.post.image} alt='' width="500" height="600"></img> : null}
             {poster ? ( <div><button onClick={this.toggleEdit}>&#x270E;</button> <button onClick={this.handleDelete}>delete?</button> </div>): null}
             {(this.state.edit) ?                 <form onSubmit={this.handleSubmit}>
                         <input type='text' name='content' value={this.state.content} onChange={this.handleChange} placeholder={this.state.post.content}/>

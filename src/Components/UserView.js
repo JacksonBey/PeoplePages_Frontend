@@ -15,7 +15,8 @@ class UserView extends Component {
         isEdit: false,
         age: '',
         location: '',
-        id: ''
+        id: '',
+        wasEdited: false
     }
 
     componentDidMount(){
@@ -156,13 +157,14 @@ class UserView extends Component {
 
     handleSubmit = async (e) => {
         e.preventDefault()
-        console.log('this.props: ',this.props)
+        // console.log('this.props: ',this.props)
+        let nEdit = !this.state.isEdit
         let displayUser = this.props.users.users.find(user => user.id === parseInt(this.props.match.params.userId))
-        console.log('display user: ', displayUser)
+        // console.log('display user: ', displayUser)
         await this.setIdState(state => ({
             id: displayUser.id,
-            location: displayUser.location,
-            age: displayUser
+            wasEdited: true,
+            isEdit: nEdit
         }))
         // this.setState({
         //     id: displayUser.id
@@ -187,6 +189,7 @@ class UserView extends Component {
 
     render() {
         // console.log('user view props', this.props)
+        // console.log('this.props.user.loggedIn', this.props.user.loggedIn)
         // console.log('curent state: ', this.state)
         if (this.props.users.users !== undefined){
             let displayUser = this.props.users.users.find(user => user.id === parseInt(this.props.match.params.userId))
@@ -207,7 +210,7 @@ class UserView extends Component {
             if (this.props.users.user.user_id !== displayUser.id){
                      currentUser = false
             }
-        // console.log('displayUser: ', displayUser)
+        console.log('displayUser: ', displayUser)
         // console.log('logged in user: ', this.props.users.user.loggedIn)
         // console.log('current user state', this.state.currentUser)
         // console.log('friends added', this.state.friends)
@@ -220,12 +223,15 @@ class UserView extends Component {
             <div>
                 <h1>{displayUser.firstName} {displayUser.lastNameInitial.toUpperCase()}.</h1>
         <p>Age: {displayUser.age} Location: {displayUser.location}</p>
+        <p>Posts: {displayUser.posts.length} Liked Posts: {displayUser.likes.length}</p>
                 <h3>Friends({friends.length}):</h3>
         {friends.map((friend,idx) =>{ return <li key={idx}>{friend.firstName} {friend.lastNameInitial}.</li>})}
                 {(this.props.users.user.loggedIn && currentUser === false && isFriend === false) ? <button onClick={() => this.handleFriend(displayUser)}>Add Friend!</button> : null}
                 {(isFriend === true) ? <button onClick={() => this.handleUnFriend(displayUser)}>Unfriend</button> : null}
                  {/* edit user stuff */}
-                 {this.state.currentUser ? <button onClick={this.handleEditClick}>Edit/ Add Info</button> : null}
+                 {this.state.currentUser ? <span><button onClick={this.handleEditClick}>Edit/ Add Info</button> 
+                 <button onClick={this.props.handleLogout}>Logout</button></span>
+                 : null}
                  {this.state.isEdit ? 
                     <form onSubmit={this.handleSubmit}>
                         <label>Age: 
@@ -237,6 +243,7 @@ class UserView extends Component {
                         <input type='submit' />
 
                     </form> : null}
+                    {this.state.wasEdited ? <p>refresh page to view your edit</p> : null}
             </div>
         )
         // && this.state.isFriend === false

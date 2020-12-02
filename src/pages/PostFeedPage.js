@@ -6,14 +6,17 @@ import { getFriendships } from '../actions/friendships';
 
 class PostFeedPage extends Component {
 
-    state = {
-        posts: this.props.getPosts()
-    }
+    // state = {
+    //     posts: this.props.getPosts()
+    // }
 
     componentDidMount() {
         // this.props.getPosts()
         this.props.getUsers()
         this.props.getFriendships()
+        if (this.props.posts === []){
+            this.props.getPosts()
+        }
         }
 
     renderPosts() {

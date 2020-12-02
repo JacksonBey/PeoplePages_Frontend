@@ -157,12 +157,12 @@ class Post extends Component {
         return(
              <Segment>
 
-                 <h3>{id}</h3>
+                 {/* <h3>{id}</h3> */}
                  {image !== '' && image !== null ? <img src={image} alt='' width="500" height="600"></img> : null}
              <h2>{content}</h2>
-            <p> posted on: {date}</p>
+            <p>By <Link key={user_id + 'u'} to={`/users/${user_id}`}>{username}</Link> on {date}</p>
              {/* <p>-{username}</p>  */}
-        <Link key={user_id + 'u'} to={`/users/${user_id}`}>{username}</Link>
+
             <br/>
              {(this.props.user.loggedIn) ?
              (this.state.liked) ? <button onClick={this.handleUnlikeClick}>&#10084;</button> 
