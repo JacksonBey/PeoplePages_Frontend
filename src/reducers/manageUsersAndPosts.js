@@ -105,13 +105,11 @@ function usersReducer(state = { user: {
         }
 
     case 'EDIT_USER':
-        //  console.log('action: ', action)
+         console.log('action: ', action)
         return {
             ...state,
             user: {
                 ...state.user,
-            firstName: action.data.user.firstName,
-            lastNameInitial: action.data.user.lastNameInitial,
             location: action.data.user.location,
             age: action.data.user.age,
             loggedIn: true

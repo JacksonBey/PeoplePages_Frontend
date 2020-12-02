@@ -2,7 +2,7 @@ export function editUserInfo(text){
     console.log('text: ', text)
     return (dispatch) => {
         dispatch({ type: 'START_LOG_REQUEST' });
-    fetch(`http://localhost:3001/users/${text.userId}`, {
+    fetch(`http://localhost:3001/users/${text.id}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'

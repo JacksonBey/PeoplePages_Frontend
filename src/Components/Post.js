@@ -151,9 +151,9 @@ class Post extends Component {
         // console.log('id of poster: ', this.props.post.user_id)
         // console.log('props error: ', this.props.posts.find(post => post.id === this.props.post.id).errors )
         // console.log(poster)
-        console.log('post date: ', this.props.post.created_at.split('T')[0])
+        // console.log('post date: ', this.props.post.created_at.split('T')[0])
         let date = this.props.post.created_at.split('T')[0]
-        let {id, content, username, user_id, image} = this.props.post
+        let {id, content, username, user_id, image, comments} = this.props.post
         return(
              <Segment>
 
@@ -168,7 +168,7 @@ class Post extends Component {
              (this.state.liked) ? <button onClick={this.handleUnlikeClick}>&#10084;</button> 
              : <button onClick={this.handleLikeClick}>&#9825;</button> : null}
              <p>likes: {this.state.likes}</p>
-             {this.state.comments.length > 0 ? <p>Comments({this.state.comments.length})</p> : null}
+             {comments.length > 0 ? <p>Comments({comments.length})</p> : null}
              <Link key={id} to={`/posts/${id}`}>Goto post</Link>
             {/* {this.state.comments.map(comment => {
                 // return (

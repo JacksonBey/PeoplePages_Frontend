@@ -46,7 +46,8 @@ class UserBar extends Component {
                 >login</NavLink> 
             <NavLink
                 className='ui item'
-                to= '/myaccount'
+                // to= '/myaccount'
+                to={`/users/${this.props.user.user_id}`}
                 exact
                 activeStyle={{
                     background: 'lightgrey'
