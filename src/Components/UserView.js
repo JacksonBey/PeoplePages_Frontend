@@ -179,12 +179,12 @@ class UserView extends Component {
 
 
 // before experiment: 
-{/* <h1>{displayUser.firstName} {displayUser.lastNameInitial.toUpperCase()}.</h1>
-<h3>Friends({this.state.friends.length}):</h3>
-{this.state.friends.map((friend,idx) =>{ return <li key={idx}>{friend.firstName} {friend.lastNameInitial}.</li>})}
-{(this.props.users.user.loggedIn && this.state.currentUser === false && this.state.isFriend === false) ? <button onClick={() => this.handleFriend(displayUser)}>Add Friend!</button> : null}
-{(this.state.isFriend === true) ? <button onClick={() => this.handleUnFriend(displayUser)}>Unfriend</button> : null}
-</div> */}
+//  <h1>{displayUser.firstName} {displayUser.lastNameInitial.toUpperCase()}.</h1>
+// <h3>Friends({this.state.friends.length}):</h3>
+// {this.state.friends.map((friend,idx) =>{ return <li key={idx}>{friend.firstName} {friend.lastNameInitial}.</li>})}
+// {(this.props.users.user.loggedIn && this.state.currentUser === false && this.state.isFriend === false) ? <button onClick={() => this.handleFriend(displayUser)}>Add Friend!</button> : null}
+// {(this.state.isFriend === true) ? <button onClick={() => this.handleUnFriend(displayUser)}>Unfriend</button> : null}
+// </div> 
 
 const mapStateToProps = state => {
     // console.log(state.users.user)

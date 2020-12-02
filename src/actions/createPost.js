@@ -11,7 +11,8 @@ export function createPost(text){
         body: JSON.stringify({
             content: text.content,
             user_id: text.userId,
-            username: text.username
+            username: text.username,
+            image: text.image
         })
         })
         .then(res => res.json())

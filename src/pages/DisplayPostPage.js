@@ -159,7 +159,8 @@ class DisplayPostPage extends Component {
                     <input type='submit' />     
                 </form>
              : null}
-            {this.props.posts.find(post => post.id === this.state.post.id).errors ? <p style={{ color: 'red' }}>is too short (minimum is 1 character)</p> : null}
+            {this.props.posts.find(post => post.id === this.state.post.id) !== undefined ? 
+            this.props.posts.find(post => post.id === this.state.post.id).errors ? <p style={{ color: 'red' }}>is too short (minimum is 1 character)</p> : null : null}
                 </div>
              ) }
     }

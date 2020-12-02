@@ -153,11 +153,12 @@ class Post extends Component {
         // console.log(poster)
         console.log('post date: ', this.props.post.created_at.split('T')[0])
         let date = this.props.post.created_at.split('T')[0]
-        let {id, content, username, user_id} = this.props.post
+        let {id, content, username, user_id, image} = this.props.post
         return(
              <Segment>
 
                  <h3>{id}</h3>
+                 {image !== '' && image !== null ? <img src={image} alt='' width="500" height="600"></img> : null}
              <h2>{content}</h2>
             <p> posted on: {date}</p>
              {/* <p>-{username}</p>  */}

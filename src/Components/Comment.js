@@ -46,11 +46,14 @@ class Comment extends Component {
     // }
 
     componentDidMount = () => {
-        let comments = this.props.posts.find(post => post.id === this.props.comment.post_id).comments
-        console.log('comments: ', comments)
-        console.log('comment: ', this.props.comment)
+        // let comments = this.props.posts.find(post => post.id === this.props.comment.post_id).comments
+        // console.log('comments: ', comments)
+        // console.log('comment: ', this.props.comment)
         if(this.props.comment.id === undefined) {
-            let date = new Date().split('T')[0]
+            let ddate = new Date()
+            console.log('ddate: ', ddate)
+            let date= ddate.getUTCFullYear() + '-' + ddate.getMonth() + '-' + ddate.getDay()
+            console.log('date', date)
             this.setState({
                 date  
             })

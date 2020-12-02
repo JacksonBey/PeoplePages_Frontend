@@ -62,7 +62,7 @@ class PostFeedPage extends Component {
         // console.log('props: ', this.props)
         return(
             <div>
-                <h2>Posts</h2>
+            <h2>Posts</h2>
         {(this.props.posts === undefined || this.props.posts === [])? null : this.props.posts.sort(this.compare).map((post, idx) => <Post key={idx} post={post}
             liked= {this.findliked(post)}
         />)

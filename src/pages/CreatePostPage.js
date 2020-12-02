@@ -6,7 +6,8 @@ class CreatePostPage extends Component {
     state = {
         content: '',
         userId: '',
-        username: ''
+        username: '',
+        image: ''
     }
 
     componentDidMount = () => {
@@ -33,7 +34,8 @@ class CreatePostPage extends Component {
         e.preventDefault()
         this.props.createPost(this.state)
         this.setState({
-            content: ''
+            content: '',
+            image: ''
         })
     }
 
@@ -44,7 +46,12 @@ class CreatePostPage extends Component {
             <div>
                 <br/>
                 <form onSubmit={this.handleSubmit}>
+                    <label>Text:
                     <input type='text' name='content' value={this.state.content} onChange={this.handleChange}/>
+                    </label>
+                    <label>Image Url:
+                    <input type='text' name='image' value={this.state.image} onChange={this.handleChange}/>
+                    </label>
                     <input type='submit' />
 
                 </form>
