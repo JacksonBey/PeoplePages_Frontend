@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import jwt_decode from "jwt-decode";
 import { connect } from 'react-redux'
+import { storage } from '../firebase'
 
 class CreatePostPage extends Component {
     state = {
@@ -39,6 +40,38 @@ class CreatePostPage extends Component {
         })
     }
 
+    handleFileChange = e => {
+        if (e.target.files[0]) {
+            this.setState({
+                ...this.state,
+                image: e.target.files[0]
+            }, () => {
+                this.handleUpload()
+            })
+        }
+    }
+
+    handleUpload = () => {
+        const uploadTask = storage.ref(`postImages/${this.state.image.name}`).put(this.state.image)
+        uploadTask.on(
+            'state_changed',
+            snapshot => {},
+            error => { console.log(error) },
+            () => {
+                storage
+                    .ref('postImages')
+                    .child(this.state.image.name)
+                    .getDownloadURL()
+                    .then( url => {
+                        console.log(url)
+                        this.setState({
+                            image: url
+                        })
+                    })
+            }
+        )
+    }
+
 
     render() {
         // console.log('posts errors: ', this.props.posts)
@@ -51,6 +84,9 @@ class CreatePostPage extends Component {
                     </label>
                     <label>Image Url:
                     <input type='text' name='image' value={this.state.image} onChange={this.handleChange}/>
+                    </label>
+                    <label>Upload Image:
+                    <input type='file' name='image' accept='image/*' onChange={this.handleFileChange}/>
                     </label>
                     <input type='submit' />
 
