@@ -2,10 +2,9 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import {getUsers} from '../actions/getUsers'
 import {addFriend, unFriend} from '../actions/friendships'
-import {notify} from '../actions/notifications'
+import {notify, readNotification} from '../actions/notifications'
 import { getFriendships, acceptFriendship} from '../actions/friendships';
 import { editUserInfo } from '../actions/editUserInfo'
-import Friend from './Friend'
 
 class UserView extends Component {
 
@@ -189,6 +188,23 @@ class UserView extends Component {
     }
 
 
+    findNotification = (friendship) => {
+        let afilter = {
+            user_id: this.props.user.user_id,
+            post_id: null,
+            friend_id: friendship.follower_id
+        }
+        let notification = this.props.notifications.find(note => {
+            for (const key in afilter) {
+                if (note[key] === undefined || note[key] !== afilter[key])
+                  return false;
+              }
+              return true;
+        })
+        return notification
+    }
+
+
 
     handleAccept = (friendship) => {
         console.log('accepted')
@@ -199,6 +215,19 @@ class UserView extends Component {
         let text = (friendship)
         console.log('found friend: ', text)
         this.props.acceptFriendship(text)
+
+
+        // find note and delete!
+        // note.reason.split(' ').slice(2).join(' ').toString()
+        // let afilter = {
+        //     user_id: this.props.user.user_id,
+        //     post_id: null,
+        //     friend_id: friendship.follower_id
+        // }
+        let note = this.findNotification(friendship)
+        console.log('found note: ', note)
+        this.props.readNotification(note)
+
     }
 
     handleDecline = (friendship) => {
@@ -216,6 +245,12 @@ class UserView extends Component {
         let text ={friendship: friendship, followee: followee, follower: follower, follower_id: follower.id, followee_id: followee.id}
         console.log('delete friend request package: ', text)
         this.props.unFriend(text)
+
+
+        // find note and delete!
+        let note = this.findNotification(friendship)
+        this.props.readNotification(note)
+
     }
 
     //edit user stuff
@@ -391,9 +426,6 @@ class UserView extends Component {
                     {this.state.wasEdited ? <p>refresh page to view your edit</p> : null}
                     <h3>Friends({friends.length}):</h3>
         {friends.map((friend,idx) =>{ return <li key={idx}>{friend.firstName} {friend.lastNameInitial}.</li>})}
-
-                    {/* <h1>Friend Component: </h1>
-                    {friends.map((friend,idx) =>{ return <Friend friend={friend} displayUser={displayUser} pending={pendingAccept} pendingAccept={pendingAccept}/>})} */}
             </div>
         )
         // && this.state.isFriend === false
@@ -423,7 +455,7 @@ class UserView extends Component {
 const mapStateToProps = state => {
     // console.log(state.users.user)
     return {users: state.users, user: state.users.user,
-    friendships: state.users.friendships}
+    friendships: state.users.friendships, notifications: state.users.notifications}
   }
   
   const mapDispatchToProps = dispatch => ({
@@ -431,6 +463,7 @@ const mapStateToProps = state => {
     addFriend: (text) => dispatch(addFriend(text)),
     unFriend: (text) => dispatch(unFriend(text)),
     notify: (note) => dispatch(notify(note)),
+    readNotification: (text) => dispatch(readNotification(text)),
     getFriendships: () => dispatch(getFriendships()),
     acceptFriendship: (text) => dispatch(acceptFriendship(text)),
     editInfo: (text) => dispatch(editUserInfo(text))
