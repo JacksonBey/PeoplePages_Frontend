@@ -62,7 +62,7 @@ class NotificationPage extends Component {
         this.handleRead(note)
         // console.log('decline note:', note)
         let friendship = this.findFriendship(note)
-        let followee = this.props.user
+        let followee = this.props.users.users.find(user => this.props.user.user_id === user.id)
         console.log('followee: ', followee)
         console.log('props.user: ', this.props.users.users)
         let follower = this.props.users.users.find(user => {

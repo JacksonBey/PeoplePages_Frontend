@@ -147,19 +147,46 @@ function usersReducer(state = { user: {
         }
     case 'UN_FRIEND':
         console.log('unfriended')
-        // console.log('unfriending action text',action.text)
+        console.log('unfriending action text',action.text)
         let ufollower = state.users.find(user => user.id === action.text.follower_id)
         let ufollowee = action.text.followee
-        ufollower.followees = ufollower.followees.filter(followee => followee.id !== ufollowee.id)
-        ufollowee.followers = ufollowee.followers.filter(follower => follower.id !== ufollower.id)
+
+
+        let ufollowerfolloweeindex = ufollower.followees.findIndex(followee => followee.id === ufollowee.id)
+        console.log('ufollowerfolloweeindex', ufollowerfolloweeindex)
+        if (ufollowerfolloweeindex !== []) {
+            ufollower.followees.splice(ufollowerfolloweeindex, 1)
+        }
+
+        let ufollowerfollowerindex = ufollower.followers.findIndex(follower => follower.id === ufollowee.id)
+        console.log('ufollowerfollowerindex', ufollowerfollowerindex)
+        if (ufollowerfollowerindex !== []) {
+            ufollower.followers.splice(ufollowerfollowerindex, 1)
+        }
+
+        let ufolloweefollowerindex = ufollowee.followers.findIndex(follower => follower.id === ufollower.id)
+        console.log('ufolloweefollowerindex', ufolloweefollowerindex)
+        if (ufolloweefollowerindex !== []) {
+            ufollowee.followers.splice(ufolloweefollowerindex, 1)
+        }
+
+        let ufolloweefolloweeindex = ufollowee.followees.findIndex(followee => followee.id === ufollower.id)
+        console.log('ufolloweefolloweeindex', ufolloweefolloweeindex)
+        if (ufolloweefolloweeindex !== []) {
+            ufollowee.followees.splice(ufolloweefolloweeindex, 1)
+        }
+
+
+
+        console.log('ufollower: ', ufollower)
+        console.log('ufollowee: ', ufollowee)
         let ufusers = state.users.filter(user => user.id !== ufollower.id)
         ufusers = ufusers.filter(user => user.id !== ufollowee.id)
         ufusers = [...ufusers, ufollowee, ufollower]
-        // console.log('state friendships: ', state.friendships)
+        console.log('state friendships: ', state.friendships)
         let friendshiplist = state.friendships.filter(friendship => friendship.id !== action.text.friendship.id)
-        // console.log('friendshiplist: ',friendshiplist)
-        // console.log('ufollower: ', ufollower)
-        // console.log('ufollowee: ', ufollower)
+        console.log('friendshiplist: ',friendshiplist)
+
 
         return {
             ...state, users: ufusers, friendships: friendshiplist,
@@ -167,10 +194,30 @@ function usersReducer(state = { user: {
         }
     case 'ACCEPT_FRIENDSHIP':
         console.log('friendship accepted')
-        console.log('action data: ', action.data)
+        console.log('action data: ', action)
         // MAKE FRIENDSHIP NOT PENDING NO MORE ON ACCEPT FRIEND!
+        let afollower = state.users.find(user => user.id === action.adata.text.follower_id)
+        console.log('ufollower: ', afollower)
+        let afollowee = state.users.find(user => user.id === action.adata.text.followee_id)
+        console.log('ufollowee: ', afollowee)
+        // afollower.followees = afollower.followees.filter(followee => followee.id !== afollowee.id)
+
+        // afollower.followees = [...afollower.followees, afollowee]
+        // afollowee.followers = [...afollowee.followers, afollower]
+
+        // afollowee.followers = afollowee.followers.filter(follower => follower.id !== afollower.id)
+        let afusers = state.users.filter(user => user.id !== afollower.id)
+        afusers = afusers.filter(user => user.id !== afollowee.id)
+        afusers = [...afusers, afollowee, afollower]
+        // console.log('state friendships: ', state.friendships)
+        let afriendshiplist = state.friendships.filter(friendship => friendship.id !== action.adata.text.id)
+        afriendshiplist=[...afriendshiplist, action.adata.data.friendship]
+        // console.log('friendshiplist: ',friendshiplist)
+
+
+
         return {
-            ...state,
+            ...state, users: afusers, friendships: afriendshiplist,
             requesting: false
         }
     case 'GET_NOTIFICATIONS':

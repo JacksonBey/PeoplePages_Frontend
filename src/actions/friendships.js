@@ -34,7 +34,9 @@ export function acceptFriendship(text){
         })
         })
         .then(res => res.json())
-        .then(data => {dispatch({type: 'ACCEPT_FRIENDSHIP', data})})
+        .then(data => {
+            let adata = {data, text}
+            dispatch({type: 'ACCEPT_FRIENDSHIP', adata})})
     }}
 
 
