@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
+import {getNotifications} from '../actions/notifications'
 
 
 class LoginPage extends Component {
@@ -20,6 +21,7 @@ class LoginPage extends Component {
         e.preventDefault()
         console.log('this.state: ' ,this.state)
         this.props.handleLogin(this.state)
+        this.props.getNotifications()
     }
 
 
@@ -41,9 +43,13 @@ class LoginPage extends Component {
     }
 }
 
+const mapDispatchToProps = dispatch => ({
+    getNotifications: () => dispatch(getNotifications({type: 'GET_NOTIFICATIONS'}))
+  })
+
 const mapStateToProps = state => {
     // console.log(state.users.user)
     return {users: state.users.user}
   }
 
-export default connect(mapStateToProps)(LoginPage)
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage)

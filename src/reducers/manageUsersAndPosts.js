@@ -120,17 +120,17 @@ function usersReducer(state = { user: {
         // console.log('friended')
         // console.log('friending action data',action.ntext)
         // let follower = action.ntext.follower
-        let follower = state.users.find(user => user.id === action.ntext.follower.user_id)
-        let followee = action.ntext.followee
+        // let follower = state.users.find(user => user.id === action.ntext.follower.user_id)
+        // let followee = action.ntext.followee
         // let followerinx = state.users.findIndex(user => user.id === follower.user_id)
         // let followeeinx = state.users.findIndex(user => user.id === followee.user_id)
-        follower.followees = [...follower.followees, followee]
-        followee.followers = [...followee.followers, follower]
+        // follower.followees = [...follower.followees, followee]
+        // followee.followers = [...followee.followers, follower]
         // console.log('followee: ', followee)
         // console.log('follower: ', follower)
-        let uusers = state.users.filter(user => user.id !== follower.id)
-        uusers = uusers.filter(user => user.id !== followee.id)
-        uusers = [...uusers, followee, follower]
+        // let uusers = state.users.filter(user => user.id !== follower.id)
+        // uusers = uusers.filter(user => user.id !== followee.id)
+        // uusers = [...uusers, followee, follower]
         // console.log('uusers: ', uusers)
         let nfriendslist = [...state.friendships, action.ntext.data.friendship]
         // let nusers = {users: [...state.users]}
@@ -142,13 +142,13 @@ function usersReducer(state = { user: {
         // let nstate = [state.user, state.users=[...state.users.slice(0,followerinx), follower, ...state.users.slice(followerinx+1)]]
         // nstate = [state.user, nstate.users=[...nstate.users.slice(0,followeeinx), followee, ...nstate.users.slice(followeeinx+1)]]
         return {
-            ...state, users: uusers, friendships: nfriendslist,
+            ...state, friendships: nfriendslist,
             requesting: false
         }
     case 'UN_FRIEND':
         console.log('unfriended')
         // console.log('unfriending action text',action.text)
-        let ufollower = state.users.find(user => user.id === action.text.follower.user_id)
+        let ufollower = state.users.find(user => user.id === action.text.follower_id)
         let ufollowee = action.text.followee
         ufollower.followees = ufollower.followees.filter(followee => followee.id !== ufollowee.id)
         ufollowee.followers = ufollowee.followers.filter(follower => follower.id !== ufollower.id)
@@ -165,6 +165,14 @@ function usersReducer(state = { user: {
             ...state, users: ufusers, friendships: friendshiplist,
             requesting: false
         }
+    case 'ACCEPT_FRIENDSHIP':
+        console.log('friendship accepted')
+        console.log('action data: ', action.data)
+        // MAKE FRIENDSHIP NOT PENDING NO MORE ON ACCEPT FRIEND!
+        return {
+            ...state,
+            requesting: false
+        }
     case 'GET_NOTIFICATIONS':
         // console.log('notifications action data: ', action.data)
         return {
@@ -174,10 +182,17 @@ function usersReducer(state = { user: {
         }
     case 'NOTIFY':
         // console.log('notify action data: ', action)
+        if (state.notifications !== undefined){
         return {
             ...state,
             notifications: [...state.notifications, action.data.notification],
             requesting: false
+        }} else {
+            return {
+                ...state,
+                notifications: [action.data.notification],
+                requesting: false
+            }
         }
     case 'READ_NOTIFICATION':
         // console.log('read notify data', action.text)
@@ -339,4 +354,34 @@ function usersReducer(state = { user: {
     }
   }
 
- 
+
+// old add friend action: 
+//   case 'ADD_FRIEND':
+//     // console.log('friended')
+//     // console.log('friending action data',action.ntext)
+//     // let follower = action.ntext.follower
+//     let follower = state.users.find(user => user.id === action.ntext.follower.user_id)
+//     let followee = action.ntext.followee
+//     // let followerinx = state.users.findIndex(user => user.id === follower.user_id)
+//     // let followeeinx = state.users.findIndex(user => user.id === followee.user_id)
+//     follower.followees = [...follower.followees, followee]
+//     followee.followers = [...followee.followers, follower]
+//     // console.log('followee: ', followee)
+//     // console.log('follower: ', follower)
+//     let uusers = state.users.filter(user => user.id !== follower.id)
+//     uusers = uusers.filter(user => user.id !== followee.id)
+//     uusers = [...uusers, followee, follower]
+//     // console.log('uusers: ', uusers)
+//     let nfriendslist = [...state.friendships, action.ntext.data.friendship]
+//     // let nusers = {users: [...state.users]}
+//     // console.log('nusers before: ', nusers)
+//     // nusers = {users: [...nusers.users.slice(0,followerinx), follower, ...nusers.users.slice(followerinx+1)]}
+//     // nusers = {users: [...nusers.users.slice(0,followeeinx), followee, ...nusers.users.slice(followeeinx+1)]}
+//     // console.log('nusers: ', nusers)
+
+//     // let nstate = [state.user, state.users=[...state.users.slice(0,followerinx), follower, ...state.users.slice(followerinx+1)]]
+//     // nstate = [state.user, nstate.users=[...nstate.users.slice(0,followeeinx), followee, ...nstate.users.slice(followeeinx+1)]]
+//     return {
+//         ...state, users: uusers, friendships: nfriendslist,
+//         requesting: false
+//     }

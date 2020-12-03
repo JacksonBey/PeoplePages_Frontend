@@ -9,7 +9,8 @@ export function addFriend(text){
             },
             body: JSON.stringify({
                 follower_id: text.follower_id,
-                followee_id: text.followee_id
+                followee_id: text.followee_id,
+                pending: true
             })
             })
             .then(res => res.json())
@@ -18,6 +19,24 @@ export function addFriend(text){
                 dispatch({type: 'ADD_FRIEND', ntext})})
 }
 }
+
+export function acceptFriendship(text){
+    console.log('text: ', text)
+    return (dispatch) => {
+        dispatch({ type: 'START_LOG_REQUEST' });
+    fetch(`http://localhost:3001/friendships/${text.id}`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            pending: false
+        })
+        })
+        .then(res => res.json())
+        .then(data => {dispatch({type: 'ACCEPT_FRIENDSHIP', data})})
+    }}
+
 
 export function unFriend(text){
     console.log('text: ', text)

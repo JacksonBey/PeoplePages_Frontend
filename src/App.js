@@ -27,6 +27,7 @@ import UserView from './Components/UserView'
 import NotificationPage from './pages/NotificationPage';
 import {getNotifications} from './actions/notifications'
 import { getFriendships } from './actions/friendships';
+import {getUsers} from './actions/getUsers'
 
 
 class App extends Component{
@@ -47,6 +48,7 @@ class App extends Component{
     this.props.getNotifications()
     this.props.getFriendships()
     this.props.getPosts()
+    this.props.getUsers()
     if(localStorage.getItem('token') !== ''){
       let token= localStorage.getItem('token')
       // console.log('token: ', token)
@@ -130,6 +132,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => ({
+  getUsers: () => dispatch(getUsers()),
   login: (text) => dispatch(fetchUser(text)),
   logOut: () => dispatch({type: 'LOG_OUT'}),
   signUp: (text) => dispatch(signUpUser(text)),
