@@ -11,7 +11,8 @@ export function signUpUser(text){
             username: text.username,
             password: text.password,
             firstName: text.firstName,
-            lastNameInitial: text.lastNameInitial
+            lastNameInitial: text.lastNameInitial,
+            profilePic: text.profilePic
         })
         })
         .then(res => res.json())

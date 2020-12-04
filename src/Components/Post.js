@@ -5,6 +5,7 @@ import {addLike, unLike} from '../actions/likes'
 import { Link } from 'react-router-dom';
 import {notify} from '../actions/notifications'
 import {createComment} from '../actions/comments'
+import default_prof_pic from '../images/default_prof_pic.jpg'
 // import Comment from './Comment'
 // import { v4 as uuid } from 'uuid';
 
@@ -152,6 +153,11 @@ class Post extends Component {
         // console.log('props error: ', this.props.posts.find(post => post.id === this.props.post.id).errors )
         // console.log(poster)
         // console.log('post date: ', this.props.post.created_at.split('T')[0])
+        let user = {};
+        console.log('props users', this.props.users)
+        if (this.props.users.users !== undefined){
+        user = this.props.users.users.find(user => this.props.post.user_id === user.id)
+        }
         let date = this.props.post.created_at.split('T')[0]
         let {id, content, username, user_id, image, comments} = this.props.post
         return(
@@ -160,7 +166,10 @@ class Post extends Component {
                  {/* <h3>{id}</h3> */}
                  {image !== '' && image !== null ? <img src={image} alt='' width="500" height="600"></img> : null}
              <h2>{content}</h2>
-            <p>By <Link key={user_id + 'u'} to={`/users/${user_id}`}>{username}</Link> on {date}</p>
+            <p>By 
+            {(user.profilePic === '' || user.profilePic === undefined) ? <img src={default_prof_pic} alt='' width="25" height="30"></img> 
+                :<img src={user.profilePic} alt={default_prof_pic} width="25" height="30"></img> }
+                <Link key={user_id + 'u'} to={`/users/${user_id}`}>{username}</Link> on {date}</p>
              {/* <p>-{username}</p>  */}
 
             <br/>
@@ -197,7 +206,7 @@ class Post extends Component {
 
 const mapStateToProps = state => {
     // console.log(state.users.user)
-    return {user: state.users.user, posts: state.posts.posts}
+    return {user: state.users.user, posts: state.posts.posts, users: state.users}
   }
   
   const mapDispatchToProps = dispatch => ({

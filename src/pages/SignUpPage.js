@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 // import { connect } from 'react-redux'
+import { storage } from '../firebase'
 
  class SignUpPage extends Component {
 
@@ -7,7 +8,8 @@ import React, {Component} from 'react';
         username: '',
         password: '',
         firstName: '',
-        lastNameInitial: ''
+        lastNameInitial: '',
+        profilePic: ''
     }
 
     handleChange = (e) => {
@@ -20,6 +22,43 @@ import React, {Component} from 'react';
         e.preventDefault()
         this.props.handleSignUp(this.state)
     }
+
+    //image stuff
+
+
+    handleFileChange = e => {
+        if (e.target.files[0]) {
+            this.setState({
+                ...this.state,
+                profilePic: e.target.files[0]
+            }, () => {
+                this.handleUpload()
+            })
+        }
+    }
+
+    handleUpload = () => {
+        const uploadTask = storage.ref(`profilePics/${this.state.profilePic.name}`).put(this.state.profilePic)
+        uploadTask.on(
+            'state_changed',
+            snapshot => {},
+            error => { console.log(error) },
+            () => {
+                storage
+                    .ref('profilePics')
+                    .child(this.state.profilePic.name)
+                    .getDownloadURL()
+                    .then( url => {
+                        console.log(url)
+                        this.setState({
+                            profilePic: url
+                        })
+                    })
+            }
+        )
+    }
+
+    //end of image stuff
 
 
     render() {
@@ -38,6 +77,12 @@ import React, {Component} from 'react';
                     </label>
                     <label>Last Name Initial: 
                     <input type='text' name='lastNameInitial' value={this.state.lastNameInitial} onChange={this.handleChange}/>
+                    </label>
+                    <label>Profile Image Url:
+                    <input type='text' name='profilePic' value={this.state.profilePic} onChange={this.handleChange}/>
+                    </label>
+                    <label>Upload Profile Image:
+                    <input type='file' name='profilePic' accept='image/*' onChange={this.handleFileChange}/>
                     </label>
                     <input type='submit' />
 

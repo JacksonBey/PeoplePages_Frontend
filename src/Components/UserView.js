@@ -5,6 +5,7 @@ import {addFriend, unFriend} from '../actions/friendships'
 import {notify, readNotification} from '../actions/notifications'
 import { getFriendships, acceptFriendship} from '../actions/friendships';
 import { editUserInfo } from '../actions/editUserInfo'
+import default_prof_pic from '../images/default_prof_pic.jpg'
 
 class UserView extends Component {
 
@@ -398,6 +399,9 @@ class UserView extends Component {
 
         return(
             <div>
+                {(displayUser.profilePic === '' || displayUser.profilePic === undefined) ? <img src={default_prof_pic} alt='' width="50" height="60"></img> 
+                :<img src={displayUser.profilePic} alt={default_prof_pic} width="50" height="60"></img> }
+                
                 <h1>{displayUser.firstName} {displayUser.lastNameInitial.toUpperCase()}.</h1>
         <p>Age: {displayUser.age} Location: {displayUser.location}</p>
         <p>Posts: {displayUser.posts.length} Liked Posts: {displayUser.likes.length}</p>

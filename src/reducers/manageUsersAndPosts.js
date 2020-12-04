@@ -45,6 +45,7 @@ function usersReducer(state = { user: {
             lastNameInitial: action.data.user.lastNameInitial,
             location: action.data.user.location,
             age: action.data.user.age,
+            profilePic: action.data.user.profilePic,
             token: action.data.token,
             loggedIn: true
         },
@@ -73,6 +74,7 @@ function usersReducer(state = { user: {
             lastNameInitial: action.data.user.lastNameInitial,
             location: action.data.user.location,
             age: action.data.user.age,
+            profilePic: action.data.user.profilePic,
             loggedIn: true
         },
             requesting: false
