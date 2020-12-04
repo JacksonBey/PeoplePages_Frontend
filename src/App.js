@@ -28,6 +28,7 @@ import NotificationPage from './pages/NotificationPage';
 import {getNotifications} from './actions/notifications'
 import { getFriendships } from './actions/friendships';
 import {getUsers} from './actions/getUsers'
+import UsersPage from './pages/UsersPage'
 
 
 class App extends Component{
@@ -121,6 +122,7 @@ class App extends Component{
       <Route path={`/posts/:postId`} render={routerProps => <DisplayPostPage {...routerProps} /> }/>
       <Route path={`/users/:userId`} render={routerProps => <UserView {...routerProps} isLoggedIn = {this.props.loggedIn} handleLogout={this.handleLogout}/> }/>
       <Route path='/notifications' component={NotificationPage} />
+      <Route path='/users' component={UsersPage} />
       </Switch>
     </div>
   );

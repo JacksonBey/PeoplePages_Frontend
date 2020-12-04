@@ -71,12 +71,21 @@ class UserBar extends Component {
                 >My Post Feed</NavLink> 
             <NavLink
                 className='ui item'
+                to= '/users'
+                exact
+                activeStyle={{
+                    background: 'lightgrey'
+                }}
+                >Users</NavLink> 
+            <NavLink
+                className='ui item'
                 to= '/notifications'
                 exact
                 activeStyle={{
                     background: 'lightgrey'
                 }}
-            >Notifications({notifications === undefined ? 0 : notifications.length})</NavLink> 
+                >Notifications({notifications === undefined ? 0 : notifications.length})</NavLink> 
+
         </div>
     )}
 }
