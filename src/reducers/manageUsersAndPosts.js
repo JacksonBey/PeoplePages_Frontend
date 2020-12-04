@@ -341,9 +341,9 @@ function usersReducer(state = { user: {
             requesting: false
         }
     case 'ADD_LIKE':
-        // console.log('like added', action.data.like.id)
+        console.log('like added', action.data)
         // console.log('action data post id: ', action.data.like.post_id)
-        // console.log('state posts: ', state.posts)
+        console.log('state users' , state)
         let idx = state.posts.findIndex(post => post.id === action.data.like.post_id)
         //find post
         //add likes into post likes

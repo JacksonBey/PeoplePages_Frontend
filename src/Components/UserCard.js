@@ -6,6 +6,7 @@ import { getFriendships, acceptFriendship} from '../actions/friendships';
 import {addFriend, unFriend} from '../actions/friendships'
 import { Segment } from 'semantic-ui-react'
 import default_prof_pic from '../images/default_prof_pic.jpg'
+import { Link } from 'react-router-dom';
 
 class UserCard extends Component {
 
@@ -239,8 +240,11 @@ handleDecline = (friendship) => {
 
         return(
             <Segment >
-        <div  className='userCard'>                {(displayUser.profilePic === '' || displayUser.profilePic === undefined) ? <img src={default_prof_pic} alt='' width="50" height="60"></img> 
-                :<img src={displayUser.profilePic} alt={default_prof_pic} width="50" height="60"></img> }<h1>{this.props.duser.firstName} {this.props.duser.lastNameInitial}.</h1>
+               {(displayUser.profilePic === '' || displayUser.profilePic === undefined) ? <img src={default_prof_pic} alt='' width="50" height="60"></img> 
+                :<img src={displayUser.profilePic} alt={default_prof_pic} width="50" height="60"></img> }
+                    <br/>
+                <Link key={this.props.duser.id + 'u'} to={`/users/${this.props.duser.id}`}>{this.props.duser.firstName} {this.props.duser.lastNameInitial}.</Link>
+                    <br/>
                 {(this.props.users.user.loggedIn && currentUser === false && isFriend === false && pending === false && pendingAccept === false) ? <button onClick={() => this.handleFriend(displayUser)}>Add Friend!</button> : null}
                 {(isFriend === true && pending === false) ? <button onClick={() => this.handleUnFriend(displayUser)}>Unfriend</button> : null}
                  {/* edit user stuff */}
@@ -248,7 +252,7 @@ handleDecline = (friendship) => {
                  {pendingAccept ? 
                  <span><button onClick={() => this.handleAccept(acceptordecline)}>Accept</button><button onClick={() => this.handleDecline(acceptordecline)}>Decline</button></span>
                  : null}
-                </div>
+                
             </Segment>
         )
     }else{

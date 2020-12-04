@@ -6,6 +6,7 @@ import {notify, readNotification} from '../actions/notifications'
 import { getFriendships, acceptFriendship} from '../actions/friendships';
 import { editUserInfo } from '../actions/editUserInfo'
 import default_prof_pic from '../images/default_prof_pic.jpg'
+import Post from '../Components/Post'
 
 class UserView extends Component {
 
@@ -25,6 +26,9 @@ class UserView extends Component {
     componentDidMount(){
         this.props.getUsers()
         this.props.getFriendships()
+        if (this.props.posts === []){
+            this.props.getPosts()
+        }
         let displayUser;
         // console.log('in comp did mount')
         // console.log('users: ', this.props.users.users)
@@ -299,8 +303,27 @@ class UserView extends Component {
 
 
     //end of edit user stuff
+    compare(a, b) {
+        const aind = a.id;
+        const bind = b.id;
+      
+        let comparison = 0;
+        if (bind > aind) {
+          comparison = 1;
+        } else if (bind < aind) {
+          comparison = -1;
+        }
+        return comparison;
+    }
 
-
+    findliked = (post) => {
+        let isliked = post.likes.find(like => like.user_id === this.props.user.user_id)
+        if(isliked === undefined){
+            return null
+        } else {
+            return isliked
+        }
+    }
 
 
 
@@ -398,6 +421,9 @@ class UserView extends Component {
             pending = true
         }
 
+        let posts = this.props.posts.filter(post => post.user_id === displayUser.id)
+        posts.sort(this.compare)
+
 
         return(
             <div>
@@ -406,7 +432,7 @@ class UserView extends Component {
                 
                 <h1>{displayUser.firstName} {displayUser.lastNameInitial.toUpperCase()}.</h1>
         <p>Age: {displayUser.age} Location: {displayUser.location}</p>
-        <p>Posts: {displayUser.posts.length} Liked Posts: {displayUser.likes.length}</p>
+        <p>Posts: {displayUser.posts.length} </p>
 
                 {(this.props.users.user.loggedIn && currentUser === false && isFriend === false && pending === false && pendingAccept === false) ? <button onClick={() => this.handleFriend(displayUser)}>Add Friend!</button> : null}
                 {(isFriend === true && pending === false) ? <button onClick={() => this.handleUnFriend(displayUser)}>Unfriend</button> : null}
@@ -430,8 +456,14 @@ class UserView extends Component {
 
                     </form> : null}
                     {this.state.wasEdited ? <p>refresh page to view your edit</p> : null}
+                    <br/>
                     <h3>Friends({friends.length}):</h3>
         {friends.map((friend,idx) =>{ return <li key={idx}>{friend.firstName} {friend.lastNameInitial}.</li>})}
+                    <br/>
+                    <h3>Posts({posts.length}):</h3>
+        {posts.map((post, idx) => <Post key={idx} post={post}
+            liked= {this.findliked(post)}
+        />)}
             </div>
         )
         // && this.state.isFriend === false
@@ -461,7 +493,7 @@ class UserView extends Component {
 const mapStateToProps = state => {
     // console.log(state.users.user)
     return {users: state.users, user: state.users.user,
-    friendships: state.users.friendships, notifications: state.users.notifications}
+    friendships: state.users.friendships, notifications: state.users.notifications, posts: state.posts.posts}
   }
   
   const mapDispatchToProps = dispatch => ({

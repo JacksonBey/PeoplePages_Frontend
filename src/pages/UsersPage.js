@@ -4,6 +4,7 @@ import UserCard from '../Components/UserCard'
 import { getFriendships } from '../actions/friendships';
 import {getUsers} from '../actions/getUsers'
 
+
 class UsersPage extends Component {
 
 

@@ -76,6 +76,10 @@ class App extends Component{
       })
       this.props.history.push('/postfeed') 
     }
+
+    if (this.props.location.pathname === '/login' && localStorage.token !== '') {
+      this.props.history.push('/postfeed')
+    }
   }
 
   handleLogout = () => {
@@ -88,9 +92,41 @@ class App extends Component{
     this.props.history.push('/login') 
   }
 
+
+//   createNewPost= async (state) => {
+//     return await Promise.resolve(this.props.createPost((state)))
+
+// }
+
+// handleSubmit = (e) => {
+//     e.preventDefault()
+//     // this.props.createPost(this.state)
+//     this.createNewPost(this.state).then(this.props.handleCreation())
+//     this.setState({
+//         content: '',
+//         image: ''
+//     })
+
+// }
+  login = async (text) => {
+    return await Promise.resolve(this.props.login(text))
+  }
+
+
   handleLogin = (text) => {
-    this.props.login(text)
-    this.props.history.push('/postfeed')
+    console.log('error: ', this.props.users.error)
+    this.login(text).then( data => {
+      // console.log('error: ', this.props.users.error)
+      // console.log('data?', data)
+      // console.log('islogged in ', this.props.users)
+      // console.log('is token blank? ', localStorage.getItem('token') !== '')
+      // if(this.props.users.error !== true){
+      //   this.props.history.push('/postfeed')
+      // }
+
+      // this.props.history.push('/postfeed')
+    } )
+    // 
   }
 
   handleCreation= () => {
@@ -120,7 +156,7 @@ class App extends Component{
       {/* <Route exact path='/postfeed' component={this.renderPostFeedPage} /> */}
       <Route path='/postfeed' render={routerProps => <PostFeedPage {...routerProps} getPosts = {this.props.getPosts}/>} />
       <Route path={`/posts/:postId`} render={routerProps => <DisplayPostPage {...routerProps} /> }/>
-      <Route path={`/users/:userId`} render={routerProps => <UserView {...routerProps} isLoggedIn = {this.props.loggedIn} handleLogout={this.handleLogout}/> }/>
+      <Route path={`/users/:userId`} render={routerProps => <UserView {...routerProps} isLoggedIn = {this.props.loggedIn} handleLogout={this.handleLogout}  getPosts = {this.props.getPosts}/> }/>
       <Route path='/notifications' component={NotificationPage} />
       <Route path='/users' component={UsersPage} />
       </Switch>
