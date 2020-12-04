@@ -154,7 +154,7 @@ class Post extends Component {
         // console.log(poster)
         // console.log('post date: ', this.props.post.created_at.split('T')[0])
         let user = {};
-        console.log('props users', this.props.users)
+        // console.log('props users', this.props.users)
         if (this.props.users.users !== undefined){
         user = this.props.users.users.find(user => this.props.post.user_id === user.id)
         }

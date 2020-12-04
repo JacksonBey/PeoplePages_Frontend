@@ -156,25 +156,25 @@ function usersReducer(state = { user: {
 
         let ufollowerfolloweeindex = ufollower.followees.findIndex(followee => followee.id === ufollowee.id)
         console.log('ufollowerfolloweeindex', ufollowerfolloweeindex)
-        if (ufollowerfolloweeindex !== []) {
+        if (ufollowerfolloweeindex !== -1) {
             ufollower.followees.splice(ufollowerfolloweeindex, 1)
         }
 
         let ufollowerfollowerindex = ufollower.followers.findIndex(follower => follower.id === ufollowee.id)
         console.log('ufollowerfollowerindex', ufollowerfollowerindex)
-        if (ufollowerfollowerindex !== []) {
+        if (ufollowerfollowerindex !== -1) {
             ufollower.followers.splice(ufollowerfollowerindex, 1)
         }
 
         let ufolloweefollowerindex = ufollowee.followers.findIndex(follower => follower.id === ufollower.id)
         console.log('ufolloweefollowerindex', ufolloweefollowerindex)
-        if (ufolloweefollowerindex !== []) {
+        if (ufolloweefollowerindex !== -1) {
             ufollowee.followers.splice(ufolloweefollowerindex, 1)
         }
 
         let ufolloweefolloweeindex = ufollowee.followees.findIndex(followee => followee.id === ufollower.id)
         console.log('ufolloweefolloweeindex', ufolloweefolloweeindex)
-        if (ufolloweefolloweeindex !== []) {
+        if (ufolloweefolloweeindex !== -1) {
             ufollowee.followees.splice(ufolloweefolloweeindex, 1)
         }
 
@@ -182,9 +182,22 @@ function usersReducer(state = { user: {
 
         console.log('ufollower: ', ufollower)
         console.log('ufollowee: ', ufollowee)
-        let ufusers = state.users.filter(user => user.id !== ufollower.id)
-        ufusers = ufusers.filter(user => user.id !== ufollowee.id)
-        ufusers = [...ufusers, ufollowee, ufollower]
+        let ufollowerindex= state.users.findIndex(user => user.id === ufollower.id )
+        // let ufusers = state.users.filter(user => user.id !== ufollower.id)
+        //maybe no filter needed? slice handles it
+        // let ufusers = state.users.splice(ufollowerindex, 1)
+        let ufusers = state.users
+
+        ufusers = [...ufusers.slice(0,ufollowerindex), ufollower, ...ufusers.slice(ufollowerindex+1)]
+        console.log('ufusers after follower: ', ufusers)
+
+        let ufolloweeindex= ufusers.findIndex(user => user.id === ufollowee.id )
+        // ufusers = ufusers.filter(user => user.id !== ufollowee.id)
+        ufusers = [...ufusers.slice(0,ufolloweeindex), ufollowee, ...ufusers.slice(ufolloweeindex+1)]
+        console.log('ufusers after followee: ', ufusers)
+
+        // find index and then put them back there
+        // posts: [...state.posts.slice(0,dcommentPostidx), dcpost, ...state.posts.slice(dcommentPostidx+1)]
         console.log('state friendships: ', state.friendships)
         let friendshiplist = state.friendships.filter(friendship => friendship.id !== action.text.friendship.id)
         console.log('friendshiplist: ',friendshiplist)
@@ -202,15 +215,27 @@ function usersReducer(state = { user: {
         console.log('ufollower: ', afollower)
         let afollowee = state.users.find(user => user.id === action.adata.text.followee_id)
         console.log('ufollowee: ', afollowee)
+
+        //find index of users and put back in right index
+        let afolloweri = state.users.findIndex(user => user.id === afollower.id)
+        // let afusers = state.users.filter(user => user.id !== afollower.id)
+        let afusers = state.users
+        afusers = [...afusers.slice(0,afolloweri), afollower, ...afusers.slice(afolloweri+1)]
+        
+        let afolloweei = state.users.findIndex(user => user.id === afollowee.id)
+        // afusers.filter(user => user.id !== afollowee.id)
+        afusers = [...afusers.slice(0,afolloweei), afollowee, ...afusers.slice(afolloweei+1)]
+
+
         // afollower.followees = afollower.followees.filter(followee => followee.id !== afollowee.id)
 
         // afollower.followees = [...afollower.followees, afollowee]
         // afollowee.followers = [...afollowee.followers, afollower]
 
         // afollowee.followers = afollowee.followers.filter(follower => follower.id !== afollower.id)
-        let afusers = state.users.filter(user => user.id !== afollower.id)
-        afusers = afusers.filter(user => user.id !== afollowee.id)
-        afusers = [...afusers, afollowee, afollower]
+
+        // afusers = afusers.filter(user => user.id !== afollowee.id)
+        // afusers = [...afusers, afollowee, afollower]
         // console.log('state friendships: ', state.friendships)
         let afriendshiplist = state.friendships.filter(friendship => friendship.id !== action.adata.text.id)
         afriendshiplist=[...afriendshiplist, action.adata.data.friendship]

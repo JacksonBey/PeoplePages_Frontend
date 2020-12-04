@@ -8,6 +8,7 @@ import rootReducer from './reducers/manageUsersAndPosts.js';
 import { BrowserRouter} from 'react-router-dom';
 import 'semantic-ui-css/semantic.min.css'
 import thunk from 'redux-thunk';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 
 // const store = createStore(rootReducer, applyMiddleware(thunk));

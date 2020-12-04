@@ -26,7 +26,7 @@ class UserView extends Component {
         this.props.getUsers()
         this.props.getFriendships()
         let displayUser;
-        console.log('in comp did mount')
+        // console.log('in comp did mount')
         // console.log('users: ', this.props.users.users)
         // console.log('friendships: ', this.props.users.friendships)
         if (this.props.users.users !== undefined){
@@ -52,7 +52,7 @@ class UserView extends Component {
               }
               return true;
             })
-        console.log('pending: ', ispending)
+        // console.log('pending: ', ispending)
         if(ispending !== undefined){
             this.setState({
                 pending: true
@@ -79,7 +79,7 @@ class UserView extends Component {
             isFriend = false
         } else {isFriend = true}
         // console.log('isfriend: ',isFriend)
-        console.log('id: ', displayUser.id)
+        // console.log('id: ', displayUser.id)
         this.setState({
             friends, isFriend, id: displayUser.id
         })
@@ -151,9 +151,11 @@ class UserView extends Component {
         let follower = this.props.users.users.find(user => user.id === this.props.users.user.user_id)
         console.log('user id ', this.props.users.user)
         console.log('follower: ', follower)
-        let friendship = this.props.users.friendships.find(friendship => friendship.followee_id === followee.id) 
+        let friendship = {followee_id: followee.id, follower_id: follower.id}
+        friendship= this.findFriendship(friendship)
         if (friendship === undefined){
-            friendship = this.props.users.friendships.find(friendship => friendship.follower_id === followee.id) 
+            friendship = {followee_id: follower.id, follower_id: followee.id}
+            friendship= this.findFriendship(friendship)
         }
         follower.user_id = follower.id
         console.log('friendship: ',friendship)
@@ -312,15 +314,15 @@ class UserView extends Component {
             let displayUser = this.props.users.users.find(user => user.id === parseInt(this.props.match.params.userId))
             let friends = []
             let pendings = this.props.users.friendships.filter(friendship => friendship.pending === true)
-            console.log('pendings: ', pendings)
+            // console.log('pendings: ', pendings)
             if (displayUser.followers !== []){
-                console.log('display user followers: ', displayUser.followers)
+                // console.log('display user followers: ', displayUser.followers)
             displayUser.followers.forEach(friend => friends.push(friend))
             pendings.forEach(pending => {
                 if (pending.followee_id === displayUser.id){
                 friends = friends.filter(friend => friend.id !== pending.follower_id)}
             })
-            console.log('friends after follwers: ', friends)
+            // console.log('friends after follwers: ', friends)
             }
             if (displayUser.followees !== []){
                 displayUser.followees.forEach(friend => {friends.push(friend)})
@@ -328,11 +330,11 @@ class UserView extends Component {
                 // console.log('pendind id: ', pendings[0].followee_id)
 
                 pendings.forEach(pending => {
-                    console.log(pending.followee_id)
+                    // console.log(pending.followee_id)
                     if (pending.follower_id === displayUser.id){
                     friends = friends.filter(friend => friend.id !== pending.followee_id)}
                 })
-                console.log('friends after follees: ', friends)
+                // console.log('friends after follees: ', friends)
             }
             let isFriend = friends.find(friend => friend.id === this.props.users.user.user_id)
             if(isFriend === undefined){
@@ -359,7 +361,7 @@ class UserView extends Component {
             follower_id: this.props.users.user.user_id,
             pending: true
         }
-                console.log('displayUser: ', displayUser)
+                // console.log('displayUser: ', displayUser)
                 // console.log('user', this.props.users.user.user_id)
         let ispending = this.props.friendships.find(friendship => {
             for (const key in ffilter) {
