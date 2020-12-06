@@ -29,6 +29,7 @@ import {getNotifications} from './actions/notifications'
 import { getFriendships } from './actions/friendships';
 import {getUsers} from './actions/getUsers'
 import UsersPage from './pages/UsersPage'
+import Header from './Components/Header';
 
 
 class App extends Component{
@@ -37,9 +38,17 @@ class App extends Component{
     redirected: true
   }
 
+  // componentWillMount(){
+  //   console.log('ididnt')
+  // }
 
+  // constructor(){
+  //   super()
+  //   console.log('body contains dark theme? (in app)', document.body.classList.contains("dark-theme"))
+  // }
 
   componentDidMount() {
+    console.log(document.body)
     // console.log('localstorage user: ',localStorage.getItem('user'))
     // console.log('mounted')
     // this.setState({
@@ -145,6 +154,7 @@ class App extends Component{
   render() {
   return (
     <div className="App">
+      <Header />
       {(this.props.users.loggedIn)? <UserBar /> : <NavBar />}
             <Switch>
       <Route exact path='/' component={this.renderHomePage}/>

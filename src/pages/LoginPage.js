@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux'
 import {getNotifications} from '../actions/notifications'
+import PPlogo from '../images/PPlogo.png'
 
 
 class LoginPage extends Component {
@@ -29,7 +30,7 @@ class LoginPage extends Component {
         // console.log('this.props: ',this.props)
         return(
             <div>
-                
+                <span><h2>Welcome to</h2> <img   src={PPlogo} alt='' width="80" height="65"/> </span>
                 {(this.props.users.loggedIn)? <button onClick={this.props.handleLogout}>LogOut</button> : 
                                 <form onSubmit={this.handleSubmit}>
                                 <input type='text' value={this.state.username} name='username' onChange={this.handleChange}/>

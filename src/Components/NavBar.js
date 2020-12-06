@@ -12,13 +12,16 @@ import { NavLink } from 'react-router-dom';
 
 const NavBar = () => {
     return(
-        <div className='ui secondary pointing menu'>
-            <NavLink
+        <div className='ui secondary pointing menu' width='100%' margin-top="0px">
+            {/* <img   src={PPlogo} alt='' width="80" height="65" align='left'/> */}
+
+            {/* <NavLink
                 className='ui item'
                 to= '/'
                 exact
                 activeStyle={{
-                    background: 'lightgrey'
+                    background: '#b3ffff',
+                    width: '100px'
                 }}
                 >Home</NavLink>
 
@@ -27,15 +30,15 @@ const NavBar = () => {
                 to= '/about'
                 exact
                 activeStyle={{
-                    background: 'lightgrey'
+                    background: '#b3ffff'
                 }}
-                >about</NavLink> 
+                >about</NavLink>  */}
             <NavLink
                 className='ui item'
                 to= '/login'
                 exact
                 activeStyle={{
-                    background: 'lightgrey'
+                    background: '#b3ffff'
                 }}
                 >login</NavLink> 
             <NavLink
@@ -43,7 +46,7 @@ const NavBar = () => {
                 to= '/signup'
                 exact
                 activeStyle={{
-                    background: 'lightgrey'
+                    background: '#b3ffff'
                 }}
                 >Sign-Up</NavLink> 
             <NavLink
@@ -51,7 +54,7 @@ const NavBar = () => {
                 to= '/postfeed'
                 exact
                 activeStyle={{
-                    background: 'lightgrey'
+                    background: '#b3ffff'
                 }}
                 >Post Feed</NavLink> 
 

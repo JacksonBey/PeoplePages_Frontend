@@ -1,12 +1,12 @@
-body {
+/* body {
   margin: 0;
   /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif; */
-    font-family: 'Titillium Web', sans-serif;
+    /* font-family: 'Titillium Web', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
+} */ 
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -15,4 +15,51 @@ code {
 
 .userCard{
   display: inline-block
+}
+
+
+
+body {
+  margin: 0;
+  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif; */
+    font-family: 'Titillium Web', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  color: #222;
+  background: #e6ffff;
+}
+a {
+  color: #0033cc;
+}
+
+.body {
+  background: #e6ffff;
+}
+
+
+.header{
+  padding: 35px;
+  /* text-align: center; */
+  padding-bottom: 38px;
+  
+  background:   #b3ffff;
+  color:   #222;
+  font-size: 30px;
+}
+/* #3399ff */
+
+.floatLeft{float:left;
+  margin-left:20px
+}
+
+/* .peoplepagestext {
+  align: left,
+  color
+} */
+
+.ui.secondary.pointing.menu{
+  margin-top: 0px
 }
