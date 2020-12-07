@@ -24,7 +24,7 @@ export function acceptFriendship(text){
     console.log('text: ', text)
     return (dispatch) => {
         dispatch({ type: 'START_LOG_REQUEST' });
-    fetch(`https://people-pages-app-api.herokuapp.com/friendships/${text.id}`, {
+    fetch(`http://localhost:3001/friendships/${text.id}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'
@@ -44,7 +44,7 @@ export function unFriend(text){
     console.log('text: ', text)
     return (dispatch) => {
         dispatch({ type: 'START_LOG_REQUEST' });
-    fetch(`https://people-pages-app-api.herokuapp.com/${text.friendship.id}`, {method: 'DELETE'})
+    fetch(`http://localhost:3001/friendships/${text.friendship.id}`, {method: 'DELETE'})
             .then(res => res.json())
             .then(data => {dispatch({type: 'UN_FRIEND', text})})
 }
@@ -53,7 +53,7 @@ export function unFriend(text){
 export function getFriendships(text){
     return (dispatch) => {
         dispatch({ type: 'START_LOG_REQUEST' });
-    fetch(`https://people-pages-app-api.herokuapp.com/friendships`, {
+    fetch(`http://localhost:3001/friendships`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'

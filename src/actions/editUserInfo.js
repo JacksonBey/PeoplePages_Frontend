@@ -2,7 +2,7 @@ export function editUserInfo(text){
     console.log('text: ', text)
     return (dispatch) => {
         dispatch({ type: 'START_LOG_REQUEST' });
-    fetch(`https://people-pages-app-api.herokuapp.com/${text.id}`, {
+    fetch(`http://localhost:3001/users/${text.id}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json'

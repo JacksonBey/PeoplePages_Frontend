@@ -3,7 +3,7 @@ export function createPost(text){
     // console.log('text: ', text)
     return (dispatch) => {
         dispatch({ type: 'START_REQUEST' });
-    fetch('https://people-pages-app-api.herokuapp.com/posts', {
+    fetch('http://localhost:3001/posts', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

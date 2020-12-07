@@ -4,7 +4,7 @@ export function fetchUser(text){
     // console.log('text: ', text)
     return (dispatch) => {
         dispatch({ type: 'START_LOG_REQUEST' });
-    fetch('https://people-pages-app-api.herokuapp.com/login', {
+    fetch('http://localhost:3001/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
