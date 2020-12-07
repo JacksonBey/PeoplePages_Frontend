@@ -9,7 +9,6 @@ class UsersPage extends Component {
 
 
     render() {
-        console.log(this.props.users)
         if (this.props.users !== undefined) {
             let users = this.props.users.filter(user => user.id !== this.props.user.user_id)
         return(

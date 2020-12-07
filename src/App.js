@@ -65,6 +65,10 @@ class App extends Component{
     if (this.props.location.pathname === '/login' && localStorage.token !== '') {
       this.props.history.push('/postfeed')
     }
+
+    if (this.props.location.pathname === '/signup' && localStorage.token !== '') {
+      this.props.history.push('/postfeed')
+    }
   }
 
   handleLogout = () => {
@@ -90,10 +94,14 @@ class App extends Component{
     this.props.history.push('/postfeed')
   }
 
+  handleSignUp = (text) => {
+    this.props.signUp(text)
+  }
+
 
   renderLogin = () => <LoginPage handleLogin={this.handleLogin} isLoggedIn = {this.props.loggedIn} handleLogout={this.handleLogout}/>
   renderHomePage = () => <HomePage  isLoggedIn = {this.props.loggedIn}/>
-  renderSignUpPage = () => <SignUpPage handleSignUp={this.props.signUp}/>
+  renderSignUpPage = () => <SignUpPage handleSignUp={this.handleSignUp}/>
   renderMyAccountPage = () => <MyAccountPage  handleEditInfo = {this.props.editInfo}/>
   renderCreatePostPage = () => <CreatePostPage  createPost = {this.props.createPost} handleCreation = {this.handleCreation}/>
   renderPostFeedPage = () => <PostFeedPage  getPosts = {this.props.getPosts}/>

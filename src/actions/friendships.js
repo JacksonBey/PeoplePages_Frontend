@@ -1,7 +1,7 @@
 export function addFriend(text){
     return (dispatch) => {
         dispatch({ type: 'START_LOG_REQUEST' });
-    fetch('https://people-pages-app-api.herokuapp.com/friendships', {
+    fetch('http://localhost:3001/friendships', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
