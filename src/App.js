@@ -38,47 +38,23 @@ class App extends Component{
     redirected: true
   }
 
-  // componentWillMount(){
-  //   console.log('ididnt')
-  // }
-
-  // constructor(){
-  //   super()
-  //   console.log('body contains dark theme? (in app)', document.body.classList.contains("dark-theme"))
-  // }
-
   componentDidMount() {
     console.log(document.body)
-    // console.log('localstorage user: ',localStorage.getItem('user'))
-    // console.log('mounted')
-    // this.setState({
-    //   redirected: false
-
-    // })
     this.props.getNotifications()
     this.props.getFriendships()
     this.props.getPosts()
     this.props.getUsers()
     if(localStorage.getItem('token') !== ''){
       let token= localStorage.getItem('token')
-      // console.log('token: ', token)
       let pw = jwt_decode(token)
-      // console.log('parseJwt: ', pw.password)
       let text = {username: localStorage.getItem('user'), password: pw.password}
-      // console.log('text: ', text)
       this.props.login(text)
 
     }
   }
 
   componentDidUpdate() {
-    // console.log('ls user: ',localStorage.getItem('user'))
-    // console.log('logged in?')
-    // console.log('redirected?', this.state.redirected)
-    // console.log('loggedIn: ',this.props.users.loggedIn)
-    // console.log(this.props.history)
     if(this.props.users.loggedIn === true && this.state.redirected === false){
-      // console.log('logged in!!!!!!')
       this.setState({
         redirected: true
 
@@ -92,7 +68,6 @@ class App extends Component{
   }
 
   handleLogout = () => {
-    // console.log('handlelogout')
     this.props.logOut()
     this.setState({
       redirected: false
@@ -101,22 +76,6 @@ class App extends Component{
     this.props.history.push('/login') 
   }
 
-
-//   createNewPost= async (state) => {
-//     return await Promise.resolve(this.props.createPost((state)))
-
-// }
-
-// handleSubmit = (e) => {
-//     e.preventDefault()
-//     // this.props.createPost(this.state)
-//     this.createNewPost(this.state).then(this.props.handleCreation())
-//     this.setState({
-//         content: '',
-//         image: ''
-//     })
-
-// }
   login = async (text) => {
     return await Promise.resolve(this.props.login(text))
   }
@@ -124,18 +83,7 @@ class App extends Component{
 
   handleLogin = (text) => {
     console.log('error: ', this.props.users.error)
-    this.login(text).then( data => {
-      // console.log('error: ', this.props.users.error)
-      // console.log('data?', data)
-      // console.log('islogged in ', this.props.users)
-      // console.log('is token blank? ', localStorage.getItem('token') !== '')
-      // if(this.props.users.error !== true){
-      //   this.props.history.push('/postfeed')
-      // }
-
-      // this.props.history.push('/postfeed')
-    } )
-    // 
+    this.login(text)
   }
 
   handleCreation= () => {
@@ -163,7 +111,6 @@ class App extends Component{
       <Route exact path='/signup' component={this.renderSignUpPage} />
       <Route exact path='/myaccount' component={this.renderMyAccountPage} />
       <Route exact path='/createpost' component={this.renderCreatePostPage} />
-      {/* <Route exact path='/postfeed' component={this.renderPostFeedPage} /> */}
       <Route path='/postfeed' render={routerProps => <PostFeedPage {...routerProps} getPosts = {this.props.getPosts}/>} />
       <Route path={`/posts/:postId`} render={routerProps => <DisplayPostPage {...routerProps} /> }/>
       <Route path={`/users/:userId`} render={routerProps => <UserView {...routerProps} isLoggedIn = {this.props.loggedIn} handleLogout={this.handleLogout}  getPosts = {this.props.getPosts}/> }/>
@@ -175,7 +122,6 @@ class App extends Component{
   }
 }
 const mapStateToProps = state => {
-  // console.log(state.users.user)
   return {users: state.users.user}
 }
 

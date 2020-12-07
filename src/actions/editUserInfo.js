@@ -16,21 +16,6 @@ export function editUserInfo(text){
         })
         .then(res => res.json())
         .then(data => {dispatch({type: 'EDIT_USER', data}
-        // ,
-        // ((data.error === 'Invalid username or password') ? null : (
-        //     localStorage.setItem('user', data.user.username), localStorage.setItem('token', data.token)
-        //  ))
          )
-        // } else {
-        // this.setState({user: data.user, token: data.token, error: false, loggedIn: true}, () => {
-        //     this.props.history.push('/') 
-        // })}
         })
     }}
-
-//     isEdit: false,
-//     userId: '',
-//     firstName: '',
-//     lastNameInitial: '',
-//     age: ''
-// }

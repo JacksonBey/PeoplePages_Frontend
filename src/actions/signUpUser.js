@@ -23,9 +23,5 @@ export function signUpUser(text){
         : (
             localStorage.setItem('user', data.user.username), localStorage.setItem('token', data.token)
          )))
-        // } else {
-        // this.setState({user: data.user, token: data.token, error: false, loggedIn: true}, () => {
-        //     this.props.history.push('/') 
-        // })}
         })
     }}

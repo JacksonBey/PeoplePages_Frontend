@@ -11,18 +11,13 @@ import { Link } from 'react-router-dom';
 class UserCard extends Component {
 
 
-// friendship stuff from userview
 handleFriend = (followee) => {
     let follower = this.props.users.user  
     let text ={followee: followee, follower: follower, follower_id: follower.user_id, followee_id: followee.id}
-    // console.log('friending text: ', text)
     this.setState({
-        // friends: [...this.state.friends, follower],
-        // isFriend: true,
         pending: true
     })
     let note = {user_id: followee.id, reason: `${this.props.user.firstName} ${this.props.user.lastNameInitial}. added you as a friend!`, post_id: null, friend_id: this.props.user.user_id }
-    // console.log('add freind note: ', note)
     this.props.notify(note)
     this.props.addFriend(text)
 }
@@ -40,15 +35,6 @@ handleUnFriend = (followee) => {
     follower.user_id = follower.id
     console.log('friendship: ',friendship)
     let text ={friendship: friendship, followee: followee, follower: follower, follower_id: follower.user_id, followee_id: followee.id}
-    // console.log('state frineds: ', this.state.friends)
-    // let nfriends = this.state.friends.filter(friend => friend.id !== follower.user_id)
-    // console.log('new friends list 1st filter: ', nfriends)
-    // nfriends = nfriends.filter(friend => friend.id !== follower.id)
-    // console.log('new friends list: ', nfriends)
-    // this.setState({
-    //     friends: nfriends,
-    //     isFriend: false
-    // }) 
     console.log('unfriend package: ', text)
     this.props.unFriend(text)
 
@@ -92,21 +78,9 @@ findNotification = (friendship) => {
 handleAccept = (friendship) => {
     console.log('accepted')
     console.log('friendship ',friendship)
-
-    //find friendship
-    // let text = this.findFriendship(note)
     let text = (friendship)
     console.log('found friend: ', text)
     this.props.acceptFriendship(text)
-
-
-    // find note and delete!
-    // note.reason.split(' ').slice(2).join(' ').toString()
-    // let afilter = {
-    //     user_id: this.props.user.user_id,
-    //     post_id: null,
-    //     friend_id: friendship.follower_id
-    // }
     let note = this.findNotification(friendship)
     console.log('found note: ', note)
     this.props.readNotification(note)
@@ -124,50 +98,36 @@ handleDecline = (friendship) => {
          return user.id === friendship.follower_id
     })
     console.log('follower: ', follower)
-    // delete friendship below
     let text ={friendship: friendship, followee: followee, follower: follower, follower_id: follower.id, followee_id: followee.id}
     console.log('delete friend request package: ', text)
     this.props.unFriend(text)
-
-
-    // find note and delete!
     let note = this.findNotification(friendship)
     this.props.readNotification(note)
 
 }
 
 
-//end of friendship stuff from userview
-
 
     render() {
-        // stuff from userview
 
         if (this.props.users.users !== undefined){
             let displayUser = this.props.users.users.find(user => user.id === this.props.duser.id)
             let friends = []
             let pendings = this.props.users.friendships.filter(friendship => friendship.pending === true)
-            // console.log('pendings: ', pendings)
             if (displayUser.followers !== []){
-                // console.log('display user followers: ', displayUser.followers)
             displayUser.followers.forEach(friend => friends.push(friend))
             pendings.forEach(pending => {
                 if (pending.followee_id === displayUser.id){
                 friends = friends.filter(friend => friend.id !== pending.follower_id)}
             })
-            // console.log('friends after follwers: ', friends)
             }
             if (displayUser.followees !== []){
                 displayUser.followees.forEach(friend => {friends.push(friend)})
-                // console.log('followee id: ', displayUser.followees[0].id)
-                // console.log('pendind id: ', pendings[0].followee_id)
 
                 pendings.forEach(pending => {
-                    // console.log(pending.followee_id)
                     if (pending.follower_id === displayUser.id){
                     friends = friends.filter(friend => friend.id !== pending.followee_id)}
                 })
-                // console.log('friends after follees: ', friends)
             }
             let isFriend = friends.find(friend => friend.id === this.props.users.user.user_id)
             if(isFriend === undefined){
@@ -177,15 +137,6 @@ handleDecline = (friendship) => {
             if (this.props.users.user.user_id !== displayUser.id){
                      currentUser = false
             }
-
-        // console.log('logged in user: ', this.props.users.user.loggedIn)
-        // console.log('current user state', this.state.currentUser)
-        // console.log('friends added', this.state.friends)
-        // let friendships;
-        // if (this.props.users.friendships !== undefined){
-        //     friendships = this.props.users.friendships.filter(friend => friend.follower_id === displayUser.id)
-        //     friendships = [...friendships, this.props.users.friendships.filter(friend => friend.followee_id === displayUser.id)]
-        // }
         let pending = false
         let pendingAccept = false;
         let acceptordecline;
@@ -194,8 +145,6 @@ handleDecline = (friendship) => {
             follower_id: this.props.users.user.user_id,
             pending: true
         }
-                // console.log('displayUser: ', displayUser)
-                // console.log('user', this.props.users.user.user_id)
         let ispending = this.props.friendships.find(friendship => {
             for (const key in ffilter) {
                 if (friendship[key] === undefined || friendship[key] !== ffilter[key])
@@ -203,7 +152,6 @@ handleDecline = (friendship) => {
               }
               return true;
             })
-            //check other way around
             let efilter = {
                 followee_id: this.props.users.user.user_id,
                 follower_id: displayUser.id,
@@ -226,18 +174,9 @@ handleDecline = (friendship) => {
         if (acceptordecline !== undefined){
             pendingAccept= true
         } 
-        // console.log('pending: ', ispending)
         if(ispending !== undefined){
             pending = true
         }
-
-
-
-        // end of stuff from userview
-
-
-
-
         return(
             <Segment >
                {(displayUser.profilePic === '' || displayUser.profilePic === undefined) ? <img src={default_prof_pic} alt='' width="50" height="60"></img> 
@@ -247,7 +186,6 @@ handleDecline = (friendship) => {
                     <br/>
                 {(this.props.users.user.loggedIn && currentUser === false && isFriend === false && pending === false && pendingAccept === false) ? <button onClick={() => this.handleFriend(displayUser)}>Add Friend!</button> : null}
                 {(isFriend === true && pending === false) ? <button onClick={() => this.handleUnFriend(displayUser)}>Unfriend</button> : null}
-                 {/* edit user stuff */}
                  { pending ? <button disabled>pending</button> : null}
                  {pendingAccept ? 
                  <span><button onClick={() => this.handleAccept(acceptordecline)}>Accept</button><button onClick={() => this.handleDecline(acceptordecline)}>Decline</button></span>

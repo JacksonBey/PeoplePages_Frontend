@@ -9,13 +9,6 @@ import {notify} from '../actions/notifications'
 
 class DisplayPostPage extends Component {
 
-    // componentDidMount() {
-    //     // console.log('porps posts: ', this.props.posts[0].id)
-    //     // console.log('postId: ', this.props.match.params.postId)
-    //     let post = this.props.posts.find(post => post.id == this.props.match.params.postId)
-    //     // console.log(post)
-    // }
-
     state = {
         post: this.props.posts.find(post => post.id === parseInt(this.props.match.params.postId)),
         edit: false,
@@ -119,11 +112,7 @@ class DisplayPostPage extends Component {
 
 
     render() {
-        // console.log('posts display props: ', this.props)
-        // console.log('postId: ', this.props.match.params.postId)
         let poster = false
-        // console.log('userprops', this.props.user)
-        // console.log('this.porsp post', this.props.posts)
         if (this.props.user.loggedIn !== false && this.props.posts !== [] && this.state.post !== undefined) {poster = (this.props.user.user_id === this.state.post.user_id)}
         if (this.props.posts === undefined || this.props.posts === [] || this.state.post === undefined) {
             return <div>hi</div>
@@ -142,14 +131,6 @@ class DisplayPostPage extends Component {
                     : null }
                     <h3>comments: </h3>
                     {this.state.comments.map(comment => {
-                // return (
-                // <p key={comment.id + 'r'}>{comment.content} -<Link key={id} to={`/users/${comment.user_id}`}>{comment.username}</Link>
-                // {comment.user_id === this.props.user.user_id && this.state.editOrDelete === false ? 
-                // <button onClick={this.handleEODClick}>X</button> 
-                // : null}
-                // {this.state.editOrDelete ? <span><button onClick={this.handleCommentEdit}>Edit</button><button onClick={this.handleCommentDelete}>Delete</button></span> : null}
-                // </p>
-                // )
                 return <Comment key={uuid()} comment={comment} id={comment.id} post={this.state.post} onDeleteComment={this.onDeleteComment}/>
             })}
                         {(this.props.user.loggedIn && this.state.commenting === false) ? <button onClick = {this.handleComment}>create comment</button> : null}

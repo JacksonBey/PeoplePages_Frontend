@@ -30,9 +30,6 @@ class UserView extends Component {
             this.props.getPosts()
         }
         let displayUser;
-        // console.log('in comp did mount')
-        // console.log('users: ', this.props.users.users)
-        // console.log('friendships: ', this.props.users.friendships)
         if (this.props.users.users !== undefined){
         displayUser = this.props.users.users.find(user => user.id === parseInt(this.props.match.params.userId))
         this.setState({
@@ -43,7 +40,6 @@ class UserView extends Component {
             id: displayUser.id,
             loaded: true
         })
-        // see if friendship is pending:
         let ffilter = {
             followee_id: displayUser.id,
             follower_id: this.props.users.user.user_id,
@@ -56,44 +52,25 @@ class UserView extends Component {
               }
               return true;
             })
-        // console.log('pending: ', ispending)
         if(ispending !== undefined){
             this.setState({
                 pending: true
             })
         }
-        // console.log('friendships: ', this.props.friendships)
-        // console.log('f with display user id: ', this.props.friendships.filter(friendship => {
-        //     return friendship.follower_id === this.props.users.user.user_id
-        // }))
-
-        //get friendships belonging to displayed user.
         let friends = []
         if (displayUser.followers !== []){
         displayUser.followers.forEach(friend => friends.push(friend))
-        // console.log('friends after follwers: ', friends)
         }
         if (displayUser.followees !== []){
         displayUser.followees.forEach(friend => friends.push(friend))
-        // console.log('friends after follwees: ', friends)
         }
-        // console.log('d user friends: ', friends)
         let isFriend = friends.find(friend => friend.id === this.props.users.user.user_id)
         if(isFriend === undefined){
             isFriend = false
         } else {isFriend = true}
-        // console.log('isfriend: ',isFriend)
-        // console.log('id: ', displayUser.id)
         this.setState({
             friends, isFriend, id: displayUser.id
         })
-        // find the users that are associated with that friendship
-        //display them in a list
-
-
-
-        // console.log('displayUser: ', displayUser)
-        // console.log('current user id: ', this.props.users.user)
         if (this.props.users.user.user_id !== displayUser.id){
             this.setState({
                 currentUser: false
@@ -101,52 +78,13 @@ class UserView extends Component {
         }
     }}
 
-    // shouldComponentUpdate = (nextProps, nextState) => {
-    //     if (this.props === nextProps && this.state === nextState){
-    //         return false
-    //     } else return true
-    // }
- 
-    // componentDidUpdate(){
-        // console.log('state.friends: ', this.state.friends)
-    //     console.log('this.props.users.users', this.props.users.users)
-    //     console.log('updated')
-    //     if (this.props.users.users !== undefined){
-    //         console.log('in conditional')
-    //         let displayUser = this.props.users.users.find(user => user.id === parseInt(this.props.match.params.userId))
-    
-    //         //get friendships belonging to displayed user.
-    //         let friends = []
-    //         if (displayUser.followers !== []){
-    //         displayUser.followers.forEach(friend => friends.push(friend))
-    //         // console.log('friends after follwers: ', friends)
-    //         }
-    //         if (displayUser.followees !== []){
-    //         displayUser.followees.forEach(friend => friends.push(friend))
-    //         // console.log('friends after follwees: ', friends)
-    //         }
-    //         // console.log('d user friends: ', friends)
-    //         let isFriend = friends.find(friend => friend.id === this.props.users.user.user_id)
-    //         if(isFriend === undefined){
-    //             isFriend = false
-    //         } else {isFriend = true}
-    //         // console.log('isfriend: ',isFriend)
-    //         this.setState({
-    //             friends, isFriend
-    //         })}
-    // }
-
     handleFriend = (followee) => {
         let follower = this.props.users.user  
         let text ={followee: followee, follower: follower, follower_id: follower.user_id, followee_id: followee.id}
-        // console.log('friending text: ', text)
         this.setState({
-            // friends: [...this.state.friends, follower],
-            // isFriend: true,
             pending: true
         })
         let note = {user_id: followee.id, reason: `${this.props.user.firstName} ${this.props.user.lastNameInitial}. added you as a friend!`, post_id: null, friend_id: this.props.user.user_id }
-        // console.log('add freind note: ', note)
         this.props.notify(note)
         this.props.addFriend(text)
     }
@@ -216,21 +154,9 @@ class UserView extends Component {
     handleAccept = (friendship) => {
         console.log('accepted')
         console.log('friendship ',friendship)
-
-        //find friendship
-        // let text = this.findFriendship(note)
         let text = (friendship)
         console.log('found friend: ', text)
         this.props.acceptFriendship(text)
-
-
-        // find note and delete!
-        // note.reason.split(' ').slice(2).join(' ').toString()
-        // let afilter = {
-        //     user_id: this.props.user.user_id,
-        //     post_id: null,
-        //     friend_id: friendship.follower_id
-        // }
         let note = this.findNotification(friendship)
         console.log('found note: ', note)
         this.props.readNotification(note)
@@ -248,19 +174,13 @@ class UserView extends Component {
              return user.id === friendship.follower_id
         })
         console.log('follower: ', follower)
-        // delete friendship below
         let text ={friendship: friendship, followee: followee, follower: follower, follower_id: follower.id, followee_id: followee.id}
         console.log('delete friend request package: ', text)
         this.props.unFriend(text)
-
-
-        // find note and delete!
         let note = this.findNotification(friendship)
         this.props.readNotification(note)
 
     }
-
-    //edit user stuff
 
     handleChange = (e) => {
         this.setState({
@@ -276,18 +196,13 @@ class UserView extends Component {
 
     handleSubmit = async (e) => {
         e.preventDefault()
-        // console.log('this.props: ',this.props)
         let nEdit = !this.state.isEdit
         let displayUser = this.props.users.users.find(user => user.id === parseInt(this.props.match.params.userId))
-        // console.log('display user: ', displayUser)
         await this.setIdState(state => ({
             id: displayUser.id,
             wasEdited: true,
             isEdit: nEdit
         }))
-        // this.setState({
-        //     id: displayUser.id
-        // })
         console.log('this.state: ',this.state)
         this.props.editInfo(this.state)
     }
@@ -299,10 +214,6 @@ class UserView extends Component {
         })
     }
 
-
-
-
-    //end of edit user stuff
     compare(a, b) {
         const aind = a.id;
         const bind = b.id;
@@ -329,35 +240,23 @@ class UserView extends Component {
 
 
     render() {
-        // console.log('user view props', this.props)
-        // console.log('this.props.user.loggedIn', this.props.user.loggedIn)
-        // console.log('curent state: ', this.state)
-
         if (this.props.users.users !== undefined){
             let displayUser = this.props.users.users.find(user => user.id === parseInt(this.props.match.params.userId))
             let friends = []
             let pendings = this.props.users.friendships.filter(friendship => friendship.pending === true)
-            // console.log('pendings: ', pendings)
             if (displayUser.followers !== []){
-                // console.log('display user followers: ', displayUser.followers)
             displayUser.followers.forEach(friend => friends.push(friend))
             pendings.forEach(pending => {
                 if (pending.followee_id === displayUser.id){
                 friends = friends.filter(friend => friend.id !== pending.follower_id)}
             })
-            // console.log('friends after follwers: ', friends)
             }
             if (displayUser.followees !== []){
                 displayUser.followees.forEach(friend => {friends.push(friend)})
-                // console.log('followee id: ', displayUser.followees[0].id)
-                // console.log('pendind id: ', pendings[0].followee_id)
-
                 pendings.forEach(pending => {
-                    // console.log(pending.followee_id)
                     if (pending.follower_id === displayUser.id){
                     friends = friends.filter(friend => friend.id !== pending.followee_id)}
                 })
-                // console.log('friends after follees: ', friends)
             }
             let isFriend = friends.find(friend => friend.id === this.props.users.user.user_id)
             if(isFriend === undefined){
@@ -367,15 +266,6 @@ class UserView extends Component {
             if (this.props.users.user.user_id !== displayUser.id){
                      currentUser = false
             }
-
-        // console.log('logged in user: ', this.props.users.user.loggedIn)
-        // console.log('current user state', this.state.currentUser)
-        // console.log('friends added', this.state.friends)
-        // let friendships;
-        // if (this.props.users.friendships !== undefined){
-        //     friendships = this.props.users.friendships.filter(friend => friend.follower_id === displayUser.id)
-        //     friendships = [...friendships, this.props.users.friendships.filter(friend => friend.followee_id === displayUser.id)]
-        // }
         let pending = false
         let pendingAccept = false;
         let acceptordecline;
@@ -384,8 +274,6 @@ class UserView extends Component {
             follower_id: this.props.users.user.user_id,
             pending: true
         }
-                // console.log('displayUser: ', displayUser)
-                // console.log('user', this.props.users.user.user_id)
         let ispending = this.props.friendships.find(friendship => {
             for (const key in ffilter) {
                 if (friendship[key] === undefined || friendship[key] !== ffilter[key])
@@ -393,7 +281,6 @@ class UserView extends Component {
               }
               return true;
             })
-            //check other way around
             let efilter = {
                 followee_id: this.props.users.user.user_id,
                 follower_id: displayUser.id,
@@ -416,7 +303,6 @@ class UserView extends Component {
         if (acceptordecline !== undefined){
             pendingAccept= true
         } 
-        // console.log('pending: ', ispending)
         if(ispending !== undefined){
             pending = true
         }
@@ -436,7 +322,6 @@ class UserView extends Component {
 
                 {(this.props.users.user.loggedIn && currentUser === false && isFriend === false && pending === false && pendingAccept === false) ? <button onClick={() => this.handleFriend(displayUser)}>Add Friend!</button> : null}
                 {(isFriend === true && pending === false) ? <button onClick={() => this.handleUnFriend(displayUser)}>Unfriend</button> : null}
-                 {/* edit user stuff */}
                  { pending ? <button disabled>pending</button> : null}
                  {pendingAccept ? 
                  <span><button onClick={() => this.handleAccept(acceptordecline)}>Accept</button><button onClick={() => this.handleDecline(acceptordecline)}>Decline</button></span>
@@ -466,7 +351,6 @@ class UserView extends Component {
         />)}
             </div>
         )
-        // && this.state.isFriend === false
         }else{
         return(
             <div>
@@ -476,22 +360,7 @@ class UserView extends Component {
     }
 }
 
-// {this.state.friends.map((friend,idx) =>{ return <li key={idx}>{friend.firstName} {friend.lastNameInitial}.</li>})}
-// {(this.props.users.user.loggedIn && this.state.currentUser === false && this.state.isFriend === false) ? <button onClick={() => this.handleFriend(displayUser)}>Add Friend!</button> : null}
-// {(this.state.isFriend === true) ? <button onClick={() => this.handleUnFriend(displayUser)}>Unfriend</button> : null}
-// </div>
-
-
-// before experiment: 
-//  <h1>{displayUser.firstName} {displayUser.lastNameInitial.toUpperCase()}.</h1>
-// <h3>Friends({this.state.friends.length}):</h3>
-// {this.state.friends.map((friend,idx) =>{ return <li key={idx}>{friend.firstName} {friend.lastNameInitial}.</li>})}
-// {(this.props.users.user.loggedIn && this.state.currentUser === false && this.state.isFriend === false) ? <button onClick={() => this.handleFriend(displayUser)}>Add Friend!</button> : null}
-// {(this.state.isFriend === true) ? <button onClick={() => this.handleUnFriend(displayUser)}>Unfriend</button> : null}
-// </div> 
-
 const mapStateToProps = state => {
-    // console.log(state.users.user)
     return {users: state.users, user: state.users.user,
     friendships: state.users.friendships, notifications: state.users.notifications, posts: state.posts.posts}
   }

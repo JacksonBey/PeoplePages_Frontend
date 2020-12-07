@@ -6,8 +6,6 @@ import { Link } from 'react-router-dom';
 import {notify} from '../actions/notifications'
 import {createComment} from '../actions/comments'
 import default_prof_pic from '../images/default_prof_pic.jpg'
-// import Comment from './Comment'
-// import { v4 as uuid } from 'uuid';
 
 class Post extends Component {
 
@@ -31,10 +29,6 @@ class Post extends Component {
         })
     }
 
-    // findLike = () => {
-        
-    // }
-
     handleLikeClick = () => {
         let nlikes = this.state.likes + 1
         this.setState({
@@ -42,9 +36,6 @@ class Post extends Component {
             likes: nlikes
         })
         let text = {post_id: this.props.post.id, user_id: this.props.user.user_id}
-        // console.log('userid: ', this.props.user)
-        // console.log('text package: ',text)
-        // console.log('post props: ', this.props.post)
         let note = {user_id: this.props.post.user_id, reason: `${this.props.user.firstName} ${this.props.user.lastNameInitial}. liked your post!`, post_id: this.props.post.id, friend_id: this.props.user.user_id}
         this.props.notify(note)
         this.props.addLike(text)
@@ -56,16 +47,12 @@ class Post extends Component {
             liked: false,
             likes: nlikes
         })
-        // let likeid = 
-        // console.log('likes: ', this.props.post.likes.find(like => like.user_id === this.props.user.user_id))
         let text;
         if (this.props.post.likes.find(like => like.user_id === this.props.user.user_id) !== undefined){
           text = {post_id: this.props.post.id, user_id: this.props.user.user_id, like_id: this.props.post.likes.find(like => like.user_id === this.props.user.user_id).id}}
         else{
             text = {post_id: this.props.post.id, user_id: this.props.user.user_id, like_id: this.props.liked.id}
         }
-        // console.log('userid: ', this.props.user.user_id)
-        // console.log('text package: ',text)
         this.props.unLike(text)
     }
 
@@ -96,28 +83,8 @@ class Post extends Component {
                 comments: [text, ...this.state.comments]
             })
         }
-        // let note = {user_id: this.props.post.user_id, reason: `${this.props.user.firstName} ${this.props.user.lastNameInitial}. commented on your post!`, post_id: this.state.post.id, friend_id: null }
-        // this.props.notify(note)
         this.props.createComment(text)
     }
-
-    // handleEODClick = () => {
-    //     this.setState({
-    //         editOrDelete: true
-    //     })
-    // }
-
-    // handleCommentEdit = () => {
-    //     this.setState({
-    //         editOrDelete: false
-    //     })
-    // }
-
-    // handleCommentDelete = () => {
-    //     this.setState({
-    //         editOrDelete: false
-    //     })
-    // }
 
     compare(a, b) {
         const aind = a.id;
@@ -146,15 +113,7 @@ class Post extends Component {
     }
 
     render() {
-        // console.log('props.post.comments: ', this.props.post.comments)
-        // console.log('liked?: ', this.props.liked)
-        // console.log('id of user: ', this.props.user.user_id )
-        // console.log('id of poster: ', this.props.post.user_id)
-        // console.log('props error: ', this.props.posts.find(post => post.id === this.props.post.id).errors )
-        // console.log(poster)
-        // console.log('post date: ', this.props.post.created_at.split('T')[0])
         let user = {};
-        // console.log('props users', this.props.users)
         if (this.props.users.users !== undefined){
         user = this.props.users.users.find(user => this.props.post.user_id === user.id)
         }
@@ -163,14 +122,12 @@ class Post extends Component {
         return(
              <Segment>
 
-                 {/* <h3>{id}</h3> */}
                  {image !== '' && image !== null ? <img src={image} alt='' width="500" height="600"></img> : null}
              <h2>{content}</h2>
             <p>By 
             {(user.profilePic === '' || user.profilePic === undefined) ? <img src={default_prof_pic} alt='' width="25" height="30"></img> 
                 :<img src={user.profilePic} alt={default_prof_pic} width="25" height="30"></img> }
                 <Link key={user_id + 'u'} to={`/users/${user_id}`}>{username}</Link> on {date}</p>
-             {/* <p>-{username}</p>  */}
 
             <br/>
              {(this.props.user.loggedIn) ?
@@ -179,25 +136,6 @@ class Post extends Component {
              <p>likes: {this.state.likes}</p>
              {comments.length > 0 ? <p>Comments({comments.length})</p> : null}
              <Link key={id} to={`/posts/${id}`}>Goto post</Link>
-            {/* {this.state.comments.map(comment => {
-                // return (
-                // <p key={comment.id + 'r'}>{comment.content} -<Link key={id} to={`/users/${comment.user_id}`}>{comment.username}</Link>
-                // {comment.user_id === this.props.user.user_id && this.state.editOrDelete === false ? 
-                // <button onClick={this.handleEODClick}>X</button> 
-                // : null}
-                // {this.state.editOrDelete ? <span><button onClick={this.handleCommentEdit}>Edit</button><button onClick={this.handleCommentDelete}>Delete</button></span> : null}
-                // </p>
-                // )
-                return <Comment key={uuid()} comment={comment} id={comment.id} post={this.props.post} onDeleteComment={this.onDeleteComment}/>
-            })}
-            {(this.props.user.loggedIn && this.state.commenting === false) ? <button onClick = {this.handleComment}>create comment</button> : null}
-            {this.state.commenting === true ? 
-                <form onSubmit={this.handleSubmitComment}>
-                    <input type='text' name='commentContent' value={this.state.commentContent} onChange={this.handleChange}/>
-                    <input type='submit' />     
-                </form>
-             : null}
-            {this.props.posts.find(post => post.id === this.props.post.id).errors ? <p style={{ color: 'red' }}>is too short (minimum is 1 character)</p> : null} */}
              </Segment>
 
         )
@@ -205,7 +143,6 @@ class Post extends Component {
 }
 
 const mapStateToProps = state => {
-    // console.log(state.users.user)
     return {user: state.users.user, posts: state.posts.posts, users: state.users}
   }
   

@@ -15,14 +15,10 @@ class CreatePostPage extends Component {
         let token= localStorage.getItem('token')
         let userId = jwt_decode(token).user_id
         let username = this.props.user.firstName + ' ' + this.props.user.lastNameInitial + '.'
-        // console.log(userId)
         this.setState({
             userId,
             username
         })
-        // console.log('user: ', this.props.user)
-
-        // console.log('username: ', username)
     }
 
     handleChange = (e) => {
@@ -38,7 +34,6 @@ class CreatePostPage extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault()
-        // this.props.createPost(this.state)
         this.createNewPost(this.state).then(this.props.handleCreation())
         this.setState({
             content: '',
@@ -46,30 +41,6 @@ class CreatePostPage extends Component {
         })
 
     }
-
-    // setIdState(stateUpdate){
-    //     return new Promise(resolve => {
-    //         this.setState(stateUpdate, () => resolve())
-    //     })
-    // }
-
-    // handleSubmit = async (e) => {
-    //     e.preventDefault()
-    //     console.log('this.props: ',this.props)
-    //     let nEdit = !this.state.isEdit
-    //     let displayUser = this.props.users.users.find(user => user.id === parseInt(this.props.match.params.userId))
-    //     console.log('display user: ', displayUser)
-    //     await this.setIdState(state => ({
-    //         id: displayUser.id,
-    //         wasEdited: true,
-    //         isEdit: nEdit
-    //     }))
-    //     // this.setState({
-    //     //     id: displayUser.id
-    //     // })
-    //     console.log('this.state: ',this.state)
-    //     this.props.editInfo(this.state)
-    // }
 
     handleFileChange = e => {
         if (e.target.files[0]) {
@@ -105,7 +76,6 @@ class CreatePostPage extends Component {
 
 
     render() {
-        // console.log('posts errors: ', this.props.posts)
         return(
             <div>
                 <br/>

@@ -30,7 +30,6 @@ export function createComment(text){
 
 
 export function editComment(text){
-    // console.log('text: ', text)
     return (dispatch) => {
         dispatch({ type: 'START_REQUEST' });
     fetch(`http://localhost:3001/comments/${text.id}`, {

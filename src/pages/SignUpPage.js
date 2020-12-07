@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-// import { connect } from 'react-redux'
 import { storage } from '../firebase'
 
  class SignUpPage extends Component {
@@ -22,8 +21,6 @@ import { storage } from '../firebase'
         e.preventDefault()
         this.props.handleSignUp(this.state)
     }
-
-    //image stuff
 
 
     handleFileChange = e => {
@@ -58,8 +55,6 @@ import { storage } from '../firebase'
         )
     }
 
-    //end of image stuff
-
 
     render() {
         console.log('error mesage', localStorage.getItem('signup_error'))
@@ -92,13 +87,5 @@ import { storage } from '../firebase'
         )
     }
 }
-
-// const mapStateToProps = state => {
-//     // console.log(state.users.user)
-//     return {users: state.users.user}
-//   }
-
-
-// export default connect(mapStateToProps)(SignUpPage)
 
 export default SignUpPage

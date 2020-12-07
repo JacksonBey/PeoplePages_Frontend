@@ -6,12 +6,8 @@ import { getFriendships } from '../actions/friendships';
 
 class PostFeedPage extends Component {
 
-    // state = {
-    //     posts: this.props.getPosts()
-    // }
 
     componentDidMount() {
-        // this.props.getPosts()
         this.props.getUsers()
         this.props.getFriendships()
         if (this.props.posts === []){
@@ -57,12 +53,6 @@ class PostFeedPage extends Component {
 
 
     render() {
-        // console.log('this.props.posts: ',this.props.posts)
-        // console.log('typeof props post: ', typeof this.props.posts)
-        // console.log('props length when loading:', this.props.posts.posts.length)
-        // console.log('username', this.props.posts.posts[0].username)
-        // console.log('user id: ', this.props.user.user_id)
-        // console.log('props: ', this.props)
         return(
             <div>
             <h2>Posts</h2>

@@ -1,5 +1,4 @@
 export function notify(text){
-    // console.log('text: ', text)
     return (dispatch) => {
         dispatch({ type: 'START_LOG_REQUEST' });
     fetch('http://localhost:3001/notifications', {
@@ -30,7 +29,6 @@ export function readNotification(text){
 
 
 export function getNotifications(){
-    // console.log('text: ', text)
     return (dispatch) => {
         dispatch({ type: 'START_LOG_REQUEST' });
     fetch('http://localhost:3001/notifications', {

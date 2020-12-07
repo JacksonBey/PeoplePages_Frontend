@@ -27,7 +27,6 @@ class LoginPage extends Component {
 
 
     render() {
-        // console.log('this.props: ',this.props)
         return(
             <div>
                 <span><h2>Welcome to</h2> <img   src={PPlogo} alt='' width="80" height="65"/> </span>
@@ -49,7 +48,6 @@ const mapDispatchToProps = dispatch => ({
   })
 
 const mapStateToProps = state => {
-    // console.log(state.users.user)
     return {users: state.users.user}
   }
 

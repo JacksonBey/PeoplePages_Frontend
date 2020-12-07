@@ -1,5 +1,4 @@
 export function addFriend(text){
-    // console.log('text: ', text)
     return (dispatch) => {
         dispatch({ type: 'START_LOG_REQUEST' });
     fetch('https://people-pages-app-api.herokuapp.com/friendships', {

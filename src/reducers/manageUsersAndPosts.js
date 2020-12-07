@@ -1,8 +1,4 @@
 import { combineReducers } from "redux";
-
-
-
-
  
 const rootReducer = combineReducers({
   users: usersReducer,
@@ -24,8 +20,6 @@ function usersReducer(state = { user: {
             requesting: true
         }   
     case 'LOG_IN':
-        // console.log('state: ', state)
-        // console.log('action: ', action)
         if(action.data.error ===  "Invalid username or password") {
             return { 
                 ...state,
@@ -61,8 +55,6 @@ function usersReducer(state = { user: {
             error: false}, requesting: false   
         }
     case 'SIGN_UP':
-        // console.log('action data user id: ',action.data.user)
-        // console.log('i was here')
         if(action.data.error === undefined) {localStorage.setItem('signup_error', '')
         return {
             ...state,
@@ -88,19 +80,13 @@ function usersReducer(state = { user: {
             }
         } 
     case 'GET_USERS':
-        // console.log('hit get users')
-        // console.log('action data: ', action.data)
         let users = action.data
-        // let friendships = action.data.friendships
-        // console.log('users in action:', users)
         return {
             users: users,
-            // friendships: friendships,
             ...state,
             requesting: false
         }
     case 'GET_FRIENDSHIPS':
-        // console.log('action data: ', action.data)
         return {...state,
             friendships: action.data.friendships,
             requesting: false
@@ -119,30 +105,7 @@ function usersReducer(state = { user: {
             requesting: false
         }
     case 'ADD_FRIEND':
-        // console.log('friended')
-        // console.log('friending action data',action.ntext)
-        // let follower = action.ntext.follower
-        // let follower = state.users.find(user => user.id === action.ntext.follower.user_id)
-        // let followee = action.ntext.followee
-        // let followerinx = state.users.findIndex(user => user.id === follower.user_id)
-        // let followeeinx = state.users.findIndex(user => user.id === followee.user_id)
-        // follower.followees = [...follower.followees, followee]
-        // followee.followers = [...followee.followers, follower]
-        // console.log('followee: ', followee)
-        // console.log('follower: ', follower)
-        // let uusers = state.users.filter(user => user.id !== follower.id)
-        // uusers = uusers.filter(user => user.id !== followee.id)
-        // uusers = [...uusers, followee, follower]
-        // console.log('uusers: ', uusers)
         let nfriendslist = [...state.friendships, action.ntext.data.friendship]
-        // let nusers = {users: [...state.users]}
-        // console.log('nusers before: ', nusers)
-        // nusers = {users: [...nusers.users.slice(0,followerinx), follower, ...nusers.users.slice(followerinx+1)]}
-        // nusers = {users: [...nusers.users.slice(0,followeeinx), followee, ...nusers.users.slice(followeeinx+1)]}
-        // console.log('nusers: ', nusers)
-
-        // let nstate = [state.user, state.users=[...state.users.slice(0,followerinx), follower, ...state.users.slice(followerinx+1)]]
-        // nstate = [state.user, nstate.users=[...nstate.users.slice(0,followeeinx), followee, ...nstate.users.slice(followeeinx+1)]]
         return {
             ...state, friendships: nfriendslist,
             requesting: false
@@ -183,21 +146,14 @@ function usersReducer(state = { user: {
         console.log('ufollower: ', ufollower)
         console.log('ufollowee: ', ufollowee)
         let ufollowerindex= state.users.findIndex(user => user.id === ufollower.id )
-        // let ufusers = state.users.filter(user => user.id !== ufollower.id)
-        //maybe no filter needed? slice handles it
-        // let ufusers = state.users.splice(ufollowerindex, 1)
         let ufusers = state.users
 
         ufusers = [...ufusers.slice(0,ufollowerindex), ufollower, ...ufusers.slice(ufollowerindex+1)]
         console.log('ufusers after follower: ', ufusers)
 
         let ufolloweeindex= ufusers.findIndex(user => user.id === ufollowee.id )
-        // ufusers = ufusers.filter(user => user.id !== ufollowee.id)
         ufusers = [...ufusers.slice(0,ufolloweeindex), ufollowee, ...ufusers.slice(ufolloweeindex+1)]
         console.log('ufusers after followee: ', ufusers)
-
-        // find index and then put them back there
-        // posts: [...state.posts.slice(0,dcommentPostidx), dcpost, ...state.posts.slice(dcommentPostidx+1)]
         console.log('state friendships: ', state.friendships)
         let friendshiplist = state.friendships.filter(friendship => friendship.id !== action.text.friendship.id)
         console.log('friendshiplist: ',friendshiplist)
@@ -210,52 +166,29 @@ function usersReducer(state = { user: {
     case 'ACCEPT_FRIENDSHIP':
         console.log('friendship accepted')
         console.log('action data: ', action)
-        // MAKE FRIENDSHIP NOT PENDING NO MORE ON ACCEPT FRIEND!
         let afollower = state.users.find(user => user.id === action.adata.text.follower_id)
         console.log('ufollower: ', afollower)
         let afollowee = state.users.find(user => user.id === action.adata.text.followee_id)
         console.log('ufollowee: ', afollowee)
-
-        //find index of users and put back in right index
         let afolloweri = state.users.findIndex(user => user.id === afollower.id)
-        // let afusers = state.users.filter(user => user.id !== afollower.id)
         let afusers = state.users
         afusers = [...afusers.slice(0,afolloweri), afollower, ...afusers.slice(afolloweri+1)]
         
         let afolloweei = state.users.findIndex(user => user.id === afollowee.id)
-        // afusers.filter(user => user.id !== afollowee.id)
         afusers = [...afusers.slice(0,afolloweei), afollowee, ...afusers.slice(afolloweei+1)]
-
-
-        // afollower.followees = afollower.followees.filter(followee => followee.id !== afollowee.id)
-
-        // afollower.followees = [...afollower.followees, afollowee]
-        // afollowee.followers = [...afollowee.followers, afollower]
-
-        // afollowee.followers = afollowee.followers.filter(follower => follower.id !== afollower.id)
-
-        // afusers = afusers.filter(user => user.id !== afollowee.id)
-        // afusers = [...afusers, afollowee, afollower]
-        // console.log('state friendships: ', state.friendships)
         let afriendshiplist = state.friendships.filter(friendship => friendship.id !== action.adata.text.id)
         afriendshiplist=[...afriendshiplist, action.adata.data.friendship]
-        // console.log('friendshiplist: ',friendshiplist)
-
-
-
         return {
             ...state, users: afusers, friendships: afriendshiplist,
             requesting: false
         }
     case 'GET_NOTIFICATIONS':
-        // console.log('notifications action data: ', action.data)
         return {
             ...state,
             notifications: action.data.notifications,
             requesting: false
         }
     case 'NOTIFY':
-        // console.log('notify action data: ', action)
         if (state.notifications !== undefined){
         return {
             ...state,
@@ -269,10 +202,7 @@ function usersReducer(state = { user: {
             }
         }
     case 'READ_NOTIFICATION':
-        // console.log('read notify data', action.text)
-        // console.log('state.notifications: ', state.notifications)
         let nnotifications = state.notifications.filter(note => note.id !== action.text.id)
-        // console.log('nnotifications: ', nnotifications)
         return {
             ...state,
             notifications: nnotifications,
@@ -304,7 +234,6 @@ function usersReducer(state = { user: {
     } 
     
     case 'GET_POSTS':
-        // console.log('action data: ', action.data)
         return {
             posts: action.data,
             requesting: false
@@ -312,10 +241,6 @@ function usersReducer(state = { user: {
         
     case 'CREATE_POST':
         console.log('action: ', action)
-        // console.log('state: ',state)
-        // let nstate = [...state, action.data.post]
-        // console.log('nstate: ', nstate)
-        // console.log('post created? actiom data error', action.data.error)
         let newPost= action.data.post
         if(action.data.error === undefined) {localStorage.setItem('post_error', '')
         newPost.likes = []
@@ -342,24 +267,17 @@ function usersReducer(state = { user: {
         }
     case 'ADD_LIKE':
         console.log('like added', action.data)
-        // console.log('action data post id: ', action.data.like.post_id)
         console.log('state users' , state)
         let idx = state.posts.findIndex(post => post.id === action.data.like.post_id)
-        //find post
-        //add likes into post likes
-        //add post back into state
         let post = state.posts.find(p => p.id === action.data.like.post_id)
 
         post.likes = [...post.likes, action.data.like]
-        // console.log('found post: ', post)
 
         return {
             posts: [...state.posts.slice(0,idx), post, ...state.posts.slice(idx+1)],
             requesting: false
         }
     case 'UNLIKE':
-        // console.log('like removed')
-        // console.log('action text: ', action.text)
         let index = state.posts.findIndex(post => post.id === action.text.post_id)
         let likepost = state.posts.find(p => p.id === action.text.post_id)
         likepost.likes = likepost.likes.filter(like => like.id !== action.text.like_id)
@@ -380,11 +298,8 @@ function usersReducer(state = { user: {
                 requesting: false
             }
         } else {
-
-        // console.log('state.posts: ', state.posts)
         let cidx = state.posts.findIndex(post => post.id === action.data.comment.post_id)
         let cpost = state.posts.find(p => p.id === action.data.comment.post_id)
-        // console.log('cpost: ', cpost)
         cpost.comments = [...cpost.comments, action.data.comment]
         cpost.errors = false
 
@@ -402,12 +317,8 @@ function usersReducer(state = { user: {
         let ecpost = state.posts.find(post => post.id === action.data.comment.post_id)
         let ecommentPostidx = state.posts.findIndex(post => post.id === action.data.post_id)
         let ecidx = ecpost.comments.findIndex(comment => comment.id === action.data.comment.id)
-        // console.log('ecidx: ', ecidx)
-        // console.log('ecpost: ', ecpost.comments)
         ecpost.comments = ecpost.comments.filter(comment => comment.id !== action.data.comment.id)
-        // console.log('ecposts post filter: ', ecpost.comments)
         ecpost.comments = [...ecpost.comments.slice(0,ecidx), action.data.comment, ...ecpost.comments.slice(ecidx+1)]
-        // console.log('ecpost post comment edit: ', ecpost.comments)
         return {
             posts: [...state.posts.slice(0,ecommentPostidx), ecpost, ...state.posts.slice(ecommentPostidx+1)],
             requesting: false
@@ -427,35 +338,3 @@ function usersReducer(state = { user: {
         return state;
     }
   }
-
-
-// old add friend action: 
-//   case 'ADD_FRIEND':
-//     // console.log('friended')
-//     // console.log('friending action data',action.ntext)
-//     // let follower = action.ntext.follower
-//     let follower = state.users.find(user => user.id === action.ntext.follower.user_id)
-//     let followee = action.ntext.followee
-//     // let followerinx = state.users.findIndex(user => user.id === follower.user_id)
-//     // let followeeinx = state.users.findIndex(user => user.id === followee.user_id)
-//     follower.followees = [...follower.followees, followee]
-//     followee.followers = [...followee.followers, follower]
-//     // console.log('followee: ', followee)
-//     // console.log('follower: ', follower)
-//     let uusers = state.users.filter(user => user.id !== follower.id)
-//     uusers = uusers.filter(user => user.id !== followee.id)
-//     uusers = [...uusers, followee, follower]
-//     // console.log('uusers: ', uusers)
-//     let nfriendslist = [...state.friendships, action.ntext.data.friendship]
-//     // let nusers = {users: [...state.users]}
-//     // console.log('nusers before: ', nusers)
-//     // nusers = {users: [...nusers.users.slice(0,followerinx), follower, ...nusers.users.slice(followerinx+1)]}
-//     // nusers = {users: [...nusers.users.slice(0,followeeinx), followee, ...nusers.users.slice(followeeinx+1)]}
-//     // console.log('nusers: ', nusers)
-
-//     // let nstate = [state.user, state.users=[...state.users.slice(0,followerinx), follower, ...state.users.slice(followerinx+1)]]
-//     // nstate = [state.user, nstate.users=[...nstate.users.slice(0,followeeinx), followee, ...nstate.users.slice(followeeinx+1)]]
-//     return {
-//         ...state, users: uusers, friendships: nfriendslist,
-//         requesting: false
-//     }
