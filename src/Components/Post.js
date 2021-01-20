@@ -120,21 +120,21 @@ class Post extends Component {
         let {id, content, username, user_id, image, comments} = this.props.post
         return(
              <div className='postCard'>
-
-                 {image !== '' && image !== null ? <img src={image} alt='' width="350vh" height="350vh"></img> : null}
-             <h2>{content}</h2>
-            <p>By 
-            {(user.profilePic === '' || user.profilePic === undefined) ? <img className='profilePic' src={default_prof_pic} alt='' width="50vh" height="30"></img> 
+                 <div className='contentDiv'>
+                    <h2 style={{display:'flex', justifyContent:'center'}}>{content}</h2>
+                    {image !== '' && image !== null ? <img className='postImage' src={image} alt='' width="350vh" height="350vh"></img> : null}
+                </div>
+                <p>By 
+                {(user.profilePic === '' || user.profilePic === undefined) ? <img className='profilePic' src={default_prof_pic} alt='' width="50vh" height="30"></img> 
                 :<img className='profilePic' src={user.profilePic} alt={default_prof_pic} width="40vh" height="40vh"></img> }
                 <Link key={user_id + 'u'} to={`/users/${user_id}`}>{username}</Link> on {date}</p>
-
-            <br/>
-             {(this.props.user.loggedIn) ?
-             (this.state.liked) ? <button className="button" onClick={this.handleUnlikeClick}>&#10084;</button> 
-             : <button className="button" onClick={this.handleLikeClick}>&#9825;</button> : null}
-             <p>likes: {this.state.likes}</p>
-             {comments.length > 0 ? <p>Comments({comments.length})</p> : null}
-             <Link key={id} to={`/posts/${id}`}>Goto post</Link>
+                <br/>
+                {(this.props.user.loggedIn) ?
+                (this.state.liked) ? <button className="button" onClick={this.handleUnlikeClick}>&#10084;</button> 
+                : <button className="button" onClick={this.handleLikeClick}>&#9825;</button> : null}
+                <p>likes: {this.state.likes}</p>
+                {comments.length > 0 ? <p>Comments({comments.length})</p> : null}
+                <Link key={id} to={`/posts/${id}`}>Goto post</Link>
              </div>
 
         )

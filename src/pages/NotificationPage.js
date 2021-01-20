@@ -77,7 +77,7 @@ class NotificationPage extends Component {
             mynotifications = this.props.notifications.filter(note => note.user_id === this.props.user.user_id)
         }
         return(
-            <div key="123">
+            <div>
                 <h3 className="notificationFeedTitle">Your notifications({mynotifications.length}):</h3>
                 {mynotifications.map((note, idx )=> {
                     let date = note.created_at.split('T')[0]

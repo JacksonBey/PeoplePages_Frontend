@@ -9,25 +9,16 @@ const NavBar = () => {
                 className='ui item'
                 to= '/login'
                 exact
-                activeStyle={{
-                    background: '#b3ffff'
-                }}
                 >login</NavLink> 
             <NavLink
                 className='ui item'
                 to= '/signup'
                 exact
-                activeStyle={{
-                    background: '#b3ffff'
-                }}
                 >Sign-Up</NavLink> 
             <NavLink
                 className='ui item'
                 to= '/postfeed'
                 exact
-                activeStyle={{
-                    background: '#b3ffff'
-                }}
                 >Post Feed</NavLink> 
 
         </div>

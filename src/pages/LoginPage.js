@@ -28,12 +28,18 @@ class LoginPage extends Component {
 
     render() {
         return(
-            <div>
-                <span><h2>Welcome to</h2> <img   src={PPlogo} alt='' width="80" height="65"/> </span>
+            <div className='loginDiv'>
+                <span><h2>Welcome</h2></span>
                 {(this.props.users.loggedIn)? <button className="button" onClick={this.props.handleLogout}>LogOut</button> : 
-                                <form onSubmit={this.handleSubmit}>
+                                <form className='loginForm' onSubmit={this.handleSubmit}>
+                                    <label>Username:
                                 <input type='text' value={this.state.username} name='username' onChange={this.handleChange}/>
-                                <input type='text' value={this.state.password} name='password' onChange={this.handleChange}/>
+                                </label>
+                                <li className="spacer"></li>
+                                <label> Password:
+                                <input type='password' value={this.state.password} name='password' onChange={this.handleChange}/>
+                                </label>
+                                <li className="spacer"></li>
                                 <input className="button" type='submit' />
                             </form>
                             }

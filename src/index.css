@@ -31,12 +31,28 @@ body {
   color: #222;
   background: #e6ffff;
 }
-a {
+/* a {
   color: #0033cc;
+} */
+
+.ui.item{
+  background: linear-gradient(
+    to right bottom,
+    #4cf6a2,
+    #4c91f6
+  );
+
 }
 
 .body {
-  background: #e6ffff;
+  /* background: #e6ffff;
+   */
+   background: linear-gradient(
+    to right,
+    #4cf6a2,
+    #4c91f6
+  );
+  
 }
 
 
@@ -45,7 +61,7 @@ a {
   /* text-align: center; */
   padding-bottom: 38px;
   
-  background:   #b3ffff;
+  /* background:   #b3ffff; */
   color:   #222;
   font-size: 30px;
 }
@@ -63,3 +79,7 @@ a {
 .ui.secondary.pointing.menu{
   margin-top: 0px
 }
+
+/* .ui.secondary.pointing.menu:active{
+  background-color: red;
+} */

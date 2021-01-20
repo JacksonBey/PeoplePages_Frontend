@@ -181,3 +181,57 @@
 .uploadButton{
   background: transparent;
 }
+
+.loginForm{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(
+    to right bottom,
+    rgba(255,255,255,0.8),
+    rgba(255,255,255,0.3) 
+  );
+  margin:.5rem 2rem;
+  padding: 1rem 3rem;
+  border-radius: 3rem;
+  border-style: solid;
+  border-color: #42A3D4;
+  border-width: .5rem;
+  list-style: none;
+}
+
+.loginDiv{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ui.secondary.pointing.menu{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.signupForm{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(
+    to right bottom,
+    rgba(255,255,255,0.8),
+    rgba(255,255,255,0.3) 
+  );
+  margin:.5rem 2rem;
+  padding: 1rem 3rem;
+  border-radius: 3rem;
+  border-style: solid;
+  border-color: #42A3D4;
+  border-width: .5rem;
+  list-style: none;
+}
+
+.postImage{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

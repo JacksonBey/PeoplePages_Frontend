@@ -16,7 +16,7 @@ class UserBar extends Component {
                 to={`/users/${this.props.user.user_id}`}
                 exact
                 activeStyle={{
-                    background: '#b3ffff'
+                    background: 'transparent'
                 }}
                 >Account</NavLink> 
             <NavLink
@@ -24,7 +24,7 @@ class UserBar extends Component {
                 to= '/createpost'
                 exact
                 activeStyle={{
-                    background: '#b3ffff'
+                    background: 'transparent'
                 }}
                 >Create Post</NavLink> 
             <NavLink
@@ -32,7 +32,7 @@ class UserBar extends Component {
                 to= '/postfeed'
                 exact
                 activeStyle={{
-                    background: '#b3ffff'
+                    background: 'transparent'
                 }}
                 >My Post Feed</NavLink> 
             <NavLink
@@ -40,7 +40,7 @@ class UserBar extends Component {
                 to= '/users'
                 exact
                 activeStyle={{
-                    background: '#b3ffff'
+                    background: 'transparent'
                 }}
                 >Users</NavLink> 
             <NavLink
@@ -48,7 +48,7 @@ class UserBar extends Component {
                 to= '/notifications'
                 exact
                 activeStyle={{
-                    background: '#b3ffff'
+                    background: 'transparent'
                 }}
                 >Notifications({notifications === undefined ? 0 : notifications.length})</NavLink> 
 

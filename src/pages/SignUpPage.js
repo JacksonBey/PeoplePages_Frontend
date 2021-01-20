@@ -60,12 +60,12 @@ import { storage } from '../firebase'
         console.log('error mesage', localStorage.getItem('signup_error'))
         return(
             <div>
-                <form onSubmit={this.handleSubmit}>
+                <form  className="signupForm" onSubmit={this.handleSubmit}>
                     <label> Username: 
                     <input type='text' name='username' value={this.state.username} onChange={this.handleChange}/>
                     </label>
                     <label> Password: 
-                    <input type='text' name='password' value={this.state.password} onChange={this.handleChange}/>
+                    <input type='password' name='password' value={this.state.password} onChange={this.handleChange}/>
                     </label>
                     <label>First Name: 
                     <input type='text' name='firstName' value={this.state.firstName} onChange={this.handleChange}/>
@@ -79,7 +79,7 @@ import { storage } from '../firebase'
                     <label>Upload Profile Image:
                     <input type='file' name='profilePic' accept='image/*' onChange={this.handleFileChange}/>
                     </label>
-                    <input type='submit' />
+                    <input className="button" type='submit' />
 
                 </form>
                 <p style={{ color: 'red' }}>{localStorage.getItem('signup_error')}</p>
