@@ -342,7 +342,7 @@ class UserView extends Component {
                     </form> : null}
                     {this.state.wasEdited ? <p>refresh page to view your edit</p> : null}
                     <br/>
-                    <h3>Friends({friends.length}):</h3>
+                    {friends.length > 0 ? <h3>Friends({friends.length}):</h3>: null}
         {friends.map((friend,idx) =>{ return <li key={idx}>{friend.firstName} {friend.lastNameInitial}.</li>})}
                     <br/>
                     <h3>Posts({posts.length}):</h3>
