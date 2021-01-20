@@ -12,7 +12,7 @@ class UsersPage extends Component {
         if (this.props.users !== undefined) {
             let users = this.props.users.filter(user => user.id !== this.props.user.user_id)
         return(
-            <div>
+            <div className="usersPageDiv">
                 {users.map((user,idx) => <UserCard key={idx} duser={user}/>)}
             </div>
         )} else {

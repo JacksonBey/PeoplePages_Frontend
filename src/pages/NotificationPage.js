@@ -77,20 +77,22 @@ class NotificationPage extends Component {
             mynotifications = this.props.notifications.filter(note => note.user_id === this.props.user.user_id)
         }
         return(
-            <div>
-                <h3>your notifications({mynotifications.length}):</h3>
+            <div key="123">
+                <h3 className="notificationFeedTitle">Your notifications({mynotifications.length}):</h3>
                 {mynotifications.map((note, idx )=> {
                     let date = note.created_at.split('T')[0]
                     let person = note.reason.split(' ').slice(0,2).join(' ').toString()
                     let reason = note.reason.split(' ').slice(2).join(' ').toString()
-                    return <li key={idx}><Link to={`/users/${note.friend_id}`}>{person}</Link> {reason}
+                    return <div  key={idx+'d'} className="notificationDiv">
+                    <li key={idx}><Link to={`/users/${note.friend_id}`}>{person}</Link> {reason}
                     {note.post_id !== null ?
                     <Link to={`/posts/${note.post_id}`}>Goto Post</Link> : null
                     }
                     <p>on: {date}</p>
-                    {reason !== 'added you as a friend!' ? <button onClick={() => this.handleRead(note)}>read</button>  :
-                    <span><button onClick={() => this.handleAccept(note)}>Accept</button><button onClick={() => this.handleDecline(note)}>Decline</button></span>}
+                    {reason !== 'added you as a friend!' ? <button className="button" onClick={() => this.handleRead(note)}>read</button>  :
+                    <span><button className="button" onClick={() => this.handleAccept(note)}>Accept</button><button onClick={() => this.handleDecline(note)}>Decline</button></span>}
                     </li>
+                    </div>
                 })}
             </div>
         )

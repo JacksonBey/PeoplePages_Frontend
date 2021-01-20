@@ -77,19 +77,21 @@ class CreatePostPage extends Component {
 
     render() {
         return(
-            <div>
+            <div className="formDiv">
                 <br/>
-                <form onSubmit={this.handleSubmit}>
+                <form className='postForm' onSubmit={this.handleSubmit}>
                     <label>Text:
                     <input type='text' name='content' value={this.state.content} onChange={this.handleChange}/>
                     </label>
+                    <li className="spacer" key="dsaf"> </li>
                     <label>Image Url:
                     <input type='text' name='image' value={this.state.image} onChange={this.handleChange}/>
                     </label>
+                    <li className="spacer" key="sfasf"></li>
                     <label>Upload Image:
-                    <input type='file' name='image' accept='image/*' onChange={this.handleFileChange}/>
+                    <input className="uploadButton" type='file' name='image' accept='image/*' onChange={this.handleFileChange}/>
                     </label>
-                    <input type='submit' />
+                    <input className="button" type='submit' />
 
                 </form>
                 <br/>

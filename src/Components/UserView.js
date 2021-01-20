@@ -312,24 +312,24 @@ class UserView extends Component {
 
 
         return(
-            <div>
-                {(displayUser.profilePic === '' || displayUser.profilePic === undefined) ? <img src={default_prof_pic} alt='' width="50" height="60"></img> 
-                :<img src={displayUser.profilePic} alt={default_prof_pic} width="50" height="60"></img> }
-                
-                <h1>{displayUser.firstName} {displayUser.lastNameInitial.toUpperCase()}.</h1>
-        <p>Age: {displayUser.age} Location: {displayUser.location}</p>
-        <p>Posts: {displayUser.posts.length} </p>
-
-                {(this.props.users.user.loggedIn && currentUser === false && isFriend === false && pending === false && pendingAccept === false) ? <button onClick={() => this.handleFriend(displayUser)}>Add Friend!</button> : null}
-                {(isFriend === true && pending === false) ? <button onClick={() => this.handleUnFriend(displayUser)}>Unfriend</button> : null}
-                 { pending ? <button disabled>pending</button> : null}
-                 {pendingAccept ? 
-                 <span><button onClick={() => this.handleAccept(acceptordecline)}>Accept</button><button onClick={() => this.handleDecline(acceptordecline)}>Decline</button></span>
-                 : null}
-                 {currentUser ? <span><button onClick={this.handleEditClick}>Edit/ Add Info</button> 
-                 <button onClick={this.props.handleLogout}>Logout</button></span>
-                 : null}
-                 {this.state.isEdit ? 
+            <div className='userViewDiv'>
+                <div className='userView'>
+                    {(displayUser.profilePic === '' || displayUser.profilePic === undefined) ? <img className='profilePic' src={default_prof_pic} alt='' width="200vh" height="200vh"></img> 
+                    :<img className='profilePic' src={displayUser.profilePic} alt={default_prof_pic} width="200vh" height="200vh"></img> }
+                    
+                    <h1>{displayUser.firstName} {displayUser.lastNameInitial.toUpperCase()}.</h1>
+                    <p>Age: {displayUser.age} Location: {displayUser.location}</p>
+                    <p>Posts: {displayUser.posts.length} </p>
+                    {(this.props.users.user.loggedIn && currentUser === false && isFriend === false && pending === false && pendingAccept === false) ? <button className="button" onClick={() => this.handleFriend(displayUser)}>Add Friend!</button> : null}
+                    {(isFriend === true && pending === false) ? <button className="button" onClick={() => this.handleUnFriend(displayUser)}>Unfriend</button> : null}
+                    { pending ? <button className="button" disabled>pending</button> : null}
+                    {pendingAccept ? 
+                    <span><button className="button" onClick={() => this.handleAccept(acceptordecline)}>Accept</button><button className="button" onClick={() => this.handleDecline(acceptordecline)}>Decline</button></span>
+                    : null}
+                    {currentUser ? <span><button className="button" onClick={this.handleEditClick}>Edit/ Add Info</button> 
+                    <button className="button" onClick={this.props.handleLogout}>Logout</button></span>
+                    : null}
+                    {this.state.isEdit ? 
                     <form onSubmit={this.handleSubmit}>
                         <label>Age: 
                         <input type='text' name='age' value={this.state.age} onChange={this.handleChange} placeholder={displayUser.age}/>
@@ -337,18 +337,21 @@ class UserView extends Component {
                         <label>Location: 
                         <input type='text' name='location' value={this.state.location} onChange={this.handleChange} placeholder={displayUser.location}/>
                         </label>
-                        <input type='submit' />
+                        <input className="button" type='submit' />
 
                     </form> : null}
                     {this.state.wasEdited ? <p>refresh page to view your edit</p> : null}
                     <br/>
                     {friends.length > 0 ? <h3>Friends({friends.length}):</h3>: null}
-        {friends.map((friend,idx) =>{ return <li key={idx}>{friend.firstName} {friend.lastNameInitial}.</li>})}
+                    {friends.map((friend,idx) =>{ return <li key={idx}>{friend.firstName} {friend.lastNameInitial}.</li>})}
                     <br/>
-                    <h3>Posts({posts.length}):</h3>
-        {posts.map((post, idx) => <Post key={idx} post={post}
-            liked= {this.findliked(post)}
-        />)}
+                    <h3>Posts({posts.length})</h3>
+                </div>
+                <div className='userPostsDiv'>
+                    {posts.map((post, idx) => <Post key={idx} post={post}
+                    liked= {this.findliked(post)}
+                    />)}
+                </div>
             </div>
         )
         }else{

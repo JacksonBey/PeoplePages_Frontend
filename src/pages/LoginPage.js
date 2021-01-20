@@ -30,11 +30,11 @@ class LoginPage extends Component {
         return(
             <div>
                 <span><h2>Welcome to</h2> <img   src={PPlogo} alt='' width="80" height="65"/> </span>
-                {(this.props.users.loggedIn)? <button onClick={this.props.handleLogout}>LogOut</button> : 
+                {(this.props.users.loggedIn)? <button className="button" onClick={this.props.handleLogout}>LogOut</button> : 
                                 <form onSubmit={this.handleSubmit}>
                                 <input type='text' value={this.state.username} name='username' onChange={this.handleChange}/>
                                 <input type='text' value={this.state.password} name='password' onChange={this.handleChange}/>
-                                <input type='submit' />
+                                <input className="button" type='submit' />
                             </form>
                             }
                 {this.props.users.error ? <p style={{ color: 'red' }}>Invalid username or password</p> : null}

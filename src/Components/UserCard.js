@@ -4,7 +4,6 @@ import {getUsers} from '../actions/getUsers'
 import {notify, readNotification} from '../actions/notifications'
 import { getFriendships, acceptFriendship} from '../actions/friendships';
 import {addFriend, unFriend} from '../actions/friendships'
-import { Segment } from 'semantic-ui-react'
 import default_prof_pic from '../images/default_prof_pic.jpg'
 import { Link } from 'react-router-dom';
 
@@ -178,20 +177,20 @@ handleDecline = (friendship) => {
             pending = true
         }
         return(
-            <Segment >
-               {(displayUser.profilePic === '' || displayUser.profilePic === undefined) ? <img src={default_prof_pic} alt='' width="50" height="60"></img> 
-                :<img src={displayUser.profilePic} alt={default_prof_pic} width="50" height="60"></img> }
+            <div className="usersView">
+               {(displayUser.profilePic === '' || displayUser.profilePic === undefined) ? <img className="profilePic" src={default_prof_pic} alt='' width="200vh" height="200vh"></img> 
+                :<img className="profilePic" src={displayUser.profilePic} alt={default_prof_pic} width="200vh" height="200vh"></img> }
                     <br/>
                 <Link key={this.props.duser.id + 'u'} to={`/users/${this.props.duser.id}`}>{this.props.duser.firstName} {this.props.duser.lastNameInitial}.</Link>
                     <br/>
-                {(this.props.users.user.loggedIn && currentUser === false && isFriend === false && pending === false && pendingAccept === false) ? <button onClick={() => this.handleFriend(displayUser)}>Add Friend!</button> : null}
-                {(isFriend === true && pending === false) ? <button onClick={() => this.handleUnFriend(displayUser)}>Unfriend</button> : null}
-                 { pending ? <button disabled>pending</button> : null}
+                {(this.props.users.user.loggedIn && currentUser === false && isFriend === false && pending === false && pendingAccept === false) ? <button className="button" onClick={() => this.handleFriend(displayUser)}>Add Friend!</button> : null}
+                {(isFriend === true && pending === false) ? <button className="button" onClick={() => this.handleUnFriend(displayUser)}>Unfriend</button> : null}
+                 { pending ? <button className="button" disabled>pending</button> : null}
                  {pendingAccept ? 
-                 <span><button onClick={() => this.handleAccept(acceptordecline)}>Accept</button><button onClick={() => this.handleDecline(acceptordecline)}>Decline</button></span>
+                 <span><button className="button" onClick={() => this.handleAccept(acceptordecline)}>Accept</button><button className="button"onClick={() => this.handleDecline(acceptordecline)}>Decline</button></span>
                  : null}
                 
-            </Segment>
+            </div>
         )
     }else{
         return(
