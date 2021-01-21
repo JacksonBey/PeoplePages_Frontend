@@ -4,7 +4,8 @@ export function fetchPosts(){
     fetch('https://nameless-journey-93136.herokuapp.com/posts', {
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
         }}).then(res => res.json())
         .then(data => dispatch({type: 'GET_POSTS', data}))}
 }

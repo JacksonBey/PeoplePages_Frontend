@@ -5,7 +5,8 @@ export function editUserInfo(text){
     fetch(`https://nameless-journey-93136.herokuapp.com/users/${text.id}`, {
         method: 'PATCH',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
         },
         body: JSON.stringify({
             firstName: text.firstName,

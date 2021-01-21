@@ -5,7 +5,8 @@ export function signUpUser(text){
     fetch('https://nameless-journey-93136.herokuapp.com/users', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
         },
         body: JSON.stringify({
             username: text.username,

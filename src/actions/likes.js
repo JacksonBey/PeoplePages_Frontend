@@ -4,7 +4,8 @@ export function addLike(text){
     fetch('https://nameless-journey-93136.herokuapp.com/likes', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
             body: JSON.stringify({
                 user_id: text.user_id,

@@ -4,7 +4,8 @@ export function addFriend(text){
     fetch('https://nameless-journey-93136.herokuapp.com/friendships', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+        'Accept': 'application/json'
             },
             body: JSON.stringify({
                 follower_id: text.follower_id,
@@ -26,7 +27,8 @@ export function acceptFriendship(text){
     fetch(`https://nameless-journey-93136.herokuapp.com/friendships/${text.id}`, {
         method: 'PATCH',
         headers: {
-            'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+        'Accept': 'application/json'
         },
         body: JSON.stringify({
             pending: false
@@ -55,7 +57,8 @@ export function getFriendships(text){
     fetch(`https://nameless-journey-93136.herokuapp.com/friendships`, {
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+        'Accept': 'application/json'
         }}).then(res => res.json())
         .then(data => dispatch({type: 'GET_FRIENDSHIPS', data}))}
 }

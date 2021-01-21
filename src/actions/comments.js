@@ -6,7 +6,8 @@ export function createComment(text){
     fetch('https://nameless-journey-93136.herokuapp.com/comments', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
         },
         body: JSON.stringify({
             content: text.content,
@@ -35,7 +36,8 @@ export function editComment(text){
     fetch(`https://nameless-journey-93136.herokuapp.com/comments/${text.id}`, {
         method: 'PATCH',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
         },
         body: JSON.stringify({
             content: text.content
