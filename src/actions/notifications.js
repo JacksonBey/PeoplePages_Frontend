@@ -1,7 +1,7 @@
 export function notify(text){
     return (dispatch) => {
         dispatch({ type: 'START_LOG_REQUEST' });
-    fetch('http://localhost:3001/notifications', {
+    fetch('https://nameless-journey-93136.herokuapp.com/notifications', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -21,7 +21,7 @@ export function notify(text){
 export function readNotification(text){
     return (dispatch) => {
         dispatch({ type: 'START_LOG_REQUEST' });
-    fetch(`http://localhost:3001/notifications/${text.id}`, {method: 'DELETE'})
+    fetch(`https://nameless-journey-93136.herokuapp.com/notifications/${text.id}`, {method: 'DELETE'})
             .then(res => res.json())
             .then(data => {dispatch({type: 'READ_NOTIFICATION', text})})
 }
@@ -31,7 +31,7 @@ export function readNotification(text){
 export function getNotifications(){
     return (dispatch) => {
         dispatch({ type: 'START_LOG_REQUEST' });
-    fetch('http://localhost:3001/notifications', {
+    fetch('https://nameless-journey-93136.herokuapp.com/notifications', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'

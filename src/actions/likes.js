@@ -1,7 +1,7 @@
 export function addLike(text){
     return (dispatch) => {
         dispatch({ type: 'START_REQUEST' });
-    fetch('http://localhost:3001/likes', {
+    fetch('https://nameless-journey-93136.herokuapp.com/likes', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -19,7 +19,7 @@ export function addLike(text){
 export function unLike(text){
     return (dispatch) => {
         dispatch({ type: 'START_REQUEST' });
-    fetch(`http://localhost:3001/likes/${text.like_id}`, {method: 'DELETE'})
+    fetch(`https://nameless-journey-93136.herokuapp.com/likes/${text.like_id}`, {method: 'DELETE'})
             .then(res => res.json())
             .then(data => {dispatch({type: 'UNLIKE', text})})
 }

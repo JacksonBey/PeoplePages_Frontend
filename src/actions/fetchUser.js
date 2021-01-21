@@ -3,7 +3,7 @@
 export function fetchUser(text){
     return (dispatch) => {
         dispatch({ type: 'START_LOG_REQUEST' });
-    fetch('http://localhost:3001/login', {
+    fetch('https://nameless-journey-93136.herokuapp.com/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

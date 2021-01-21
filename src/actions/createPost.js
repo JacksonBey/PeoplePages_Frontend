@@ -2,7 +2,7 @@
 export function createPost(text){
     return (dispatch) => {
         dispatch({ type: 'START_REQUEST' });
-    fetch('http://localhost:3001/posts', {
+    fetch('https://nameless-journey-93136.herokuapp.com/posts', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

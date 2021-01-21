@@ -1,7 +1,7 @@
 export function getUsers(){
     return (dispatch) => {
         dispatch({ type: 'START_LOG_REQUEST' });
-    fetch('http://localhost:3001/users', {
+    fetch('https://nameless-journey-93136.herokuapp.com/users', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'

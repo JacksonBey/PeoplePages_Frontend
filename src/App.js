@@ -44,9 +44,10 @@ class App extends Component{
     this.props.getFriendships()
     this.props.getPosts()
     this.props.getUsers()
-    if(localStorage.getItem('token') !== ''){
-      let token= localStorage.getItem('token')
-      let pw = jwt_decode(token)
+    let token=localStorage.getItem('token')
+    if(token){
+      // let token= localStorage.getItem('token')
+      let pw = jwt_decode(token, {header: true})
       let text = {username: localStorage.getItem('user'), password: pw.password}
       this.props.login(text)
 
@@ -113,7 +114,7 @@ class App extends Component{
       <Header />
       {(this.props.users.loggedIn)? <UserBar /> : <NavBar />}
             <Switch>
-      <Route exact path='/' component={this.renderHomePage}/>
+      <Route exact path='/' component={this.renderLogin}/>
       <Route exact path='/about' component={AboutPage} />
       <Route exact path='/login' component={this.renderLogin} />
       <Route exact path='/signup' component={this.renderSignUpPage} />
