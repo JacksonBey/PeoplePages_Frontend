@@ -119,9 +119,9 @@ class DisplayPostPage extends Component {
         
         } else {
             return(
-                <div>
+                <div className="postCard">
             <p>content: {this.state.post.content}</p>
-            {this.state.post.image !== '' && this.state.post.image !== null ? <img src={this.state.post.image} alt='' width="500" height="600"></img> : null}
+            {this.state.post.image !== '' && this.state.post.image !== null ? <img className='postImage' src={this.state.post.image} alt='' width="350vh" height="350vh"></img> : null}
             {poster ? ( <div><button onClick={this.toggleEdit}>&#x270E;</button> <button onClick={this.handleDelete}>delete?</button> </div>): null}
             {(this.state.edit) ?                 <form onSubmit={this.handleSubmit}>
                         <input type='text' name='content' value={this.state.content} onChange={this.handleChange} placeholder={this.state.post.content}/>
