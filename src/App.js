@@ -55,7 +55,7 @@ class App extends Component{
   }
 
   componentDidUpdate() {
-    console.log('HEE HEE!')
+    // console.log('HEE HEE!')
     if(this.props.users.loggedIn === true && this.state.redirected === false){
       this.setState({
         redirected: true
@@ -64,13 +64,13 @@ class App extends Component{
       this.props.history.push('/postfeed') 
     }
 
-    if (this.props.location.pathname === '/login' && !!localStorage.token) {
-      this.props.history.push('/postfeed')
-    }
+    // if (this.props.location.pathname === '/login' && !!localStorage.token) {
+    //   this.props.history.push('/postfeed')
+    // }
 
-    if (this.props.location.pathname === '/signup' && !!localStorage.token) {
-      this.props.history.push('/postfeed')
-    }
+    // if (this.props.location.pathname === '/signup' && !!localStorage.token) {
+    //   this.props.history.push('/postfeed')
+    // }
   }
 
   handleLogout = () => {
